@@ -1,6 +1,5 @@
 import React from 'react';
-import Head from '../head'
-import Footer from '../footer'
+import {Link} from 'react-router-dom'
 import css from '../../css/index.scss'
 
 export default class Index extends React.Component {
@@ -10,12 +9,10 @@ export default class Index extends React.Component {
     }
 
     render() {
-        return <div>
-            <Head/>
-            <div className={css.box}>
-                {this.props.children}
-            </div>
-            <Footer/>
+        return <div className={css.menu}>
+            <Link to="/">主页</Link>
+            <Link to="/main">Main</Link>
+            <Link to="/about">About</Link>
         </div>
     }
 }

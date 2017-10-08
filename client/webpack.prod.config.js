@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-// const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -13,33 +12,49 @@ module.exports = {
     },
     // 模块处理
     module: {
-        // 特殊文件处理
         loaders: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-0'],
-                    // plugins: ['transform-runtime', 'add-module-exports']
-                }
+                use: [{
+                    loader: 'babel-loader',
+                    //配置参数;
+                    options: {
+                        presets: ['react', 'es2015', 'stage-0']
+                    }
+                }],
             },
-            // {
-            //     test: /\.scss/,
-            //     loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]_[local]!postcss!sass')
-            // },
-            // {
-            //     test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-            //     loader: 'url-loader?limit=50000&name=[path][name].[ext]'
-            // },
-            // {
-            //     test: /\.css$/,
-            //     loader: "style!css!"
-            // }
+            {
+                test: /\.(scss|sass|css)$/,
+                loader: ExtractTextPlugin.extract({
+                    use: [
+                        {loader: 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]_[hash:base64:4]_[local]'},
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: function () {
+                                    return [
+                                        require('autoprefixer')({
+                                            browsers: ['ios >= 7.0']
+                                        })
+                                    ];
+                                }
+                            }
+                        },
+                        {loader: 'sass-loader'},
+                    ]
+                })
+            },
+            {
+                test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+                loader: 'url-loader?limit=50000&name=[path][name].[ext]'
+            },
+            {
+                test: /\.css$/,
+                loader: "style!css!"
+            }
         ]
     },
-    // css3自动补全
-    // postcss: [autoprefixer({browsers: ['> 5%']})],
     // 输出
     output: {
         path: path.resolve(__dirname, '..', 'server', 'public', 'js'),
@@ -50,11 +65,15 @@ module.exports = {
     // 插件
     plugins: [
         // 定义变量，一般用于开发环境log或者全局变量
-        new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)}),
+        new webpack.DefinePlugin({
+            'process.env':{
+                'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            }
+        }),
         // 根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id
         new webpack.optimize.OccurrenceOrderPlugin(),
         // 多个 html共用一个js文件(chunk)
-        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
         // 将样式文件(css,sass,less)合并成一个css文件
         new ExtractTextPlugin('../css/[name].css', {allChunks: true}),
         // 压缩js

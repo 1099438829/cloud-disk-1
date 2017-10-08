@@ -4,36 +4,78 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'source-map',
+    // 根目录
+    context: path.resolve(__dirname, ''),
+    // 需要打包的文件入口
     entry: {
         index: './index/index.js',
         vendor: ['react', 'react-dom', 'react-router-dom']
     },
+    // 模块处理
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: [{
+                    loader: 'babel-loader',
+                    //配置参数;
+                    options: {
+                        presets: ['react', 'es2015', 'stage-0']
+                    }
+                }],
+            },
+            {
+                test: /\.(scss|sass|css)$/,
+                loader: ExtractTextPlugin.extract({
+                    use: [
+                        {loader: 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]_[hash:base64:4]_[local]'},
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: function () {
+                                    return [
+                                        require('autoprefixer')({
+                                            browsers: ['ios >= 7.0']
+                                        })
+                                    ];
+                                }
+                            }
+                        },
+                        {loader: 'sass-loader'},
+                    ]
+                })
+            },
+            {
+                test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+                loader: 'url-loader?limit=50000&name=[path][name].[ext]'
+            },
+            {
+                test: /\.css$/,
+                loader: "style!css!"
+            }
+        ]
+    },
+    // 输出
     output: {
         path: path.resolve(__dirname, '..', 'server', 'public', 'js'),
         filename: 'index.bundle.js',
         chunkFilename: '[name].[chunkhash:4].bundle.js',
         publicPath: '/js/'
     },
-    module: {
-        loaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-0']
-                }
-            }
-        ]
-    },
+    // 插件
     plugins: [
         // 定义变量，一般用于开发环境log或者全局变量
-        new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)}),
+        new webpack.DefinePlugin({
+            'process.env':{
+                'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            }
+        }),
         // 根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id
         new webpack.optimize.OccurrenceOrderPlugin(),
         // 多个 html共用一个js文件(chunk)
         new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
         // 将样式文件(css,sass,less)合并成一个css文件
-        new ExtractTextPlugin('../css/[name].css', {allChunks: true}),
+        new ExtractTextPlugin('../css/[name].css', {allChunks: true})
     ]
-}
+};
