@@ -26,7 +26,7 @@ react 16 + react-router 4 + koa2 按需加载最新脚手架，开箱即用
     $ cd react16-koa2/server
     $ npm i
     $ npm run start
-    $ open http://localhost:3000
+    $ open http://localhost:3001
 ```
 
 ## 说明
