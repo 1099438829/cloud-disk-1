@@ -12,18 +12,46 @@ const Min = (props) => <Bundle load={MinController}>{(A) => <A {...props}/>}</Bu
 export default class Index extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            token: undefined
+        }
     }
     message = () => {
-        Axios.get('https://domainapi.aliyun.com/onsale/search?fetchSearchTotal=true&token=tdomain-aliyun-com:z3RarzN9vabgoJW43AAEIyWrlC96u8Cs&currentPage=1&pageSize=50&suffix=com&keyWord=awei1&searchIntro=false&keywordAsPrefix=false&keywordAsSuffix=false&exKeywordAsPrefix=false&exKeywordAsSuffix=false&exKeywordAsPrefix2=false&exKeywordAsSuffix2=false&callback=jQuery11110613241475257184_1507797749664&_=1507797749674').then(ret => {
-            console.log(ret);
+        Axios.get('/api/login').then(ret => {
+            // console.log(ret);
+            window.sessionStorage.setItem('token', ret);
         })
     }
+
+    look = () => {
+        Axios.get('/api/look/123').then(ret => {
+            this.setState({token: ret})
+        })
+    }
+
+    delToken = () => {
+        window.sessionStorage.clear('token');
+    }
+
     render() {
-        const name = 'name Min';
+        const {token} = this.state;
+        console.log(token);
+        const name = '12';
         return <div>
-            this main
-            <button onClick={this.message}>message</button>
-            <p><Link to={`/main/min/${name}`}>Min</Link></p>
+            <p>this main</p>
+            <div>
+                <button onClick={this.message}>登录按钮，创建token</button>
+            </div>
+            <div>
+                <button onClick={this.look}>模拟请求，无token跳转到主页，有则返回token用户信息</button>
+            </div>
+            <div>
+                <button onClick={this.delToken}>删除sessionStorage的token</button>
+            </div>
+            <div>
+                {JSON.stringify(token)}
+            </div>
+            <p><Link to={`/main/min/${name}`}>Main 下面的 Min 子页面</Link></p>
             <div className={css.img}>
                 <img src={wdp} alt=""/>
             </div>
