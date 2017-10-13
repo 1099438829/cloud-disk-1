@@ -5,14 +5,14 @@ body{
 }
 .menu, .footer{
   background-color: #4CAF50;
-  padding: 10px;
+  padding: 15px;
   color: #fff;
   a{
     margin-right: 10px;
     color: #ddd;
   }
   a:hover{
-    color: #fff;
+    color: #111;
   }
 }
 .box{
@@ -20,7 +20,7 @@ body{
   min-height: 200px;
   font-size: 20px;
   color: blue;
-  background: url("../img/wdp.png") no-repeat;
+  background: url("../../public/img/wdp.png") no-repeat;
   background-size: 8%;
   padding: 10px;
   box-sizing: border-box;

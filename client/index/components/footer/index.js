@@ -1,5 +1,6 @@
 import React from 'react';
-import css from '../../css/index.scss'
+import css from '../index/index.scss'
+import fooCss from './footer.scss'
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class Index extends React.Component {
 
     render() {
         const {time} = this.state;
-        return <div className={css.footer}>
+        return <div className={`${css.footer} ${fooCss.foo}`}>
             this Footer <span>now time: {time.toLocaleString()}</span>
         </div>;
     }

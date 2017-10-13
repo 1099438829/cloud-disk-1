@@ -8,9 +8,9 @@ react 16 + react-router 4 + koa2 按需加载最新脚手架，开箱即用
     react 16
     react-router 4
     webpack 3
-    webpack-dev-server
     node-sass
     koa2
+    jsonwebtoken
 
 ```
 

@@ -2,13 +2,28 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+// http://www.cnblogs.com/auok/p/6420843.html
+
 module.exports = {
     // 根目录
-    context: path.resolve(__dirname, ''),
+    context: path.resolve(__dirname, './'),
     // 需要打包的文件入口
     entry: {
         index: './index/index.js',
-        vendor: ['react', 'react-dom', 'react-router-dom']
+        vendor: ['react', 'react-dom', 'react-router-dom', 'axios']
+    },
+    // 入口文件路径
+    resolve: {
+        alias: {
+            'Public': path.resolve(__dirname, './index/public/js')
+        }
+    },
+    // 输出
+    output: {
+        path: path.resolve(__dirname, '../server/public/js'),
+        filename: 'index.bundle.js',
+        chunkFilename: '[name].[chunkhash:4].bundle.js',
+        publicPath: '/js/'
     },
     // 模块处理
     module: {
@@ -25,8 +40,9 @@ module.exports = {
                 }],
             },
             {
-                test: /\.(scss|sass|css)$/,
+                test: /\.(scss|sass)$/,
                 loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
                     use: [
                         {loader: 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]_[hash:base64:4]_[local]'},
                         {
@@ -51,37 +67,24 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style!css!"
-            }
+                loader: ExtractTextPlugin.extract('css-loader')
+            },
         ]
-    },
-    // 输出
-    output: {
-        path: path.resolve(__dirname, '..', 'server', 'public', 'js'),
-        filename: 'index.bundle.js',
-        chunkFilename: '[name].[chunkhash:4].bundle.js',
-        publicPath: '/js/'
     },
     // 插件
     plugins: [
         // 定义变量，一般用于开发环境log或者全局变量
-        new webpack.DefinePlugin({
-            'process.env':{
-                'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-            }
-        }),
+        new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify(process.env.NODE_ENV)}}),
         // 根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id
         new webpack.optimize.OccurrenceOrderPlugin(),
         // 多个 html共用一个js文件(chunk)
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
+        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
         // 将样式文件(css,sass,less)合并成一个css文件
-        new ExtractTextPlugin('../css/[name].css', {allChunks: true}),
-        // 压缩js
+        new ExtractTextPlugin({filename: '../css/[name].bundle.css', allChunks: true}),
+        // 压缩
         new webpack.optimize.UglifyJsPlugin({
-            // 压缩警告
-            compress: {warnings: false},
-            // 保留注释
-            comments: false
+            output: {comments: false,},
+            compress: {warnings: false}
         }),
     ]
 };

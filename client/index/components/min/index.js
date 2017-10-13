@@ -7,7 +7,7 @@ export default class Index extends React.Component {
 
     render() {
         return <div>
-            this about
+            {this.props.match.params.name}
         </div>;
     }
 }

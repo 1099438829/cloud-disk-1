@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
-import css from '../../css/index.scss'
+import css from '../index/index.scss'
 
 export default class Index extends React.Component {
     constructor(props) {
