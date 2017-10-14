@@ -10,9 +10,9 @@ export default class Index extends React.Component {
 
     render() {
         return <div className={css.menu}>
-            <Link to="/">主页</Link>
-            <Link to="/main">Main</Link>
-            <Link to="/about">About</Link>
+            <Link to="/dashboard">主页</Link>
+            <Link to="/dashboard/main">Main</Link>
+            <Link to="/dashboard/about">About</Link>
         </div>
     }
 }

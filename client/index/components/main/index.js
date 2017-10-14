@@ -51,11 +51,11 @@ export default class Index extends React.Component {
             <div>
                 {JSON.stringify(token)}
             </div>
-            <p><Link to={`/main/min/${name}`}>Main 下面的 Min 子页面</Link></p>
+            <p><Link to={`/dashboard/main/min/${name}`}>Main 下面的 Min 子页面</Link></p>
             <div className={css.img}>
                 <img src={wdp} alt=""/>
             </div>
-            <Route path="/main/min/:name" component={Min}/>
+            <Route path="/dashboard/main/min/:name" component={Min}/>
         </div>;
     }
 }

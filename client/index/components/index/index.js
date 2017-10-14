@@ -2,8 +2,8 @@ import React from 'react';
 import Head from '../head'
 import Footer from '../footer'
 import css from './index.scss'
+import {Axios} from 'Public';
 import {Route} from 'react-router-dom'
-// import ReactTransitionGroup from 'react-addons-transition-group'
 
 import Bundle from '../../bundle';
 
@@ -21,17 +21,19 @@ export default class Index extends React.Component {
         this.state = {}
     }
 
+    componentDidMount() {
+        Axios.post('/api/user').then(ret => {
+            user = ret;
+        })
+    }
+
     render() {
-        const firstChild = props => {
-            const childrenArray = React.Children.toArray(props.children);
-            return childrenArray[0] || null;
-        };
         return <div>
             <Head/>
             <div className={css.box}>
-                    <Route exact path="/" component={Home}/>
-                    <Route path="/main" component={Main}/>
-                    <Route path="/about" component={About}/>
+                    <Route exact path="/dashboard" component={Home}/>
+                    <Route path="/dashboard/main" component={Main}/>
+                    <Route path="/dashboard/about" component={About}/>
             </div>
             <Footer/>
         </div>

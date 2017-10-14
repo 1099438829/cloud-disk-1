@@ -15,6 +15,7 @@ export default class Index extends React.Component {
     }
 
     render() {
+        console.log('home');
         const {sta} = this.state;
         return <div>
             this home

@@ -19,7 +19,7 @@ function get(url) {
             resolve(res.data)
         }).catch(function (error) {
             console.log(error);
-            window.location = '/'
+            window.location = '/login'
         });
     })
 }
@@ -33,6 +33,7 @@ function post(url, parms) {
             resolve(res.data)
         }).catch(function (error) {
             console.log(error);
+            window.location = '/login'
         });
     })
 }

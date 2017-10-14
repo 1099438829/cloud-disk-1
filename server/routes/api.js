@@ -15,4 +15,8 @@ router.get('/look/:page', checkToken, function (ctx, next) {
     ctx.body = ctx.res.user
 });
 
+router.post('/user', checkToken, function (ctx, next) {
+    ctx.body = ctx.res.user
+});
+
 module.exports = router
