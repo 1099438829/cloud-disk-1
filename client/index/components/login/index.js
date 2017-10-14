@@ -21,7 +21,7 @@ export default class Index extends React.Component {
     render() {
         return <div>
             login
-            <button onClick={this.login}>Login</button>
+            <button onClick={this.login}>登录按钮，创建token</button>
         </div>
     }
 }

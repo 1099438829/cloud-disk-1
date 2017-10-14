@@ -16,12 +16,6 @@ export default class Index extends React.Component {
             token: undefined
         }
     }
-    message = () => {
-        Axios.get('/api/login').then(ret => {
-            // console.log(ret);
-            window.sessionStorage.setItem('token', ret);
-        })
-    }
 
     look = () => {
         Axios.get('/api/look/123').then(ret => {
@@ -39,9 +33,6 @@ export default class Index extends React.Component {
         const name = '12';
         return <div>
             <p>this main</p>
-            <div>
-                <button onClick={this.message}>登录按钮，创建token</button>
-            </div>
             <div>
                 <button onClick={this.look}>模拟请求，无token跳转到主页，有则返回token用户信息</button>
             </div>
