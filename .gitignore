@@ -58,3 +58,6 @@ typings/
 .env
 
 .idea
+
+server/public/css
+server/public/js
