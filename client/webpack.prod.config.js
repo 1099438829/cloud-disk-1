@@ -35,7 +35,11 @@ module.exports = {
                     loader: 'babel-loader',
                     //配置参数;
                     options: {
-                        presets: ['react', 'es2015', 'stage-0']
+                        presets: ['react', 'es2015', 'stage-0'],
+                        plugins: [
+                            'transform-runtime',
+                            ["import", { "libraryName": "antd", "style": "css" }]
+                        ]
                     }
                 }],
             },

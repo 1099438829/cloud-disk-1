@@ -18,24 +18,28 @@ const About = (props) => <Bundle load={AboutController}>{(A) => <A {...props}/>}
 export default class Index extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            sta: false
+        }
     }
 
     componentDidMount() {
         Axios.post('/api/user').then(ret => {
             user = ret;
+            this.setState({sta: true})
         })
     }
 
     render() {
-        return <div>
+        const {sta} = this.state;
+        return sta ? <div>
             <Head/>
             <div className={css.box}>
-                    <Route exact path="/dashboard" component={Home}/>
-                    <Route path="/dashboard/main" component={Main}/>
-                    <Route path="/dashboard/about" component={About}/>
+                <Route exact path="/dashboard" component={Home}/>
+                <Route path="/dashboard/main" component={Main}/>
+                <Route path="/dashboard/about" component={About}/>
             </div>
             <Footer/>
-        </div>
+        </div> : null
     }
 }

@@ -1,7 +1,12 @@
 import React from 'react';
 import {Axios} from 'Public'
+import {Link} from 'react-router-dom'
+import {Form, Icon, Input, Button, Checkbox} from 'antd';
+import css from './login.scss'
 
-export default class Index extends React.Component {
+const FormItem = Form.Item;
+
+class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
@@ -11,17 +16,56 @@ export default class Index extends React.Component {
         window.sessionStorage.getItem('token') ? this.props.history.push("/dashboard") : null;
     }
 
-    login = () => {
-        Axios.get('/api/login').then(ret => {
-            window.sessionStorage.setItem('token', ret);
-            this.props.history.push("/dashboard");
-        })
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                Axios.post('/api/login', values).then(ret => {
+                    window.sessionStorage.setItem('token', ret);
+                    this.props.history.push("/dashboard");
+                })
+            }
+        });
     }
 
     render() {
-        return <div>
-            login
-            <button onClick={this.login}>登录按钮，创建token</button>
+        const {getFieldDecorator} = this.props.form;
+        return <div className={css.box}>
+            <h1 className={css.title}>React16-Koa2</h1>
+            <Form onSubmit={this.handleSubmit}>
+                <FormItem>
+                    {getFieldDecorator('userName', {
+                        rules: [{required: true, message: '请输入用户名!'}],
+                    })(
+                        <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="用户名"/>
+                    )}
+                </FormItem>
+                <FormItem>
+                    {getFieldDecorator('password', {
+                        rules: [{required: true, message: '请输入密码!'}],
+                    })(
+                        <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
+                               placeholder="密码"/>
+                    )}
+                </FormItem>
+                <FormItem>
+                    {getFieldDecorator('remember', {
+                        valuePropName: 'checked',
+                        initialValue: true,
+                    })(
+                        <Checkbox>记住我</Checkbox>
+                    )}
+                    <a href="">忘记密码</a>
+                    <Button type="primary" htmlType="submit">
+                        登录
+                    </Button>
+                    或 <Link to="/register">去注册</Link>
+                </FormItem>
+            </Form>
         </div>
     }
 }
+
+const Indexs = Form.create()(Index);
+export default Indexs

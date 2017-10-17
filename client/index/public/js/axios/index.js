@@ -1,5 +1,7 @@
 import axios from 'axios'
 import NProgress from 'nprogress'
+import Promise from 'bluebird';
+window.Promise = Promise;
 
 function setToken() {
     const token = window.sessionStorage.getItem('token');
@@ -12,6 +14,8 @@ function setToken() {
  */
 function get(url) {
     NProgress.start();
+    NProgress.set(0.5)
+    NProgress.inc()
     setToken()
     return new Promise(resolve => {
         axios.get(url).then(res => {
@@ -26,6 +30,8 @@ function get(url) {
 
 function post(url, parms) {
     NProgress.start();
+    NProgress.set(0.5)
+    NProgress.inc()
     setToken()
     return new Promise(resolve => {
         axios.post(url, parms).then(res => {

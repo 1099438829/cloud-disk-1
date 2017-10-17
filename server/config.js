@@ -1,4 +1,4 @@
 module.exports = {
-    port: 3001,
+    port: 3000,
     tokenName: 'react16-koa2'
 };

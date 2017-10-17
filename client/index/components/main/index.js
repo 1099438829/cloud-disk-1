@@ -3,6 +3,7 @@ import wdp from '../../public/img/wdp.png'
 import css from './main.scss'
 import {Route, Link} from 'react-router-dom'
 import {Axios} from 'Public'
+import {message} from 'antd'
 
 import Bundle from '../../bundle';
 import MinController from 'bundle-loader?lazy&name=min!../min'
@@ -25,6 +26,7 @@ export default class Index extends React.Component {
 
     delToken = () => {
         window.sessionStorage.clear('token');
+        message.success('sessionStorage已删除！')
     }
 
     render() {

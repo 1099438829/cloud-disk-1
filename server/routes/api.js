@@ -3,8 +3,8 @@ const {createToken, checkToken} = require('../token');
 
 router.prefix('/api');
 
-router.get('/login', function (ctx, next) {
-    console.log('login createToken');
+router.post('/login', function (ctx, next) {
+    console.warn('login createToken', ctx.body);
     let token = createToken({id: 10, name: 'liwei'});
     ctx.body = token
 });
