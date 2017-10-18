@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Route, Switch, BrowserRouter as Router, Redirect} from 'react-router-dom'
-import 'nprogress/nprogress.css'
+import './public/css/nprogress.css'
 import Index from './components/index'
 // import Login from './components/login'
 // import Register from './components/register'
