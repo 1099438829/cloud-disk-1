@@ -22,7 +22,7 @@ class Index extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 Axios.post('/api/login', values).then(ret => {
-                    window.sessionStorage.setItem('token', ret);
+                    window.localStorage.setItem('token', ret);
                     this.props.history.push("/dashboard");
                 })
             }

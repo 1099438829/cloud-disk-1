@@ -25,8 +25,8 @@ export default class Index extends React.Component {
     }
 
     delToken = () => {
-        window.sessionStorage.clear('token');
-        message.success('sessionStorage已删除！')
+        window.localStorage.clear('token');
+        message.success('localStorage已删除！')
     }
 
     render() {
@@ -39,7 +39,7 @@ export default class Index extends React.Component {
                 <button onClick={this.look}>模拟请求，无token跳转到主页，有则返回token用户信息</button>
             </div>
             <div>
-                <button onClick={this.delToken}>删除sessionStorage的token</button>
+                <button onClick={this.delToken}>删除localStorage的token</button>
             </div>
             <div>
                 {JSON.stringify(token)}
