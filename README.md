@@ -37,5 +37,5 @@ react 16 + react-router 4 + koa2 按需加载最新脚手架，开箱即用
 
 ## Examples
 
-http://react16-koa2.bstu.cn
+https://serve.bstu.cn
 
