@@ -30,7 +30,7 @@ export default class Index extends React.Component {
         this.state = {
             sta: false,
             collapsed: false,
-            themeSta: false
+            themeSta: true
         }
     }
 
@@ -57,12 +57,12 @@ export default class Index extends React.Component {
 
     render() {
         const {sta, themeSta, collapsed} = this.state;
-
+        let selectedKeys = '/';
         const { location } = this.props;
         const pathSnippets = location.pathname.split('/').filter(i => i);
         const extraBreadcrumbItems = pathSnippets.map((_, index) => {
             const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-            console.log(url);
+            selectedKeys = url;
             return (
                 <Breadcrumb.Item key={url}>
                     <Link to={url}>
@@ -73,9 +73,11 @@ export default class Index extends React.Component {
         });
         const breadcrumbItems = [(
             <Breadcrumb.Item key="home">
-                <Link to="/">Home</Link>
+                <Link to="/">React16-Koa2</Link>
             </Breadcrumb.Item>
         )].concat(extraBreadcrumbItems);
+
+        console.log(selectedKeys);
 
         return sta ? <div className={css.box}><Layout>
             <Sider
@@ -94,8 +96,9 @@ export default class Index extends React.Component {
                       theme={themeSta ? 'dark' : 'light'}
                       mode="inline"
                       onClick={this.changeMenu}
-                      defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1">
+                      selectedKeys={[selectedKeys]}
+                      defaultSelectedKeys={['/']}>
+                    <Menu.Item key="/">
                         <Icon type="user"/>
                         <span>数据中心</span>
                     </Menu.Item>
