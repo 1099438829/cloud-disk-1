@@ -15,7 +15,9 @@ const checkToken = async (ctx, next) => {
         ctx.throw(401, 'no token detected in http header Authorization');
     }
     try {
+        console.log(token);
         jwt.verify(token, conf.tokenName, function (err, decoded) {
+            console.warn(19, err, decoded);
             if (err) {
                 ctx.throw(401, err.name);
             } else {

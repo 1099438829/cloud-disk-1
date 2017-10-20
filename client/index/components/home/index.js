@@ -15,12 +15,45 @@ export default class Index extends React.Component {
     }
 
     render() {
-        console.log('home');
         const {sta} = this.state;
         return <div>
             this home
 
             <button onClick={()=>{this.setState({sta: true})}}>open</button>
+
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
+            <h1>Home</h1>
 
             <Popup size={[200, 200]} sta={sta} title={'A'} close={this.colse}>
 

@@ -13,7 +13,7 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        window.localStorage.getItem('token') ? this.props.history.push("/dashboard") : null;
+        window.localStorage.getItem('token') ? this.props.history.push("/") : null;
     }
 
     handleSubmit = (e) => {
@@ -23,7 +23,7 @@ class Index extends React.Component {
                 console.log('Received values of form: ', values);
                 Axios.post('/api/login', values).then(ret => {
                     window.localStorage.setItem('token', ret);
-                    this.props.history.push("/dashboard");
+                    this.props.history.push("/");
                 })
             }
         });

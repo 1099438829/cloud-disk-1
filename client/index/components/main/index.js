@@ -25,13 +25,12 @@ export default class Index extends React.Component {
     }
 
     delToken = () => {
-        window.localStorage.clear('token');
+        window.localStorage.removeItem('token');
         message.success('localStorage已删除！')
     }
 
     render() {
         const {token} = this.state;
-        console.log(token);
         const name = '12';
         return <div>
             <p>this main</p>
@@ -44,11 +43,11 @@ export default class Index extends React.Component {
             <div>
                 {JSON.stringify(token)}
             </div>
-            <p><Link to={`/dashboard/main/min/${name}`}>Main 下面的 Min 子页面</Link></p>
+            <p><Link to={`/main/min/${name}`}>Main 下面的 Min 子页面</Link></p>
             <div className={css.img}>
                 <img src={wdp} alt=""/>
             </div>
-            <Route path="/dashboard/main/min/:name" component={Min}/>
+            <Route path="/main/min/:name" component={Min}/>
         </div>;
     }
 }

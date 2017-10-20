@@ -21,10 +21,6 @@ class Index extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                Axios.post('/api/login', values).then(ret => {
-                    window.localStorage.setItem('token', ret);
-                    this.props.history.push("/dashboard");
-                })
             }
         });
     }

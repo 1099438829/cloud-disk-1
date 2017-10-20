@@ -1,10 +1,13 @@
 import React from 'react';
-import Head from '../head'
-import Footer from '../footer'
 import css from './index.scss'
 import {Axios} from 'Public';
-import {Route} from 'react-router-dom'
+import {Route, Redirect, Switch as RouterSwitch, Link} from 'react-router-dom'
 
+import {Layout, Menu, Icon, Switch, Breadcrumb} from 'antd';
+
+const {SubMenu} = Menu;
+const {Header, Sider, Content} = Layout;
+import logo from '../../public/img/wdp.png'
 import Bundle from '../../bundle';
 
 import HomeController from 'bundle-loader?lazy&name=home!../home'
@@ -15,11 +18,19 @@ const Home = (props) => <Bundle load={HomeController}>{(A) => <A {...props}/>}</
 const Main = (props) => <Bundle load={MainController}>{(A) => <A {...props}/>}</Bundle>;
 const About = (props) => <Bundle load={AboutController}>{(A) => <A {...props}/>}</Bundle>;
 
+const breadcrumbNameMap = {
+    '/main': '控制中心',
+    '/about': 'about',
+    '/main/min': 'Min子页面',
+};
+
 export default class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sta: false
+            sta: false,
+            collapsed: false,
+            themeSta: false
         }
     }
 
@@ -30,16 +41,107 @@ export default class Index extends React.Component {
         })
     }
 
+    toggle = () => {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
+    }
+
+    changeTheme = () => {
+        this.setState({themeSta: !this.state.themeSta})
+    }
+
+    changeMenu = (dat) => {
+        this.props.history.push(dat.key);
+    }
+
     render() {
-        const {sta} = this.state;
-        return sta ? <div>
-            <Head/>
+        const {sta, themeSta, collapsed} = this.state;
+
+        const { location } = this.props;
+        const pathSnippets = location.pathname.split('/').filter(i => i);
+        const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+            const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+            console.log(url);
+            return (
+                <Breadcrumb.Item key={url}>
+                    <Link to={url}>
+                        {breadcrumbNameMap[url]}
+                    </Link>
+                </Breadcrumb.Item>
+            );
+        });
+        const breadcrumbItems = [(
+            <Breadcrumb.Item key="home">
+                <Link to="/">Home</Link>
+            </Breadcrumb.Item>
+        )].concat(extraBreadcrumbItems);
+
+        return sta ? <div className={css.box}><Layout>
+            <Sider
+                // breakpoint="lg"
+                // collapsedWidth="64"
+                style={{background: themeSta ? '#404040' : '#fff'}}
+                trigger={null}
+                collapsible
+                collapsed={collapsed}
+            >
+                <div className={css.logo}>
+                    <img src={logo} alt=""/>
+                    {!collapsed ? <span>React16-Koa2</span> : null}
+                </div>
+                <Menu style={{height: 'calc(100vh - 82px)', borderRight: 0}}
+                      theme={themeSta ? 'dark' : 'light'}
+                      mode="inline"
+                      onClick={this.changeMenu}
+                      defaultSelectedKeys={['1']}>
+                    <Menu.Item key="1">
+                        <Icon type="user"/>
+                        <span>数据中心</span>
+                    </Menu.Item>
+                    <SubMenu key="sub1" title={<span><Icon type="appstore"/><span>控制中心</span></span>}>
+                        <Menu.Item key="/main">控制中心</Menu.Item>
+                        <Menu.Item key="/about">Option 5</Menu.Item>
+                        <Menu.Item key="6">Option 6</Menu.Item>
+                    </SubMenu>
+                    <Menu.Item key="3">
+                        <Icon type="upload"/>
+                        <span>设置</span>
+                    </Menu.Item>
+                </Menu>
+                <div className={css.change_theme}>
+                    <Switch onChange={this.changeTheme}/> {!collapsed ? <span>Change Theme</span> : null}
+                </div>
+            </Sider>
             <div className={css.box}>
-                <Route exact path="/dashboard" component={Home}/>
-                <Route path="/dashboard/main" component={Main}/>
-                <Route path="/dashboard/about" component={About}/>
+                <Header style={{background: '#fff', padding: 0}}>
+                    <div className={css.change_theme_btn} onClick={this.toggle}>
+                        <Icon
+                            className="trigger"
+                            type={collapsed ? 'menu-unfold' : 'menu-fold'}
+                        />
+                    </div>
+                </Header>
+
+                <Content style={{background: '#ececec', height: 'calc(100vh - 84px)'}}>
+                    <div className={css.nav}>
+                        <Breadcrumb>
+                            {breadcrumbItems}
+                        </Breadcrumb>
+                    </div>
+                    <div className={css.content}>
+                        <RouterSwitch>
+                            <Route exact path="/" component={Home}/>
+                            <Route path="/main" component={Main}/>
+                            <Route path="/about" component={About}/>
+                            <Redirect to="/404"/>
+                        </RouterSwitch>
+                    </div>
+                    <div className={css.agreement}>
+                        Copyright © 2017 react16-koa2
+                    </div>
+                </Content>
             </div>
-            <Footer/>
-        </div> : null
+        </Layout></div> : null
     }
 }

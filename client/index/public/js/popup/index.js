@@ -65,7 +65,7 @@ class Popup extends Component {
     }
 
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         const {sta, title, children, close} = this.props;
         let {size} = this.props;
         size ? size = [450, 220] : null;

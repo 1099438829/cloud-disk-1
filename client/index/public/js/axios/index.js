@@ -4,9 +4,7 @@ import Promise from 'bluebird';
 window.Promise = Promise;
 
 function setToken() {
-    const token = window.localStorage.getItem('token');
-    console.log(token);
-    axios.defaults.headers.Authorization = token;
+    axios.defaults.headers.Authorization = window.localStorage.getItem('token');
 }
 /**
  * @param  {Object} options
