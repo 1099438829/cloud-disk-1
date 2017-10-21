@@ -1,16 +1,109 @@
+.boxs {
+  position: relative;
+}
+
+.txt_danger {
+  color: red!important;
+}
+
 .box {
-  margin: 200px auto;
-  width: 400px;
+  //margin: 200px auto;
+  //width: 400px;
+  position: absolute;
+  top: 20%;
+  right: 10%;
   padding: 20px 50px;
-  background: #f3f3f3;
-  border-radius: 10px;
+  background: #fff;
+  opacity: .8;
   button {
     max-width: 300px;
     width: 100%;
   }
+  box-shadow: rgba(0,0,0,0.3) 0 0 50px;
+}
+
+.login_logo {
+  >div{
+    display: inline-table;
+    vertical-align: middle;
+  }
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  img {
+    margin: 10px 20px;
+  }
+}
+
+.login_manu {
+  width: calc(100% - 207px);
+  text-align: right;
+  li {
+    display: inline-block;
+    color: #fff;
+    margin: 20px;
+    cursor: pointer;
+  }
+  li:hover {
+    text-decoration: underline;
+  }
+}
+
+.vip {
+  background: #e35a53;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.vip:hover {
+  text-decoration: none!important;
 }
 
 .title {
   margin: 20px auto 30px;
   text-align: center;
+}
+
+.carousel {
+  //position: absolute;
+  //top: 0;
+  //left: 0;
+}
+
+.car_list {
+  >img {
+    width: 100%;
+  }
+}
+
+.car_item {
+  display: inline-block;
+  bottom: 20px;
+  left: 100px;
+  position: absolute;
+  color: #fff;
+  font-size: 46px;
+  img {
+    vertical-align: text-top;
+    display: inline-block!important;
+    height: 32px;
+    width: 46px;
+  }
+  span {
+    display: inline-block;
+  }
+}
+
+.car_l, .car_r {
+  width: 60px;
+  text-align: center;
+}
+.car_l, .car_c, .car_r {
+  display: inline-block;
+}
+
+.agreement {
+  text-align: center;
+  margin-top: 10px;
 }
