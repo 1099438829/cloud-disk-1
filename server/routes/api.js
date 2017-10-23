@@ -6,7 +6,10 @@ router.prefix('/api');
 router.post('/login', function (ctx, next) {
     console.warn('login createToken', ctx.body);
     let token = createToken({id: 10, name: 'liwei'});
-    ctx.body = token
+    ctx.cookie.set('token', token)
+    ctx.body = {
+        state: true
+    }
 });
 
 router.get('/look/:page', checkToken, function (ctx, next) {

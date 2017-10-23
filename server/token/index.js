@@ -10,14 +10,14 @@ const createToken = function (dat) {
 
 // 检测token合法性
 const checkToken = async (ctx, next) => {
-    const token = ctx.get('Authorization');
+    // const token = ctx.get('Authorization');
+    const token = ctx.cookie.get('token');
+    // console.warn(14, ctx.cookie.get('token'));
     if (token === '') {
         ctx.throw(401, 'no token detected in http header Authorization');
     }
     try {
-        console.log(token);
         jwt.verify(token, conf.tokenName, function (err, decoded) {
-            console.warn(19, err, decoded);
             if (err) {
                 ctx.throw(401, err.name);
             } else {

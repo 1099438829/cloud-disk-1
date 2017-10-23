@@ -35,7 +35,7 @@ export default class Index extends React.Component {
         return <div>
             <p>this main</p>
             <div>
-                <button onClick={this.look}>模拟请求，无token跳转到主页，有则返回token用户信息</button>
+                <button onClick={this.look}>模拟请求，无token跳转到主页，有则返回token用户信息11</button>
             </div>
             <div>
                 <button onClick={this.delToken}>删除localStorage的token</button>
