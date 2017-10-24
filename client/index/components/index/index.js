@@ -11,7 +11,6 @@ import {Progress} from 'antd'
 import HomeController from 'bundle-loader?lazy&name=home!../home'
 import MainController from 'bundle-loader?lazy&name=main!../main'
 import AboutController from 'bundle-loader?lazy&name=about!../about'
-import {formatDate} from "../../public/js/date/index";
 
 const Home = (props) => <Bundle load={HomeController}>{(A) => <A {...props}/>}</Bundle>;
 const Main = (props) => <Bundle load={MainController}>{(A) => <A {...props}/>}</Bundle>;
@@ -87,6 +86,7 @@ export default class Index extends React.Component {
     }
 
     uploadComplete = (evt) => {
+        console.log(evt);
         // 服务断接收完文件返回的结果
         // alert(evt.target.responseText);
         // console.log("上传成功！");
@@ -101,6 +101,7 @@ export default class Index extends React.Component {
 
     //上传失败
     uploadFailed = (evt) => {
+        console.log(evt);
         let {thenFile, fileList} = this.state;
         fileList.map(item => {
             if (item.index === thenFile.index) {
