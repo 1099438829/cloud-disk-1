@@ -1,9 +1,9 @@
-export default function(name) {
+export default function (name) {
     let strCookie = document.cookie;
     let arrCookie = strCookie.split("; ");
-    for(let i = 0; i < arrCookie.length; i++){
+    for (let i = 0; i < arrCookie.length; i++) {
         let arr = arrCookie[i].split("=");
-        if(name === arr[0]){
+        if (name === arr[0]) {
             return arr[1];
         }
     }

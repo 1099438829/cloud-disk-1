@@ -10,6 +10,7 @@ const conf = require('./config');
 const index = require('./routes/index')
 const users = require('./routes/users')
 const api = require('./routes/api')
+const multer = require('./routes/multer')
 
 // error handler
 onerror(app)
@@ -50,6 +51,7 @@ app.use(async (ctx, next) => {
 })
 
 // routes
+app.use(multer.routes(), multer.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())

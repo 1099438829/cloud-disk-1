@@ -3,6 +3,7 @@ import {Axios, getCookie} from 'Public'
 import {Link} from 'react-router-dom'
 import {Form, Icon, Input, Button, Checkbox, Carousel, message} from 'antd';
 import css from './login.scss'
+
 const bg1 = require('../../public/img/bg1.jpg')
 import bg2 from '../../public/img/bg2.jpg'
 import bg3 from '../../public/img/bg3.jpg'
@@ -31,7 +32,7 @@ class Index extends React.Component {
                 Axios.post('/api/login', values).then(ret => {
                     if (ret.state) {
                         this.props.history.push("/");
-                    }else {
+                    } else {
                         message.error(ret.message)
                     }
                 })

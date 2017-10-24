@@ -1,7 +1,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-size: 14px;
+  font-size: 14px!important;
   overflow: hidden;
 }
 
@@ -17,9 +17,10 @@ body {
     line-height: 42px;
     margin: 0;
     font-size: 14px;
+    text-decoration: none;
   }
-  a:hover {
-    //color: #111;
+  a:link {
+    text-decoration: none;
   }
   ul {
     margin-top: 10px;
@@ -29,12 +30,12 @@ body {
     cursor: pointer;
   }
   li:hover {
-    background: rgba(255,255,255,.15);
+    background: rgba(255, 255, 255, .15);
   }
 }
 
 .menu_active {
-  background: rgba(255,255,255,.15);
+  background: rgba(255, 255, 255, .15);
 }
 
 .box {
@@ -147,11 +148,11 @@ div[class="ant-layout-content"] {
   vertical-align: top;
   height: calc(100vh - 60px);
   overflow: auto;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px 0 0 0;
 }
+
 .content {
-  background: #fff;
   padding: 16px;
 }
 
@@ -171,5 +172,105 @@ div[class="ant-layout-content"] {
   display: inline-block;
   img {
     margin: 12px;
+  }
+}
+
+.up_box {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  //border: 5px dashed #4CAF50;
+  //box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.up_box_sty {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 5px dashed #4CAF50;
+  box-sizing: border-box;
+  div{
+    text-align: center;
+    font-size: 24px;
+    position: relative;
+    margin-top: 50%;
+  }
+}
+
+.up_file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  outline: none;
+}
+
+.up_file_model {
+  position: fixed;
+  height: 300px;
+  width: 100%;
+  background: #fff;
+  bottom: 0px;
+  box-shadow: 0 0 5px;
+  padding: 20px;
+
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid #ebebeb;
+    line-height: 30px;
+    background-color: #f5f5f5;
+    width: 20%;
+  }
+
+  td {
+    border: 1px solid #ebebeb;
+    text-align: center;
+    width: 20%;
+    padding: 0 10px;
+  }
+
+  tbody tr:hover {
+    border-left: 2px solid #de342f;
+  }
+  tr:hover td {
+    background-color: #fbe7e7;
+  }
+
+  button {
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .up_btn {
+    border: 0;
+    background-color: #03A9F4;
+    color: #fff;
+    padding: 2px 10px;
+  }
+
+  .rsup_btn {
+    border: 0;
+    background-color: #FFC107;
+    color: #fff;
+    padding: 2px 10px;
+  }
+
+  button:hover {
+    box-shadow: 0 0 5px #ddd;
   }
 }

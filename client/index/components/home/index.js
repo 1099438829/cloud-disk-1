@@ -19,7 +19,10 @@ export default class Index extends React.Component {
         return <div>
             this home
 
-            <button onClick={()=>{this.setState({sta: true})}}>open</button>
+            <button onClick={() => {
+                this.setState({sta: true})
+            }}>open
+            </button>
 
             <h1>Home</h1>
             <h1>Home</h1>

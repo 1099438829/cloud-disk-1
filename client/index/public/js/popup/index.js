@@ -76,11 +76,16 @@ class Popup extends Component {
             top: `calc(50% - ${size[1] / 2}px)`,
             left: `calc(50% - ${size[0] / 2}px)`
         };
-        let mask = <div className={styles.mask} onClick={() => {close()}}></div>;
-        let html = <div ref="box" style={popSty} className={sta ? `${styles.popup} ${styles.in}` : `${styles.popup} ${styles.out}`}>
+        let mask = <div className={styles.mask} onClick={() => {
+            close()
+        }}></div>;
+        let html = <div ref="box" style={popSty}
+                        className={sta ? `${styles.popup} ${styles.in}` : `${styles.popup} ${styles.out}`}>
             <div ref="title" onMouseDown={this.handRemove.bind(this)} className={styles.title}>{title || '提示'}</div>
             {children}
-            <div className={styles.close_box} onClick={() => {close()}}>
+            <div className={styles.close_box} onClick={() => {
+                close()
+            }}>
                 <span className={styles.close}></span>
             </div>
         </div>;

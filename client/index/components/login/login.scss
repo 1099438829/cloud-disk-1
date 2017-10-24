@@ -3,7 +3,7 @@
 }
 
 .txt_danger {
-  color: red!important;
+  color: red !important;
 }
 
 .box {
@@ -19,11 +19,11 @@
     max-width: 300px;
     width: 100%;
   }
-  box-shadow: rgba(0,0,0,0.3) 0 0 50px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 0 50px;
 }
 
 .login_logo {
-  >div{
+  > div {
     display: inline-table;
     vertical-align: middle;
   }
@@ -57,7 +57,7 @@
 }
 
 .vip:hover {
-  text-decoration: none!important;
+  text-decoration: none !important;
 }
 
 .title {
@@ -72,7 +72,7 @@
 }
 
 .car_list {
-  >img {
+  > img {
     width: 100%;
   }
 }
@@ -86,7 +86,7 @@
   font-size: 46px;
   img {
     vertical-align: text-top;
-    display: inline-block!important;
+    display: inline-block !important;
     height: 32px;
     width: 46px;
   }
@@ -99,6 +99,7 @@
   width: 60px;
   text-align: center;
 }
+
 .car_l, .car_c, .car_r {
   display: inline-block;
 }
