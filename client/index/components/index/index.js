@@ -34,6 +34,9 @@ export default class Index extends React.Component {
         Axios.post('/api/user').then(ret => {
             user = ret;
         })
+        document.ondragstart = function() {
+            return false;
+        };
     }
 
     upSta = (sta) => {
