@@ -1,0 +1,11 @@
+.cat{
+  margin: 20px;
+  li {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  li:hover {
+    border-bottom: 1px solid #4CAF50;
+  }
+}

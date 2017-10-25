@@ -1,5 +1,6 @@
 import React from 'react';
 import {Popup, Axios} from 'Public'
+import css from './home.scss'
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -25,16 +26,27 @@ export default class Index extends React.Component {
 
     open = (dat) => {
         let {index, indexUrl} = this.state;
-        index++;
         indexUrl[index] = dat;
+        index++;
         this.setState({indexUrl: indexUrl, index: index})
-        console.log(indexUrl.length);
-
         if (indexUrl.length) {
             dat = indexUrl.join("/");
             console.log(dat);
         }
+        this.getCatalog(index, dat)
+    }
 
+    ret = () => {
+        const {index, indexUrl} = this.state;
+        let copyIndex = index;
+        let copyIndexUrl = indexUrl;
+        let dat = '';
+        if (indexUrl.length) {
+            copyIndexUrl.splice(copyIndexUrl.length-1, 1)
+            copyIndex--;
+            dat = copyIndexUrl.join("/");
+            this.state.index = copyIndex;
+        }
         this.getCatalog(index, dat)
     }
 
@@ -48,21 +60,19 @@ export default class Index extends React.Component {
         console.log();
         return <div>
 
-            <ul>
-                {catalog.map((item, i) => {
-                    return <li onClick={this.open.bind(this, item)} key={i}>{item}</li>
-                })}
-            </ul>
+            <button onClick={this.ret}>返回上一个</button>
 
-            <button onClick={() => {
-                this.setState({sta: true})
-            }}>open
-            </button>
+            <div className={css.cat}>
+                <ul>
+                    {catalog.length ? catalog.map((item, i) => {
+                        return <li onClick={this.open.bind(this, item)} key={i}>{item}</li>
+                    }) : '这个文件夹是空的'}
+                </ul>
+            </div>
 
+            <button onClick={() => {this.setState({sta: true})}}>open</button>
 
-            <Popup size={[200, 200]} sta={sta} title={'A'} close={this.colse}>
-
-            </Popup>
+            <Popup size={[200, 200]} sta={sta} title={'A'} close={this.colse}></Popup>
         </div>;
     }
 }
