@@ -4,7 +4,7 @@ const conf = require('../config');
 // 创建token
 const createToken = function (dat) {
     return jwt.sign(dat, conf.tokenName, {
-        expiresIn: '21600s'
+        expiresIn: conf.cookieOptions.maxAge / 1000 + 's'
     });
 };
 
@@ -12,7 +12,6 @@ const createToken = function (dat) {
 const checkToken = async (ctx, next) => {
     // const token = ctx.get('Authorization');
     const token = ctx.cookie.get('token');
-    // console.warn(14, ctx.cookie.get('token'));
     if (token === '') {
         ctx.throw(401, 'no token detected in http header Authorization');
     }
