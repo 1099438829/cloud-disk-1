@@ -68,7 +68,7 @@ class Popup extends Component {
         // console.log(this.props);
         const {sta, title, children, close} = this.props;
         let {size} = this.props;
-        size ? size = [450, 220] : null;
+        size ? null : size = [450, 150];
         let {stas} = this.state;
         let popSty = {
             width: size[0] + 'px',

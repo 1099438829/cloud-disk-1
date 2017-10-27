@@ -1,6 +1,7 @@
 import axios from 'axios'
 import NProgress from 'nprogress'
 import Promise from 'bluebird';
+import {message} from 'antd';
 
 // window.Promise = Promise;
 
@@ -18,9 +19,22 @@ function get(url) {
             NProgress.done();
             resolve(res.data)
         }).catch(function (error) {
-            console.log(error);
-            reject(error)
-            window.location = '/login'
+            switch (error.response.status){
+                case 500:
+                    message.error(error.response.data.error);
+                    NProgress.done();
+                    break;
+                case 401:
+                    message.warn('用户信息失效！');
+                    NProgress.done();
+                    window.location = '/login'
+                    break;
+                default:
+                    message.warn('一个错误！');
+                    console.log(JSON.stringify(error));
+                    break;
+            }
+            reject()
         });
     })
 }
@@ -34,9 +48,22 @@ function post(url, parms) {
             NProgress.done();
             resolve(res.data)
         }).catch(function (error) {
-            console.log(error);
-            reject(error)
-            window.location = '/login'
+            switch (error.response.status){
+                case 500:
+                    message.error(error.response.data.error);
+                    NProgress.done();
+                    break;
+                case 401:
+                    message.warn('用户信息失效！');
+                    NProgress.done();
+                    window.location = '/login'
+                    break;
+                default:
+                    message.warn('一个错误！');
+                    console.log(JSON.stringify(error));
+                    break;
+            }
+            reject()
         });
     })
 }

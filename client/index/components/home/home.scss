@@ -1,11 +1,98 @@
-.cat{
-  margin: 20px;
-  li {
+.box {
+  min-height: calc(100vh - 152px);
+  button {
+    padding: 4px 10px;
+    background: #e8e8e8;
+    border: 0;
+    color: #3b8cff;
     cursor: pointer;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    outline: none;
+    transition: all .3s;
+    margin-right: 4px;
+    height: 30px;
   }
-  li:hover {
-    border-bottom: 1px solid #4CAF50;
+  .btn {
+    background: #3b8cff;
+    color: #f1f1f1;
   }
+  button:hover {
+    color: #62a3ff;
+    background: #e0e0e0;
+    box-shadow: 0 0 5px #ddd;
+  };
+  .btn:hover {
+    color: #fff;
+    background: #62a3ff;
+    box-shadow: 0 0 5px #3b8cff;
+  }
+}
+
+.oper {
+  padding: 10px 20px;
+}
+
+.path {
+  padding: 0 20px;
+}
+
+.empty {
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.cat {
+  margin: 20px 0;
+  .list {
+    border-top: 1px solid #d3e4ff;
+  }
+  .list, .list_base {
+    //position: absolute;
+    cursor: pointer;
+    margin-top: -1px;
+    padding: 0 20px;
+    border-bottom: 1px solid #d3e4ff;
+    div {
+      height: 40px;
+      line-height: 40px;
+      display: inline-block;
+    }
+    .sel {
+      min-width: 30px;
+      text-align: center;
+      input {
+        vertical-align: middle;
+      }
+    }
+    .name {
+      width: 80%;
+    }
+    .name:hover {
+      color: #3b8cff;
+    }
+    .operation {
+      float: right;
+      span:hover {
+        color: #F44336;
+      }
+    }
+  }
+  .list:hover {
+    background: #e6f0ff;
+    border-top: 1px solid #d3e4ff;
+    border-bottom: 1px solid #d3e4ff;
+  }
+}
+
+.add_box {
+  padding: 30px;
+  text-align: center;
+}
+
+.add_input {
+  width: 240px;
+  outline: none;
+  border: 1px solid #3b8cff;
+  height: 30px;
+  padding: 0 5px;
+  margin-right: 4px;
 }

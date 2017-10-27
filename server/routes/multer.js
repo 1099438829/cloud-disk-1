@@ -6,6 +6,7 @@ const fs = require('fs');
 var router = require('koa-router')();
 const multer = require('koa-multer'); //http://npm.taobao.org/package/multer
 // const db = require('../connect');
+const {getCookie} = require('./getCookie')
 
 router.prefix('/multer');
 
@@ -40,8 +41,9 @@ function randomString(len) {
  */
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        let path = conf.img_path+getMonth();
-        console.log(path);
+        // let path = conf.img_path+getMonth();
+        let path = decodeURIComponent(getCookie(req, 'route'));
+        console.log('path:'+path);
         if(!fs.existsSync(path)){
             fs.mkdirSync(path);
         }
@@ -53,9 +55,10 @@ const storage = multer.diskStorage({
 });
 var upload = multer({storage: storage});
 /**
- * lw 上传图片
+ * lw 上传文件
  */
 router.post('/save_img', upload.array('file'), async(ctx, next) => {
+    console.log(11111111111111);
     let message, result, state = true;
     try {
         let files = ctx.req.files;
