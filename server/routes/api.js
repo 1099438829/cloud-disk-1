@@ -54,7 +54,7 @@ router.post('/addFolder', checkToken, async function (ctx, next) {
         route = path.resolve(__dirname, '../public/img')
     }
     await new Promise((resolve, reject) => {
-        fs.mkdir(route + '\\' + u, function (err) {
+        fs.mkdir(route + '/' + u, function (err) {
             if(err)
                 throw err;
             sta = true;
@@ -91,7 +91,7 @@ router.post('/delFolder', checkToken, async function (ctx, next) {
     let route = decodeURIComponent(ctx.cookie.get('route'));
     if (route) {
         await new Promise((resolve, reject) => {
-            let path = route + '\\' + u;
+            let path = route + '/' + u;
             if (fs.lstatSync(path).isDirectory()) {
                 deleteFolderRecursive(path);
             } else {

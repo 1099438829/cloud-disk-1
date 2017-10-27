@@ -2,6 +2,7 @@ import React from 'react';
 import {Popup, Axios} from 'Public'
 import css from './home.scss'
 import Upload from '../upload'
+import {Icon} from 'antd'
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -96,13 +97,13 @@ export default class Index extends React.Component {
         return <div className={css.box} onDragEnter={this.upSta.bind(this, true)}>
             <div className={css.oper}>
                 {indexUrl.length ?
-                    <button className={css.btn} onClick={this.ret}>{`<<`}</button> : null}
+                    <button className={css.btn} onClick={this.ret}><Icon type="left" /></button> : null}
                 <button className={css.btn} onClick={() => this.openModel('addFolderModelSta')}>创建文件夹</button>
             </div>
 
-            <div className={css.path}>根 >>
+            <div className={css.path}><Icon type="home" /><Icon type="double-right" />
                 {indexUrl.map((item, i) => {
-                    return <span key={i}>{item}{indexUrl.length - 1 > i ? '  >>  ' : null}</span>
+                    return <span key={i}>{item}{indexUrl.length - 1 > i ? <Icon type="double-right" /> : null}</span>
                 })}
             </div>
 
@@ -122,7 +123,7 @@ export default class Index extends React.Component {
                             <span onClick={() => this.del(item)}>删除</span>
                         </div>
                     </div>
-                }) : <div className={css.empty}>o(╥﹏╥)o这个文件夹是空的</div>}
+                }) : <div className={css.empty}><Icon type="frown-o" />这个文件夹是空的</div>}
             </div>
             <Popup size={[480, 150]} sta={addFolderModelSta} title="新建文件夹" close={this.colse}>
                 <div>
