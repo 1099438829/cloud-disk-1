@@ -5,6 +5,7 @@ import {Route, Redirect, Switch as RouterSwitch, Link} from 'react-router-dom'
 import logo from '../../public/img/logo.png'
 import Bundle from '../../bundle';
 import {menu} from '../../config'
+import {Icon} from 'antd'
 
 import HomeController from 'bundle-loader?lazy&name=home!../home'
 import MainController from 'bundle-loader?lazy&name=main!../main'
@@ -35,9 +36,9 @@ export default class Index extends React.Component {
                 <div className={css.menu}>
                     <ul>
                         {menu.map((item, i) => {
-                            return <li key={i}
-                                       className={window.location.pathname === item.url ? css.menu_active : null}><Link
-                                to={item.url}>{item.val}</Link></li>
+                            return <li key={i} className={window.location.pathname === item.url ? css.menu_active : null}>
+                                <Link to={item.url}><Icon type={item.icon}/>&nbsp;{item.val}</Link>
+                            </li>
                         })}
                     </ul>
                 </div>

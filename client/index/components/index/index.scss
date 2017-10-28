@@ -26,8 +26,13 @@ body {
     margin-top: 10px;
   }
   li {
-    text-indent: 2rem;
+    text-indent: 1rem;
     cursor: pointer;
+    i {
+      width: 34px;
+      font-size: 18px;
+      vertical-align: text-bottom;
+    }
   }
   li:hover {
     background: rgba(255, 255, 255, .15);

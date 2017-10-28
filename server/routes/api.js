@@ -4,6 +4,9 @@ var fs = require('fs'), path = require('path');
 
 router.prefix('/api');
 
+/**
+ * lw 登录
+ */
 router.post('/login', function (ctx, next) {
     console.warn('login createToken', ctx.body);
     let token = createToken({id: 10, name: 'liwei'});
@@ -18,43 +21,61 @@ router.get('/look/:page', checkToken, function (ctx, next) {
     console.warn('TokenUser', ctx.res.user);
     ctx.body = ctx.res.user
 });
-
+/**
+ * lw 获取目录列表
+ */
 router.post('/catalog', checkToken, async function (ctx, next) {
-    // console.log(ctx.params.index, ctx.params.name);
-    console.log(11, ctx.request.body);
     let dat = ctx.request.body;
-    let u = ('name' in dat && dat.name !== 'undefined') ? dat.name : '';
-    let file = [];
-    let route = path.resolve(__dirname, '../public/img');
-    if (u && u !== '--Refresh') {
-        route = path.resolve(__dirname, '../public/img/'+u);
-    }else if(u){
-        route = decodeURIComponent(ctx.cookie.get('route'));
-    }
-    console.log(route);
-    ctx.cookie.set('route', encodeURIComponent(route))
+    let url = ('name' in dat && dat.name !== 'undefined') ? dat.name : '';
+    let file = [], data = [];
+    let route = path.resolve(__dirname, '../public/img/' + url);
+    console.log('route:' + route);
+    ctx.cookie.set('route', encodeURIComponent(route));
     await new Promise((resolve, reject) => {
         fs.readdir(route, function (err, files) {
-            console.log(files);
-            file = files
+            data = files;
             resolve()
         });
-    })
-    ctx.body = file
+    });
+    for (let i=0; i<data.length; i++){
+        let curPath = route + "/" + data[i];
+        await new Promise((resolve, reject) => {
+            fs.stat(curPath, function (err, stats) {
+                if (err) {
+                    return console.error(err);
+                }
+                // console.log(stats);
+                // console.log("读取文件信息成功！");
+                // // 检测文件类型
+                // console.log("是否为文件(isFile) ? " + stats.isFile());
+                // console.log("是否为目录(isDirectory) ? " + stats.isDirectory());
+                file.push({
+                    name: data[i],
+                    isDirectory: stats.isDirectory(),
+                    type: data[i],
+                    stats: stats
+                })
+                console.log(file);
+                resolve()
+            });
+        });
+    }
+    ctx.body = {
+        list: file,
+        url: url
+    }
 });
 
+/**
+ * lw 新建文件夹
+ */
 router.post('/addFolder', checkToken, async function (ctx, next) {
-    // console.log(ctx.params.index, ctx.params.name);
-    console.log(11, ctx.request.body);
     let dat = ctx.request.body;
-    let u = ('name' in dat && dat.name !== 'undefined') ? dat.name : '';
+    let url = ('name' in dat && dat.name !== 'undefined') ? dat.name : '';
     let sta = false;
-    let route = decodeURIComponent(ctx.cookie.get('route'));
-    if (!route) {
-        route = path.resolve(__dirname, '../public/img')
-    }
+    let route = path.resolve(__dirname, '../public/img/' + url);
     await new Promise((resolve, reject) => {
-        fs.mkdir(route + '/' + u, function (err) {
+        fs.mkdir(route, function (err) {
             if(err)
                 throw err;
             sta = true;
@@ -82,20 +103,20 @@ deleteFolderRecursive = function (path) {
     }
 };
 
+/**
+ * lw 删除文件夹
+ */
 router.post('/delFolder', checkToken, async function (ctx, next) {
-    // console.log(ctx.params.index, ctx.params.name);
-    console.log(11, ctx.request.body);
     let dat = ctx.request.body;
-    let u = ('name' in dat && dat.name !== 'undefined') ? dat.name : '';
+    let url = ('name' in dat && dat.name !== 'undefined') ? dat.name : '';
     let sta = false;
-    let route = decodeURIComponent(ctx.cookie.get('route'));
+    let route = path.resolve(__dirname, '../public/img/' + url);
     if (route) {
         await new Promise((resolve, reject) => {
-            let path = route + '/' + u;
-            if (fs.lstatSync(path).isDirectory()) {
-                deleteFolderRecursive(path);
+            if (fs.lstatSync(route).isDirectory()) {
+                deleteFolderRecursive(route);
             } else {
-                fs.unlinkSync(path)
+                fs.unlinkSync(route)
             }
             sta = true;
             resolve()
