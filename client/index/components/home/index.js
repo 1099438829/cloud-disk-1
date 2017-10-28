@@ -39,6 +39,10 @@ export default class Index extends React.Component {
         this.getCatalog(route)
     }
 
+    openUrl = (url) => {
+        console.log(url);
+    }
+
     ret = () => {
         const {indexUrl} = this.state;
         let copyIndexUrl = indexUrl;
@@ -96,14 +100,21 @@ export default class Index extends React.Component {
         const {catalog, addFolderModelSta, indexUrl, showUp} = this.state;
         return <div className={css.box} onDragEnter={this.upSta.bind(this, true)}>
             <div className={css.oper}>
-                {indexUrl.length ?
-                    <button className={css.btn} onClick={this.ret}><Icon type="left" /></button> : null}
-                <button className={css.btn} onClick={() => this.openModel('addFolderModelSta')}>创建文件夹</button>
+                <button className={css.btn} onClick={() => this.openModel('addFolderModelSta')}>上传</button>
+                <button onClick={() => this.openModel('addFolderModelSta')}>创建文件夹</button>
             </div>
 
-            <div className={css.path}><Icon type="home" /><Icon type="double-right" />
+            <div className={css.path}>
+
+                {indexUrl.length ? <span><a onClick={this.ret} href="javascript:">返回上一级</a> | <a onClick={() => this.openUrl('')} href="javascript:">全部文件</a> > </span> : '全部文件'}
+
                 {indexUrl.map((item, i) => {
-                    return <span key={i}>{item}{indexUrl.length - 1 > i ? <Icon type="double-right" /> : null}</span>
+                    let url = indexUrl.slice(0, i+1);
+                    let urlStr = url.join('/');
+                    return <span key={i}>
+                        {indexUrl.length - 1 > i ? <a onClick={() => this.openUrl(urlStr)} href="javascript:">{item}</a> : item}
+                        {indexUrl.length - 1 > i ? ' > ' : null}
+                        </span>
                 })}
             </div>
 
@@ -112,13 +123,17 @@ export default class Index extends React.Component {
                     <div className={css.sel}>
                         <input type="checkbox"/>
                     </div>
+                    <p></p>
                 </div>
                 {catalog.length ? catalog.map((item, i) => {
                     return <div className={css.list} key={i}>
                         <div className={css.sel}>
                             <input type="checkbox"/>
                         </div>
-                        <div className={css.name} onClick={() => this.open(item)}>{item}</div>
+                        <div className={css.name} onClick={() => this.open(item)}>
+                            <Icon type="file"/>
+                            {item}
+                        </div>
                         <div className={css.operation}>
                             <span onClick={() => this.del(item)}>删除</span>
                         </div>

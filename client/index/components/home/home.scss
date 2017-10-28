@@ -3,13 +3,14 @@
   button {
     padding: 4px 10px;
     background: #e8e8e8;
-    border: 0;
     color: #3b8cff;
     cursor: pointer;
     outline: none;
     transition: all .3s;
     margin-right: 4px;
     height: 30px;
+    border: 1px solid #3b8cff;
+    box-sizing: border-box;
   }
   .btn {
     background: #3b8cff;
@@ -17,8 +18,8 @@
   }
   button:hover {
     color: #62a3ff;
-    background: #e0e0e0;
-    box-shadow: 0 0 5px #ddd;
+    background: #fff;
+    box-shadow: 0 0 5px #3b8cff;
   };
   .btn:hover {
     color: #fff;
@@ -28,11 +29,11 @@
 }
 
 .oper {
-  padding: 10px 20px;
+  padding: 0 20px;
 }
 
 .path {
-  padding: 0 20px;
+  padding: 10px 20px 0;
 }
 
 .empty {
@@ -41,7 +42,6 @@
 }
 
 .cat {
-  margin: 20px 0;
   .list {
     border-top: 1px solid #d3e4ff;
   }
@@ -58,13 +58,17 @@
     }
     .sel {
       min-width: 30px;
-      text-align: center;
       input {
         vertical-align: middle;
       }
     }
     .name {
       width: 80%;
+      i {
+        margin-right: 10px;
+        font-size: 18px;
+        vertical-align: text-bottom;
+      }
     }
     .name:hover {
       color: #3b8cff;
