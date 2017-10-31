@@ -10,8 +10,8 @@ export default class Index extends React.Component {
         return <div className={css.full_screen}>
             <img className={css.rotating} src={fzfImg} alt=""/>
             <div className={css.full_btn}>
-                <button onClick={this.goIndex}>回到主页</button>
-                <button onClick={this.goBack}>去上一页</button>
+                <button className={css.info_btn} onClick={this.goIndex}>回到主页</button>
+                <button className={css.def_btn} onClick={this.goBack}>去上一页</button>
             </div>
         </div>
     }

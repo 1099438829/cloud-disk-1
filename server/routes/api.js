@@ -127,6 +127,33 @@ router.post('/delFolder', checkToken, async function (ctx, next) {
     ctx.body = sta
 });
 
+
+/**
+ * lw 删除文件夹
+ */
+router.post('/editFolder', checkToken, async function (ctx, next) {
+    let dat = ctx.request.body;
+    let url = ('name' in dat && dat.name !== 'undefined') ? dat.name : '';
+    let newUrl = ('newName' in dat && dat.newName !== 'undefined') ? dat.newName : '';
+    let sta = false;
+    let route = path.resolve(__dirname, '../public/img/' + url);
+    let newRoute = path.resolve(__dirname, '../public/img/' + newUrl);
+    if (route) {
+        await new Promise((resolve, reject) => {
+            fs.rename(route, newRoute, function (err) {
+                if(err)
+                    throw err;
+                sta = true;
+                console.log('修改名称成功！')
+                resolve()
+            });
+        });
+    } else {
+        sta = false;
+    }
+    ctx.body = sta
+});
+
 router.post('/user', checkToken, function (ctx, next) {
     ctx.body = ctx.res.user
 });

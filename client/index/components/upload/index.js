@@ -2,7 +2,7 @@ import React from 'react';
 import css from './index.scss'
 import {Axios} from 'Public';
 
-import {Progress} from 'antd'
+import {Progress, Icon} from 'antd'
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -148,13 +148,13 @@ export default class Index extends React.Component {
                                 <td>{(item.size / 1024).toFixed(2)}KB</td>
                                 <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
                                 <td>
-                                    {item.status === 'active' ? (upIng ? '上传中...' :
-                                        <button className={css.up_btn} onClick={this.upFile.bind(this, item)}>
+                                    {item.status === 'active' ? (upIng ? <span><Icon type="loading"/>&nbsp;上传中...</span> :
+                                        <button className={css.info_btn} onClick={this.upFile.bind(this, item)}>
                                             上传</button>) :
                                         item.status === 'exception' ?
-                                            <button className={css.rsup_btn} onClick={this.upFile.bind(this, item)}>
+                                            <button className={css.warn_btn} onClick={this.upFile.bind(this, item)}>
                                                 重试</button> :
-                                            '上传成功！'}
+                                            <span className={css.success_hover}>上传成功！</span>}
                                 </td>
                             </tr>
                         })}

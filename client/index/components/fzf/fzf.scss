@@ -1,3 +1,5 @@
+@import "../../theme";
+
 .full_screen {
   height: 100%;
   display: -webkit-box;
@@ -80,28 +82,8 @@
   -moz-animation: rotating 120s linear infinite;
 }
 
-.pagenotfound_text {
-  position: absolute;
-  bottom: 50px;
-  left: 50px;
-}
-
 .full_btn {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-top: 256px;
-  margin-left: -100px;
-  button {
-    padding: 10px 20px;
-    background: #fff;
-    border: 0;
-    margin: 10px;
-    cursor: pointer;
-    transition: all .2s;
-    text-align: center;
-  }
-  button:hover {
-    box-shadow: 0 5px 5px #a2a2a2;
-  }
+  position: relative;
+  text-align: center;
+  top: calc(50% + 300px);
 }

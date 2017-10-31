@@ -1,5 +1,7 @@
 $def: #f1f1f1;
 $def_hover: #fff;
+$deep: #999;
+$deep_hover: #000;
 $warn: #fda82a;
 $warn_hover: #FF9800;
 $info: #62a3ff;
@@ -8,6 +10,61 @@ $success: #60c364;
 $success_hover: #4CAF50;
 $danger: #f36257;
 $danger_hover: #F44336;
+
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 14px !important;
+  overflow: hidden;
+}
+
+.def {
+  color: $def;
+}
+
+.def_hover {
+  color: $def_hover;
+}
+
+.deep {
+  color: $deep;
+}
+
+.deep_hover {
+  color: $deep_hover;
+}
+
+.warn {
+  color: $warn;
+}
+
+.warn_hover {
+  color: $warn_hover;
+}
+
+.info {
+  color: $info;
+}
+
+.info_hover {
+  color: $info_hover;
+}
+
+.success {
+  color: $success;
+}
+
+.success_hover {
+  color: $success_hover;
+}
+
+.danger {
+  color: $danger;
+}
+
+.danger_hover {
+  color: $danger_hover;
+}
 
 @mixin def_btn {
   padding: 4px 10px;

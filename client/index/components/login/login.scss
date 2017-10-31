@@ -1,19 +1,19 @@
+@import "../../theme";
+
 .boxs {
   position: relative;
 }
 
 .txt_danger {
-  color: red !important;
+  color: $danger_hover !important;
 }
 
 .box {
-  //margin: 200px auto;
-  //width: 400px;
   position: absolute;
   top: 20%;
   right: 10%;
   padding: 20px 50px;
-  background: #fff;
+  background: $def_hover;
   opacity: .8;
   button {
     max-width: 300px;
@@ -40,7 +40,7 @@
   text-align: right;
   li {
     display: inline-block;
-    color: #fff;
+    color: $def_hover;
     margin: 20px;
     cursor: pointer;
   }
@@ -50,8 +50,8 @@
 }
 
 .vip {
-  background: #e35a53;
-  color: #fff;
+  background: $danger;
+  color: $def_hover;
   padding: 4px 10px;
   border-radius: 20px;
 }
@@ -65,12 +65,6 @@
   text-align: center;
 }
 
-.carousel {
-  //position: absolute;
-  //top: 0;
-  //left: 0;
-}
-
 .car_list {
   > img {
     width: 100%;
@@ -82,7 +76,7 @@
   bottom: 20px;
   left: 100px;
   position: absolute;
-  color: #fff;
+  color: $def_hover;
   font-size: 46px;
   img {
     vertical-align: text-top;

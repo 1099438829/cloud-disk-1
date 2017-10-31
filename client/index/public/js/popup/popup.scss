@@ -1,3 +1,5 @@
+@import "../../../theme";
+
 @-webkit-keyframes ain {
   0% {
     opacity: 0;
@@ -82,7 +84,7 @@
   position: absolute;
   right: 15px;
   top: 14px;
-  color: rgb(255, 255, 255);
+  color: $def_hover;
   height: 16px;
   width: 16px;
   line-height: initial;
@@ -97,13 +99,13 @@
   right: 7px;
   transform: rotate(45deg);
   transition: transform .3s;
-  background: white;
+  background: $def_hover;
   height: 16px;
   width: 2px;
 }
 
 .close:after {
-  background: white;
+  background: $def_hover;
   content: "";
   height: 2px;
   left: -7px;
@@ -114,12 +116,12 @@
 
 .mask {
   position: fixed;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 5000;
-  background-color: rgb(0, 0, 0);
+  background-color: $deep_hover;
   opacity: 0.3;
 }
 
@@ -130,7 +132,7 @@
   //height: 220px;
   //top: 274px;
   //left: 222px;
-  background-color: rgb(255, 255, 255);
+  background-color: $def_hover;
   box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 50px;
   border-radius: 2px;
   .title {
@@ -141,9 +143,9 @@
     line-height: 42px;
     border-bottom: 1px solid rgb(238, 238, 238);
     font-size: 14px;
-    color: rgb(255, 255, 255);
+    color: $def_hover;
     overflow: hidden;
-    background-color: #3b8cff;
-    border-radius: 2px 0px 0px;
+    background-color: $info_hover;
+    border-radius: 2px 0 0;
   }
 }

@@ -67,6 +67,11 @@
   text-align: center;
 }
 
+.edit_box {
+  padding: 30px;
+  text-align: left;
+}
+
 .add_input {
   width: 240px;
   outline: none;
@@ -74,4 +79,20 @@
   height: 30px;
   padding: 0 5px;
   margin-right: 4px;
+}
+
+.del_txt {
+  margin-bottom: 30px;
+}
+
+.former_box {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.former {
+  color: $def_hover;
+  background: $warn_hover;
+  padding: 2px 5px;
+  margin-right: 10px;
 }
