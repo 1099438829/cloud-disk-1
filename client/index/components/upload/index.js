@@ -52,7 +52,9 @@ export default class Index extends React.Component {
                 data: e.dataTransfer.files[0],
                 index: this.state.fileList.length + 1
             }
-            this.setState({fileList: [...this.state.fileList, dat], upModelSta: true})
+            this.setState({fileList: [...this.state.fileList, dat], upModelSta: true}, () =>{
+                this.upFile(dat);
+            })
         }
     }
 
@@ -61,7 +63,7 @@ export default class Index extends React.Component {
         dat.status = 'active';
         this.state.upIng = true;
         this.state.thenFile = dat;
-        let url = "/multer/save_img";
+        let url = "/multer/upload";
         let form = new FormData();
         form.append('file', dat.data);
         let xhr = new XMLHttpRequest();
@@ -148,12 +150,11 @@ export default class Index extends React.Component {
                                 <td>{(item.size / 1024).toFixed(2)}KB</td>
                                 <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
                                 <td>
-                                    {item.status === 'active' ? (upIng ? <span><Icon type="loading"/>&nbsp;上传中...</span> :
-                                        <button className={css.info_btn} onClick={this.upFile.bind(this, item)}>
-                                            上传</button>) :
+                                    {item.status === 'active' ? (upIng ?
+                                        <span><Icon type="loading"/>&nbsp;上传中...</span> :
+                                        <button className={css.info_btn} onClick={this.upFile.bind(this, item)}>上传</button>) :
                                         item.status === 'exception' ?
-                                            <button className={css.warn_btn} onClick={this.upFile.bind(this, item)}>
-                                                重试</button> :
+                                            <button className={css.warn_btn} onClick={this.upFile.bind(this, item)}>重试</button> :
                                             <span className={css.success_hover}>上传成功！</span>}
                                 </td>
                             </tr>

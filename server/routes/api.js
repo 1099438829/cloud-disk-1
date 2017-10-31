@@ -55,7 +55,7 @@ router.post('/catalog', checkToken, async function (ctx, next) {
                     type: data[i],
                     stats: stats
                 })
-                console.log(file);
+                // console.log(file);
                 resolve()
             });
         });

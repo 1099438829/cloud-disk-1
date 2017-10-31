@@ -50,24 +50,57 @@ const storage = multer.diskStorage({
         cb(null, path)
     },
     filename: function (req, file, cb) {
-        cb(null, randomString(20)+'.'+file.originalname)
+        let path = decodeURIComponent(getCookie(req, 'route'));
+        fs.readdir(path, function (err, files) {
+            let fileName = '';
+            function check(files, name, index) {
+                let sta = true;
+                files.map(function (item) {
+                    if (item === name) {
+                        sta = false;
+                        index++;
+                        let newName = name.substr(0, name.lastIndexOf(".")) + '(' + index + ')' + name.substr(name.lastIndexOf(".")).toLowerCase();
+                        // 处理多个重名
+                        let startName = name.substr(0, name.lastIndexOf("."));
+                        let pa = /.*\((.*)\)/;
+                        let startNameIndex = startName.match(pa);
+                        startNameIndex = (startNameIndex && startNameIndex.length > 1) ? startNameIndex[1] : 'NO';
+                        startNameIndex = parseInt(startNameIndex);
+                        if (!isNaN(startNameIndex)) {
+                            index = startNameIndex + 1;
+                            newName = name.substr(0, name.lastIndexOf("(")) + '(' + index + ')' + name.substr(name.lastIndexOf(".")).toLowerCase();
+                        }
+                        // 处理多个重名
+                        check(files, newName, index)
+                    }
+                });
+                if (sta) {
+                    fileName = name;
+                }
+            }
+            // 处理重名
+            check(files, file.originalname, 0);
+            cb(null, fileName)
+        });
     }
 });
 var upload = multer({storage: storage});
 /**
  * lw 上传文件
  */
-router.post('/save_img', upload.array('file'), async(ctx, next) => {
+router.post('/upload', upload.array('file'), async(ctx, next) => {
     console.log(11111111111111);
     let message, result, state = true;
     try {
         let files = ctx.req.files;
+        console.log(files);
         let mimetype = files[0].mimetype;
         mimetype = mimetype.substring(6, mimetype.length);
         let dest = files[0].destination;
         let name = files[0].filename;
-        dest = dest.substring(dest.length-6, dest.length);
-        let file_path = `${conf.url_path}/${dest}/${name}`;
+        dest = dest.substring(conf.path_num, dest.length);
+        dest = dest.replace(/\\/g, "/");
+        let file_path = `${conf.url}/${dest}/${name}`;
         result = {
             "success": true,
             "msg": "up success!",
