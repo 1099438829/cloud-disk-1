@@ -30,6 +30,19 @@ export default class Index extends React.Component {
         if (nextProps.showUp !== this.props.showUp || this.props.showUp !== this.state.showUp) {
             this.setState({showUp: nextProps.showUp})
         }
+        if (nextProps.file.length) {
+            let fileList = this.state.fileList;
+            let i = 1;
+            nextProps.file.map(item => {
+                item.index = fileList.length + i;
+                i++;
+            });
+            this.setState({upModelSta: true, fileList: [...this.state.fileList, ...nextProps.file]}, () =>{
+                nextProps.file.map(item => {
+                    this.upFile(item);
+                })
+            })
+        }
     }
 
     // 拖拽进入退出
@@ -92,7 +105,7 @@ export default class Index extends React.Component {
     uploadComplete = (evt) => {
         this.props.getCatalog('--Refresh')
         this.props.upSta(false)
-        console.log(evt);
+        // console.log(evt);
         // 服务断接收完文件返回的结果
         // alert(evt.target.responseText);
         // console.log("上传成功！");
@@ -146,7 +159,7 @@ export default class Index extends React.Component {
                         {fileList.map((item, i) => {
                             return <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td>{item.name.substring(0, 10)}</td>
+                                <td><span title={item.name}>{item.name.substring(0, 10)}</span></td>
                                 <td>{(item.size / 1024).toFixed(2)}KB</td>
                                 <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
                                 <td>

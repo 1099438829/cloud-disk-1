@@ -15,6 +15,7 @@ export default class Index extends React.Component {
             modelTitle: '',             // 模态框标题
             modelHtml: '',              // 模态框内容
             allCheckSta: false,         // 全选
+            file: [],                   // 上传按钮的文件容器
         }
     }
 
@@ -197,8 +198,24 @@ export default class Index extends React.Component {
         this.setState({catalog: catalog, allCheckSta: allSta})
     };
 
+    file = () => {
+        let upFile = this.state.file.files[0];
+        let file = {
+            name: upFile.name,
+            size: upFile.size,
+            loading: 0,
+            status: 'active',
+            timeStamp: 0,
+            data: upFile,
+            index: 1
+        };
+        this.setState({file: [file]}, () => {
+            this.state.file.value = '';
+        });
+    }
+
     render() {
-        const {catalog, modelSta, modelSize, modelTitle, modelHtml, showUp, allCheckSta} = this.state;
+        const {catalog, file, modelSta, modelSize, modelTitle, modelHtml, showUp, allCheckSta} = this.state;
         let catalogUrl = catalog.url ? catalog.url.split('/') : [];
         let checkNum = 0;
         if (catalog && catalog.list) {
@@ -212,7 +229,9 @@ export default class Index extends React.Component {
         return <div className={css.box} onDragEnter={this.upSta.bind(this, true)}>
             {/*操作*/}
             <div className={css.oper}>
-                <button className={css.info_btn}><Icon type="upload"/>&nbsp;上传</button>
+                <button className={css.info_btn}><Icon type="upload"/>&nbsp;上传
+                    <input className={css.file} type="file" ref={(e) => this.state.file = e} onChange={this.file}/>
+                </button>
                 <button className={css.def_btn} onClick={() => this.changeModel(true, 'add')}><Icon
                     type="folder-add"/>&nbsp;创建文件夹
                 </button>
@@ -267,7 +286,7 @@ export default class Index extends React.Component {
                 {modelHtml}
             </Popup>
             {/*上传*/}
-            <Upload getCatalog={this.getCatalog} showUp={showUp} upSta={this.upSta}/>
+            <Upload getCatalog={this.getCatalog} showUp={showUp} upSta={this.upSta} file={file}/>
         </div>;
     }
 }

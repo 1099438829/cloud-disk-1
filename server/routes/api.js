@@ -75,6 +75,42 @@ router.post('/addFolder', checkToken, async function (ctx, next) {
     let sta = false;
     let route = path.resolve(__dirname, '../public/img/' + url);
     await new Promise((resolve, reject) => {
+
+        // let path = decodeURIComponent(getCookie(req, 'route'));
+        // fs.readdir(path, function (err, files) {
+        //     let fileName = '';
+        //
+        //     function check(files, name, index) {
+        //         let sta = true;
+        //         files.map(function (item) {
+        //             if (item === name) {
+        //                 sta = false;
+        //                 index++;
+        //                 let newName = name.substr(0, name.lastIndexOf(".")) + '(' + index + ')' + name.substr(name.lastIndexOf(".")).toLowerCase();
+        //                 // 处理多个重名
+        //                 let startName = name.substr(0, name.lastIndexOf("."));
+        //                 let pa = /.*\((.*)\)/;
+        //                 let startNameIndex = startName.match(pa);
+        //                 startNameIndex = (startNameIndex && startNameIndex.length > 1) ? startNameIndex[1] : 'NO';
+        //                 startNameIndex = parseInt(startNameIndex);
+        //                 if (!isNaN(startNameIndex)) {
+        //                     index = startNameIndex + 1;
+        //                     newName = name.substr(0, name.lastIndexOf("(")) + '(' + index + ')' + name.substr(name.lastIndexOf(".")).toLowerCase();
+        //                 }
+        //                 // 处理多个重名
+        //                 check(files, newName, index)
+        //             }
+        //         });
+        //         if (sta) {
+        //             fileName = name;
+        //         }
+        //     }
+        //
+        //     // 处理重名
+        //     check(files, file.originalname, 0);
+        // })
+
+
         fs.mkdir(route, function (err) {
             if(err)
                 throw err;
