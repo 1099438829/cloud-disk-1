@@ -75,7 +75,7 @@ router.post('/addFolder', checkToken, async function (ctx, next) {
     let sta = false;
     let route = path.resolve(__dirname, '../public/img/' + url);
     await new Promise((resolve, reject) => {
-
+        // TODO: 新建同名文件夹处理
         // let path = decodeURIComponent(getCookie(req, 'route'));
         // fs.readdir(path, function (err, files) {
         //     let fileName = '';

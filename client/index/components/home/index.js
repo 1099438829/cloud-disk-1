@@ -101,7 +101,7 @@ export default class Index extends React.Component {
             switch (type) {
                 case 'add':
                     title = '新建文件夹';
-                    size = [480, 150];
+                    size = [480];
                     html = <div className={css.add_box}>
                         <input className={css.add_input} ref={e => this.state.addName = e} placeholder="请输入文件夹名"/>
                         <button className={css.info_btn} onClick={this.add}>新建</button>
@@ -111,7 +111,7 @@ export default class Index extends React.Component {
                 case 'edit':
                     let editName = '';
                     title = '修改文件/文件夹名称';
-                    size = [480, 176];
+                    size = [480];
                     html = <div className={css.edit_box}>
                         <p className={css.former_box}>
                             <span className={css.former}><Icon type="edit" /></span>
@@ -129,7 +129,7 @@ export default class Index extends React.Component {
                     break;
                 case 'del':
                     title = '删除文件/文件夹';
-                    size = [360, 180];
+                    size = [360];
                     html = <div className={css.add_box}>
                         <p className={`${css.warn_hover} ${css.del_txt}`}><Icon type="info-circle-o" />&nbsp;你确定删除所选文件/文件夹(包括子文件)吗？</p>
                         <button className={css.danger_btn} onClick={this.del}>删除</button>
@@ -282,7 +282,7 @@ export default class Index extends React.Component {
                     : <div className={css.empty}><Icon type="frown-o"/>&nbsp;哎呀,这个文件夹是空的!</div>}
             </div>
             {/*模态框*/}
-            <Popup size={modelSize} sta={modelSta} title={modelTitle} close={() => this.changeModel(false)}>
+            <Popup data={{size: modelSize, title: modelTitle}} sta={modelSta} close={() => this.changeModel(false)}>
                 {modelHtml}
             </Popup>
             {/*上传*/}
