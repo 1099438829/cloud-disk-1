@@ -11,10 +11,12 @@ import {Icon} from 'antd'
 import HomeController from 'bundle-loader?lazy&name=home!../home'
 import MainController from 'bundle-loader?lazy&name=main!../main'
 import AboutController from 'bundle-loader?lazy&name=about!../about'
+import PopController from 'bundle-loader?lazy&name=about!../pop'
 
 const Home = (props) => <Bundle load={HomeController}>{(A) => <A {...props}/>}</Bundle>;
 const Main = (props) => <Bundle load={MainController}>{(A) => <A {...props}/>}</Bundle>;
 const About = (props) => <Bundle load={AboutController}>{(A) => <A {...props}/>}</Bundle>;
+const Pop = (props) => <Bundle load={PopController}>{(A) => <A {...props}/>}</Bundle>;
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -55,6 +57,7 @@ export default class Index extends React.Component {
                         <div className={css.content}>
                             <RouterSwitch>
                                 <Route exact path="/" component={Home}/>
+                                <Route path="/pop" component={Pop}/>
                                 <Route path="/main" component={Main}/>
                                 <Route path="/about" component={About}/>
                                 <Redirect to="/404"/>

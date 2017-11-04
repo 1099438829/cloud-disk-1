@@ -94,7 +94,7 @@ export default class Index extends React.Component {
 
     // 根据处理类型打开模态框
     changeModel = (sta, type = '') => {
-        console.log(sta, type);
+        // console.log(sta, type);
         const {catalog} = this.state;
         let size = [], html = '', title = '';
         if (type) {

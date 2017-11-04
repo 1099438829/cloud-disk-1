@@ -9,8 +9,8 @@ module.exports = {
     context: path.resolve(__dirname, './'),
     // 需要打包的文件入口
     entry: {
-        index: './index/index.js',
-        vendor: ['react', 'react-dom', 'react-router-dom', 'axios']
+        index: ['babel-polyfill', './index/index.js'],
+        vendor: ['babel-polyfill', 'react', 'react-dom', 'react-router-dom', 'axios']
     },
     // 入口文件路径
     resolve: {

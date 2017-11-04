@@ -1,43 +1,47 @@
 /**
  * Created by awei on 2017/9/20.
+ *
+ * title: '标题' type:string,
+ * size: ['宽', '高'] type:int,
+ * titleSta: 是否显示标题 false 不显示 type:boolean,
+ * maskSta: 是否显示遮罩层 false 不显示 type:boolean,
+ * closeTime: 自动关闭时间 格式int 毫秒 type:int,
+ * index: 层级权重 type: int (如果一个页面有多个弹窗，而且需要层级响应，可根据先后设置indx的权重，越大层级越高)
  */
 import React, {Component} from 'react'
-import styles from './popup.scss'
+import css from './popup.scss'
 
 class Popup extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
-            stas: false,
+            status: true,
+            open: false
         }
-    }
-
-    componentWillMount() {
-        // console.log('will');
-    }
-
-    componentDidMount() {
-        // console.log('did');
     }
 
     componentWillReceiveProps(nextProps) {
         if (!nextProps.sta) {
-            setTimeout(() => {
-                this.setState({stas: false});
-            }, 350)
+            this.setState({status: false}, () => {
+                setTimeout(() => {
+                    this.setState({open: false}, () => {
+                        this.state.status = true;
+                    })
+                }, 350)
+            });
         } else {
-            this.state.stas = nextProps.sta;
+            this.state.open = nextProps.sta;
         }
     }
 
     handRemove = (e) => {
-        const {title, box} = this.refs;
-        const s = box.style;
+        const {title, pop} = this.refs;
+        const s = pop.style;
         let x, y, p = 'onmousemove', d = document;
         title.style.cursor = 'move';
         e = e || event;
-        x = e.clientX - box.offsetLeft;
-        y = e.clientY - box.offsetTop;
+        x = e.clientX - pop.offsetLeft;
+        y = e.clientY - pop.offsetTop;
         d[p] = function (e) {
             e = e || event;
 
@@ -46,13 +50,13 @@ class Popup extends Component {
 
             if (left <= 0) {
                 left = 0;
-            } else if (left >= d.documentElement.clientWidth - box.offsetWidth) {
-                left = d.documentElement.clientWidth - box.offsetWidth;
+            } else if (left >= d.documentElement.clientWidth - pop.offsetWidth) {
+                left = d.documentElement.clientWidth - pop.offsetWidth;
             }
             if (top <= 0) {
                 top = 0;
-            } else if (top >= d.documentElement.clientHeight - box.offsetHeight) {
-                top = d.documentElement.clientHeight - box.offsetHeight;
+            } else if (top >= d.documentElement.clientHeight - pop.offsetHeight) {
+                top = d.documentElement.clientHeight - pop.offsetHeight;
             }
 
             s.left = left + 'px';
@@ -64,8 +68,13 @@ class Popup extends Component {
         }
     };
 
+    close = () => {
+        this.props.close();
+    };
+
     render() {
-        const {sta, data, close, children} = this.props;
+        const {data, children} = this.props;
+        const {status, open} = this.state;
         let pop = {
             w: document.documentElement.clientWidth,
             h: document.documentElement.clientHeight,
@@ -77,7 +86,8 @@ class Popup extends Component {
             maskSta: true,
             closeTime: 0,
             boxHeight: {},
-            autoHeight: ''
+            autoHeight: '',
+            index: 0
         };
         if (data) {
             'size' in data ? (pop.box_w = parseInt(data.size[0]), pop.box_h = parseInt(data.size[1])) : null;
@@ -86,12 +96,20 @@ class Popup extends Component {
             'titleSta' in data ? pop.titleSta = data.titleSta : null;
             'maskSta' in data ? pop.maskSta = data.maskSta : null;
             'closeTime' in data ? pop.closeTime = data.closeTime : null;
+            'index' in data ? pop.index = data.index : null;
         }
+        // TODO：延时关闭有BUG
+        // let t = parseInt(pop.closeTime);
+        // if (t > 0 && open) {
+        //     setTimeout(() => {
+        //         open ? this.close() : null
+        //     }, t)
+        // }
         pop.w = pop.w / 2 - pop.box_w / 2;
         if (pop.box_h) {
             pop.h = pop.h / 2 - pop.box_h / 2;
             if (pop.titleSta) {
-                pop.boxHeight = {height: `${pop.box_h - 42}px`}
+                pop.boxHeight = {height: `${pop.box_h - 40}px`}
             } else {
                 pop.boxHeight = {height: '100%'}
             }
@@ -99,8 +117,11 @@ class Popup extends Component {
         } else {
             pop.h = pop.h / 2 - 200;
         }
-        let {stas} = this.state;
+        let maskSty = {
+            zIndex: 5000 + pop.index
+        };
         let popSty = {
+            zIndex: 5001 + pop.index,
             width: `${pop.box_w}px`,
             top: `${pop.h}px`,
             left: `${pop.w}px`,
@@ -110,21 +131,22 @@ class Popup extends Component {
             width: '100%',
             ...pop.boxHeight
         };
-        let mask = <div className={styles.mask} onClick={() => {close()}}></div>;
-        let html = <div ref="box" style={popSty} className={sta ? `${styles.popup} ${styles.in}` : `${styles.popup} ${styles.out}`}>
-            <div ref="title" onMouseDown={this.handRemove.bind(this)} className={styles.title}>{pop.title}</div>
-            <div style={txtSty}>
-                {children}
-            </div>
-            <div className={styles.close_box} onClick={() => {close()}}>
-                <span className={styles.close}></span>
-            </div>
-        </div>;
         return (
-            <div>
-                {sta ? mask : null}
-                {sta ? html : stas ? html : null}
-            </div>
+            open ? <div>
+                {pop.maskSta && status ?
+                    <div style={maskSty} className={css.mask} onClick={this.close}>&nbsp;</div> : null}
+                <div ref="pop" style={popSty} className={status ? css.popup_in : css.popup_out}>
+                    {pop.titleSta ?
+                        <div ref="title" className={css.title}
+                             onMouseDown={this.handRemove.bind(this)}>{pop.title}</div> : null}
+                    {pop.titleSta ?
+                        <div className={css.close_box} onClick={this.close}><span className={css.close}>&nbsp;</span>
+                        </div> : null}
+                    <div style={txtSty}>
+                        {children}
+                    </div>
+                </div>
+            </div> : null
         )
     }
 }

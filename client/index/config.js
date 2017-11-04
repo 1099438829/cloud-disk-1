@@ -1,5 +1,6 @@
 let menu = [
     {url: '/', icon: 'appstore', val: '全部文件'},
+    {url: '/pop', icon: '', val: 'pop'},
     {url: '/main', icon: '', val: 'main'},
     {url: '/about', icon: '', val: 'about'},
     {url: '/img', icon: '', val: '图片'},

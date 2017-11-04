@@ -144,3 +144,16 @@
   background-color: $info_hover;
   border-radius: 2px 2px 0 0;
 }
+
+.container {
+  z-index: 5001;
+  width: 480px;
+  top: 255.5px;
+  left: 261px;
+  position: fixed;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 50px;
+  border-radius: 2px;
+  -webkit-animation: popup_3qkN_ain .4s;
+  animation: popup_3qkN_ain .4s;
+}

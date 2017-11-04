@@ -3,9 +3,6 @@ import NProgress from 'nprogress'
 import Promise from 'bluebird';
 import {message} from 'antd';
 
-// window.Promise = Promise;
-
-
 /**
  * @param  {Object} options
  * @return {Object}         Return Promise
