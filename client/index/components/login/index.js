@@ -4,15 +4,6 @@ import {Axios, getCookie} from 'Public'
 import {Link} from 'react-router-dom'
 import {Form, Icon, Input, Button, Checkbox, Carousel, message, Tooltip} from 'antd';
 import css from './login.scss'
-
-import bg1 from 'https://i.bstu.cn/img/bg1.jpg'
-import bg2 from 'https://i.bstu.cn/img/bg2.jpg'
-import bg3 from 'https://i.bstu.cn/img/bg3.jpg'
-import bg4 from 'https://i.bstu.cn/img/bg4.jpg'
-import leftquote from 'https://i.bstu.cn/img/leftquote.png'
-import rightquote from 'https://i.bstu.cn/img/rightquote.png'
-import logo from 'https://i.bstu.cn/img/logo.png'
-
 const FormItem = Form.Item;
 
 class Index extends React.Component {
@@ -57,7 +48,7 @@ class Index extends React.Component {
             <div className={css.boxs} key={1}>
                 <div className={css.login_logo}>
                     <div>
-                        <img src={logo} alt=""/>
+                        <img src="https://i.bstu.cn/img/logo.png" alt=""/>
                     </div>
                     <div className={css.login_manu}>
                         <ul>
@@ -74,11 +65,11 @@ class Index extends React.Component {
                 <div>
                     <Carousel autoplay effect="fade">
                         <div className={css.car_list}>
-                            <img src={bg1} alt=""/>
+                            <img src="https://i.bstu.cn/img/bg1.jpg" alt=""/>
                             <div className={css.car_item}>
                                 <div>
                                     <div className={css.car_l}>
-                                        <img src={leftquote} alt=""/>
+                                        <img src="https://i.bstu.cn/img/leftquote.png" alt=""/>
                                     </div>
                                     <div className={css.car_c}>安全存储</div>
                                     <div className={css.car_r}>
@@ -91,17 +82,17 @@ class Index extends React.Component {
                                     </div>
                                     <div className={css.car_c}>生活井井有条</div>
                                     <div className={css.car_r}>
-                                        <img src={rightquote} alt=""/>
+                                        <img src="https://i.bstu.cn/img/rightquote.png" alt=""/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className={css.car_list}>
-                            <img src={bg2} alt=""/>
+                            <img src="https://i.bstu.cn/img/bg2.jpg" alt=""/>
                             <div className={css.car_item}>
                                 <div>
                                     <div className={css.car_l}>
-                                        <img src={leftquote} alt=""/>
+                                        <img src="https://i.bstu.cn/img/leftquote.png" alt=""/>
                                     </div>
                                     <div className={css.car_c}>在线预览</div>
                                     <div className={css.car_r}>
@@ -114,17 +105,17 @@ class Index extends React.Component {
                                     </div>
                                     <div className={css.car_c}>文件即开即看</div>
                                     <div className={css.car_r}>
-                                        <img src={rightquote} alt=""/>
+                                        <img src="https://i.bstu.cn/img/rightquote.png" alt=""/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className={css.car_list}>
-                            <img src={bg3} alt=""/>
+                            <img src="https://i.bstu.cn/img/bg3.jpg" alt=""/>
                             <div className={css.car_item}>
                                 <div>
                                     <div className={css.car_l}>
-                                        <img src={leftquote} alt=""/>
+                                        <img src="https://i.bstu.cn/img/leftquote.png" alt=""/>
                                     </div>
                                     <div className={css.car_c}>多端并用</div>
                                     <div className={css.car_r}>
@@ -137,17 +128,17 @@ class Index extends React.Component {
                                     </div>
                                     <div className={css.car_c}>数据随身携带</div>
                                     <div className={css.car_r}>
-                                        <img src={rightquote} alt=""/>
+                                        <img src="https://i.bstu.cn/img/rightquote.png" alt=""/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className={css.car_list}>
-                            <img src={bg4} alt=""/>
+                            <img src="https://i.bstu.cn/img/bg4.jpg" alt=""/>
                             <div className={css.car_item}>
                                 <div>
                                     <div className={css.car_l}>
-                                        <img src={leftquote} alt=""/>
+                                        <img src="https://i.bstu.cn/img/leftquote.png" alt=""/>
                                     </div>
                                     <div className={css.car_c}>好友分享</div>
                                     <div className={css.car_r}>
@@ -160,7 +151,7 @@ class Index extends React.Component {
                                     </div>
                                     <div className={css.car_c}>共度幸福时光</div>
                                     <div className={css.car_r}>
-                                        <img src={rightquote} alt=""/>
+                                        <img src="https://i.bstu.cn/img/rightquote.png" alt=""/>
                                     </div>
                                 </div>
                             </div>

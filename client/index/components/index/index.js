@@ -3,7 +3,6 @@ import React from 'react';
 import css from './index.scss'
 import {Axios} from 'Public';
 import {Route, Redirect, Switch as RouterSwitch, Link} from 'react-router-dom'
-import logo from '../../public/img/logo.png'
 import Bundle from '../../bundle';
 import {menu} from '../../config'
 import {Icon} from 'antd'
@@ -40,7 +39,7 @@ export default class Index extends React.Component {
         return sta ? <QueueAnim type="alpha">
             <div key={1} className={css.bg}>
                 <div className={css.head}>
-                    <img src={logo} alt=""/>
+                    <img src="https://i.bstu.cn/img/logo.png" alt=""/>
                 </div>
                 <div>
                     <div className={css.menu}>
