@@ -1,5 +1,4 @@
 import React from 'react';
-import wdp from '../../public/img/wdp.png'
 import css from './main.scss'
 import {Route, Link} from 'react-router-dom'
 import {Axios} from 'Public'
@@ -45,7 +44,7 @@ export default class Index extends React.Component {
             </div>
             <p><Link to={`/main/min/${name}`}>Main 下面的 Min 子页面</Link></p>
             <div className={css.img}>
-                <img src={wdp} alt=""/>
+                ON IMG
             </div>
             <Route path="/main/min/:name" component={Min}/>
         </div>;

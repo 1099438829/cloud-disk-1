@@ -2,28 +2,37 @@ import QueueAnim from 'rc-queue-anim';
 import React from 'react';
 import {Axios, getCookie} from 'Public'
 import {Link} from 'react-router-dom'
-import {Form, Icon, Input, Button, Checkbox, Carousel, message} from 'antd';
+import {Form, Icon, Input, Button, Checkbox, Carousel, message, Tooltip} from 'antd';
 import css from './login.scss'
 
-const bg1 = require('../../public/img/bg1.jpg')
-import bg2 from '../../public/img/bg2.jpg'
-import bg3 from '../../public/img/bg3.jpg'
-import bg4 from '../../public/img/bg4.jpg'
-import leftquote from '../../public/img/leftquote.png'
-import rightquote from '../../public/img/rightquote.png'
-import logo from '../../public/img/logo.png'
+import bg1 from 'https://i.bstu.cn/img/bg1.jpg'
+import bg2 from 'https://i.bstu.cn/img/bg2.jpg'
+import bg3 from 'https://i.bstu.cn/img/bg3.jpg'
+import bg4 from 'https://i.bstu.cn/img/bg4.jpg'
+import leftquote from 'https://i.bstu.cn/img/leftquote.png'
+import rightquote from 'https://i.bstu.cn/img/rightquote.png'
+import logo from 'https://i.bstu.cn/img/logo.png'
 
 const FormItem = Form.Item;
 
 class Index extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            code: ''
+        }
     }
 
     componentDidMount() {
         getCookie('token') ? this.props.history.push("/") : null;
+        this.getCode();
     }
+
+    getCode = () => {
+        Axios.get('/api/code').then(ret => {
+            this.setState({code: ret})
+        })
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -42,6 +51,7 @@ class Index extends React.Component {
     }
 
     render() {
+        const {code} = this.state;
         const {getFieldDecorator} = this.props.form;
         return <QueueAnim type="alpha">
             <div className={css.boxs} key={1}>
@@ -176,17 +186,29 @@ class Index extends React.Component {
                             )}
                         </FormItem>
                         <FormItem>
+                            <div className={css.code}>
+                                {getFieldDecorator('code', {
+                                    rules: [{required: true, message: '请输入验证码!'}],
+                                })(
+                                    <Input len={4} prefix={<Icon type="lock" style={{fontSize: 13}}/>} placeholder="验证码"/>
+                                )}
+                                <Tooltip placement="right" title="刷新">
+                                    <img onClick={this.getCode} src={code} alt="验证码"/>
+                                </Tooltip>
+                            </div>
+                        </FormItem>
+                        <FormItem>
                             {getFieldDecorator('remember', {
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(
                                 <Checkbox>记住我</Checkbox>
                             )}
-                            <a href="">忘记密码</a>
+                            <a href="/retrieve">忘记密码</a>
                             <Button type="primary" htmlType="submit">
                                 登录
                             </Button>
-                            或 <Link to="/register">去注册</Link>
+                            还没有账号？ <Link to="/register">去注册</Link>
                         </FormItem>
                     </Form>
                 </div>

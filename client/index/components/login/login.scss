@@ -22,6 +22,19 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0 0 50px;
 }
 
+.code {
+  span[class='ant-input-affix-wrapper'] {
+    width: 60%;
+  }
+  input {
+    height: 32px;
+  }
+  img {
+    cursor: pointer;
+    float: right;
+  }
+}
+
 .login_logo {
   > div {
     display: inline-table;
@@ -102,3 +115,4 @@
   text-align: center;
   margin-top: 10px;
 }
+

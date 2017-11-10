@@ -16,7 +16,9 @@ class Popup extends Component {
         super();
         this.state = {
             status: true,
-            open: false
+            open: false,
+            data: {},
+            children: ''
         }
     }
 
@@ -31,6 +33,8 @@ class Popup extends Component {
             });
         } else {
             this.state.open = nextProps.sta;
+            this.state.data = nextProps.data;
+            this.state.children = nextProps.children;
         }
     }
 
@@ -73,8 +77,7 @@ class Popup extends Component {
     };
 
     render() {
-        const {data, children} = this.props;
-        const {status, open} = this.state;
+        const {status, open, children, data} = this.state;
         let pop = {
             w: document.documentElement.clientWidth,
             h: document.documentElement.clientHeight,

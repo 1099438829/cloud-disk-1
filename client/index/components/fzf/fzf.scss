@@ -1,32 +1,5 @@
 @import "../../theme";
 
-.full_screen {
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -ms-flex: auto;
-  flex: auto;
-  //background: #ececec;
-  background-image: url("../../public/img/main_bg.jpg");
-  background-position: center 0;
-  background-repeat: no-repeat;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -o-background-size: cover;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
 .rotating {
   position: absolute;
   left: 50%;

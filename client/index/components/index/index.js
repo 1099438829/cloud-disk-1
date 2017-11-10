@@ -38,7 +38,7 @@ export default class Index extends React.Component {
     render() {
         const {sta} = this.state;
         return sta ? <QueueAnim type="alpha">
-            <div key={1} className={css.box}>
+            <div key={1} className={css.bg}>
                 <div className={css.head}>
                     <img src={logo} alt=""/>
                 </div>

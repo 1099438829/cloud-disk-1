@@ -5,7 +5,8 @@
   width: 400px;
   padding: 20px 50px;
   background: $def_hover;
-  border-radius: 10px;
+  opacity: .8;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 0 50px;
   button {
     max-width: 300px;
     width: 100%;
@@ -20,4 +21,17 @@
 .agreement {
   height: 400px;
   overflow: auto;
+}
+
+.code {
+  span[class='ant-input-affix-wrapper'] {
+    width: 60%;
+  }
+  input {
+    height: 32px;
+  }
+  img {
+    cursor: pointer;
+    float: right;
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Axios} from 'Public'
 import {Link} from 'react-router-dom'
-import {Modal, Form, Icon, Input, Button, Checkbox} from 'antd';
+import {Modal, Form, Icon, Input, Button, Checkbox, Tooltip} from 'antd';
 
 const confirm = Modal.confirm;
 import css from './register.scss'
@@ -12,9 +12,20 @@ class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false
+            visible: false,
+            code: ''
         }
     }
+
+    componentDidMount() {
+        this.getCode();
+    }
+
+    getCode = () => {
+        Axios.get('/api/code').then(ret => {
+            this.setState({code: ret})
+        })
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -30,7 +41,7 @@ class Index extends React.Component {
     }
 
     render() {
-        const {visible} = this.state;
+        const {visible, code} = this.state;
         let title = '用户注册协议';
         let con = '一、总则\n' +
             '1.1 React16+Koa2的所有权和运营权归Awei所有。 \n' +
@@ -92,62 +103,77 @@ class Index extends React.Component {
             '8.2 如本协议中的任何条款无论因何种原因完全或部分无效或不具有执行力，本协议的其余条款仍应有效并且有约束力。\n' +
             '8.3 本协议解释权及修订权归Awei所有。'
         const {getFieldDecorator} = this.props.form;
-        return <div className={css.box}>
-            <h1 className={css.title}>加入我们</h1>
-            <Form onSubmit={this.handleSubmit}>
-                <FormItem>
-                    {getFieldDecorator('name', {
-                        rules: [{required: true, message: '请输入用户名!'}],
-                    })(
-                        <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="用户名"/>
-                    )}
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator('rpassword', {
-                        rules: [{required: true, message: '请输入密码!'}],
-                    })(
-                        <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
-                               placeholder="密码"/>
-                    )}
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator('rspassword', {
-                        rules: [{required: true, message: '请再次输入密码!'}],
-                    })(
-                        <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
-                               placeholder="验证密码"/>
-                    )}
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator('remember', {
-                        valuePropName: 'checked',
-                        initialValue: false,
-                    })(
-                        <Checkbox>同意<a onClick={this.agreement.bind(this, true)} href="javascript:">协议</a></Checkbox>
-                    )}
-                    <Button type="primary" htmlType="submit">
-                        注册
-                    </Button>
-                    或 <Link to="/login">去登录</Link>
-                </FormItem>
-            </Form>
+        return <div className={css.bg}>
+            <div className={css.box}>
+                <h1 className={css.title}>加入我们</h1>
+                <Form onSubmit={this.handleSubmit}>
+                    <FormItem>
+                        {getFieldDecorator('name', {
+                            rules: [{required: true, message: '请输入用户名!'}],
+                        })(
+                            <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="用户名"/>
+                        )}
+                    </FormItem>
+                    <FormItem>
+                        {getFieldDecorator('rpassword', {
+                            rules: [{required: true, message: '请输入密码!'}],
+                        })(
+                            <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
+                                   placeholder="密码"/>
+                        )}
+                    </FormItem>
+                    <FormItem>
+                        {getFieldDecorator('rspassword', {
+                            rules: [{required: true, message: '请再次输入密码!'}],
+                        })(
+                            <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
+                                   placeholder="验证密码"/>
+                        )}
+                    </FormItem>
+                    <FormItem>
+                        <div className={css.code}>
+                            {getFieldDecorator('code', {
+                                rules: [{required: true, message: '请输入验证码!'}],
+                            })(
+                                <Input len={4} prefix={<Icon type="lock" style={{fontSize: 13}}/>} placeholder="验证码"/>
+                            )}
+                            <Tooltip placement="right" title="刷新">
+                                <img onClick={this.getCode} src={code} alt="验证码"/>
+                            </Tooltip>
+                        </div>
+                    </FormItem>
+                    <FormItem>
+                        {getFieldDecorator('remember', {
+                            valuePropName: 'checked',
+                            initialValue: false,
+                        })(
+                            <Checkbox>同意<a onClick={this.agreement.bind(this, true)}
+                                           href="javascript:">协议</a></Checkbox>
+                        )}
+                        <Button type="primary" htmlType="submit">
+                            注册
+                        </Button>
+                        已有账号？ <Link to="/login">马上登录</Link>
+                    </FormItem>
+                </Form>
 
-            <Modal
-                visible={visible}
-                title={title}
-                width="800px"
-                onOk={this.agreement.bind(this, false)}
-                onCancel={this.agreement.bind(this, false)}
-                footer={[
-                    <Button key="submit" type="primary" size="large" onClick={this.agreement.bind(this, false)}>
-                        好的
-                    </Button>,
-                ]}
-            >
+                <Modal
+                    visible={visible}
+                    title={title}
+                    width="800px"
+                    onOk={this.agreement.bind(this, false)}
+                    onCancel={this.agreement.bind(this, false)}
+                    footer={[
+                        <Button key="submit" type="primary" size="large" onClick={this.agreement.bind(this, false)}>
+                            好的
+                        </Button>,
+                    ]}
+                >
                 <pre className={css.agreement}>
                     {con}
                 </pre>
-            </Modal>
+                </Modal>
+            </div>
         </div>
     }
 }
