@@ -67,8 +67,110 @@
   width: 100%;
   color: #fff;
   display: inline-block;
-  img {
+  .logo {
+    height: 36px;
     margin: 12px;
+  }
+  .info {
+    height: 36px;
+    line-height: 36px;
+    margin: 12px;
+    span {
+      font-size: 16px;
+      color: $def_hover;
+      cursor: pointer;
+      margin: 0 20px;
+    }
+    span:hover {
+      color: $def;
+    }
+  }
+  .user {
+    margin-right: 10px;
+    .mess {
+      height: 60px;
+      display: inline-block;
+      .mess_card {
+        color: $deep;
+        position: absolute;
+        top: 75px;
+        height: 340px;
+        width: 260px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px $deep;
+        background: $def_hover;
+        .seat {
+          position: absolute;
+          top: -15px;
+          height: 15px;
+          width: 100%;
+        }
+        .san {
+          position: absolute;
+          top: 3px;
+          margin-left: 40px;
+          width: 0;
+          height: 0;
+          border-right: 12px solid transparent;
+          border-bottom: 12px solid $info_hover;
+          border-left: 12px solid transparent;
+        }
+        .mess_card_info {
+          color: #fff;
+          height: 90px;
+          background: $info_hover;
+          border-radius: 5px 5px 0 0;
+          width: 100%;
+          line-height: 90px;
+        }
+        ul {
+          margin: 2px 0 0 0;
+          padding: 0;
+          li {
+            line-height: 32px;
+            padding-left: 10px;
+            cursor: pointer;
+          }
+          li:hover {
+            background:#f0f6ff;
+          }
+          li:last-child {
+            border-radius: 0 0 5px 5px;
+          }
+        }
+      }
+    }
+    img {
+      height: 30px;
+      vertical-align: middle;
+      border-radius: 15px;
+      margin: 0 5px;
+    }
+    .download {
+      color: $def_hover;
+    }
+    .download:hover {
+      color: $def;
+    }
+    .vip {
+      color: #d07d12;
+      padding: 5px 15px;
+      background: #ffd821;
+      border-radius: 20px;
+      margin: 0 5px;
+    }
+    .vip:hover {
+      background: #f3cd1b;
+    }
+    span, .download {
+      margin: 0 5px;
+    }
+  }
+  dt {
+    float: left;
+  }
+  dd {
+    float: right;
   }
 }
 

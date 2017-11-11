@@ -3,7 +3,10 @@ import NProgress from 'nprogress'
 import Promise from 'bluebird';
 import {message} from 'antd';
 window.Promise = Promise;
-
+Promise.config({
+    longStackTraces: true,
+    warnings: false // note, run node with --trace-warnings to see full stack traces for warnings
+});
 /**
  * @param  {Object} options
  * @return {Object}         Return Promise
@@ -41,6 +44,7 @@ function post(url, parms) {
     return new Promise((resolve, reject) => {
         NProgress.start();
         NProgress.set(0.5)
+        
         NProgress.inc()
         axios.post(url, parms).then(res => {
             NProgress.done();

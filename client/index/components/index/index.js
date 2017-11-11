@@ -21,25 +21,91 @@ export default class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sta: false
+            sta: false,
+            card: false
         }
     }
 
     componentDidMount() {
         setTimeout(() => {
             Axios.post('/api/user').then(ret => {
-                user = ret;
+                user = {...ret, ...user};
                 this.setState({sta: true})
             })
         }, 500)
     }
 
+    cardSta = (sta) => {
+        this.setState({card: sta})
+    };
+
+    out = () => {
+        let keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        if (keys) {
+            for (let i = keys.length; i--;) {
+                document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+            }
+        }
+        this.props.history.push("/login");
+    };
+
     render() {
-        const {sta} = this.state;
+        const {sta, card} = this.state;
         return sta ? <QueueAnim type="alpha">
             <div key={1} className={css.bg}>
                 <div className={css.head}>
-                    <img src="https://i.bstu.cn/img/logo.png" alt=""/>
+                    <dl>
+                        <dt className={css.logo}><img src="https://i.bstu.cn/img/logo.png" alt=""/></dt>
+                        <dt className={css.info}>
+                            <span>网盘</span>
+                            <span>分享</span>
+                            <span>更多</span>
+                        </dt>
+                        <dd className={css.user}>
+                            <span className={css.mess} onMouseMove={() => this.cardSta(true)} onMouseLeave={() => this.cardSta(false)}>
+                                <span><img src={user.headImg}/></span>
+                                <span>{user.name}</span>
+                                <span><Icon type="pay-circle-o" /></span>
+                                <span><Icon type="up" /></span>
+                                {card ?
+                                <div className={css.mess_card} onMouseMove={this.move}>
+                                    <div className={css.seat}>
+                                        <i className={css.san}>&nbsp;</i>
+                                    </div>
+                                    <div className={css.mess_card_info}>
+                                        <span><img src={user.headImg}/></span>
+                                        <span>{user.name}</span>
+                                        <span><Icon type="pay-circle-o" /></span>
+                                    </div>
+                                    <div>
+                                        <span>超级会员尊享15项特权：</span>
+                                        <a className={css.vip} href="">会员中心</a>
+                                    </div>
+                                    <div>
+                                        <span><img src={user.headImg}/></span>
+                                        <span><img src={user.headImg}/></span>
+                                        <span><img src={user.headImg}/></span>
+                                        <span><img src={user.headImg}/></span>
+                                        <span><img src={user.headImg}/></span>
+                                    </div>
+                                    <div>
+                                        <ul>
+                                            <li>个人资料</li>
+                                            <li>设置二级密码</li>
+                                            <li>帮助中心</li>
+                                            <li onClick={this.out}>退出</li>
+                                        </ul>
+                                    </div>
+                                </div> : null}
+                            </span>
+                            <span>|</span>
+                            <a className={css.download} href="">客户端下载</a>
+                            <span><Icon type="bell"/></span>
+                            <span><Icon type="book"/></span>
+                            <span><Icon type="skin"/></span>
+                            <a className={css.vip} href="">会员中心</a>
+                        </dd>
+                    </dl>
                 </div>
                 <div>
                     <div className={css.menu}>
@@ -75,7 +141,7 @@ export default class Index extends React.Component {
                         <p className={css.container_txt}>安全验证中...</p>
                         <div className={css.progress}>
                             <div className={css.progress_bar}>
-                                <div className={css.progress_shadow}></div>
+                                <div className={css.progress_shadow}>&nbsp;</div>
                             </div>
                         </div>
                     </div>
