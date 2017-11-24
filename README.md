@@ -14,8 +14,6 @@ react 16 + react-router 4 + koa2 按需加载最新脚手架，开箱即用
 
 ```
 
-----
-
 ## 使用
 
 ```
@@ -39,6 +37,7 @@ react 16 + react-router 4 + koa2 按需加载最新脚手架，开箱即用
 
 https://serve.bstu.cn
 
+----
 
 # 项目总结
 
