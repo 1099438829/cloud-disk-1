@@ -35,6 +35,13 @@ class Index extends React.Component {
                         this.props.history.push("/");
                     } else {
                         message.error(ret.message)
+                        switch (ret.code){
+                            case 10000:
+                                this.getCode();
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 })
             }

@@ -11,13 +11,38 @@ router.prefix('/api');
  * lw 登录
  */
 router.post('/login', checkCode, function (ctx, next) {
-    console.log(ctx);
     console.warn('login createToken', ctx.res.user);
-    let token = createToken({id: 10, name: 'liwei'});
-    ctx.cookie.set('token', token)
-    ctx.body = {
-        state: true
+    let ret = {
+        state: false,
+        message: '验证码错误',
+        code: 10000
+    };
+    if (ctx.res.user.codeSta) {
+        ret = {
+            state: true
+        };
+        let token = createToken({id: 10, name: 'liwei'});
+        ctx.cookie.set('token', token);
     }
+    ctx.body = ret
+});
+
+/**
+ * lw 登录
+ */
+router.post('/register', checkCode, function (ctx, next) {
+    console.log('注册信息：', ctx.request.body);
+    let ret = {
+        state: false,
+        message: '验证码错误',
+        code: 10000
+    };
+    if (ctx.res.user.codeSta) {
+        ret = {
+            state: true
+        }
+    }
+    ctx.body = ret
 });
 
 router.get('/look/:page', checkToken, function (ctx, next) {

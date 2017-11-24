@@ -1,8 +1,7 @@
 import React from 'react';
 import {Axios} from 'Public'
 import {Link} from 'react-router-dom'
-import {Modal, Form, Icon, Input, Button, Checkbox, Tooltip} from 'antd';
-
+import {Modal, Form, Icon, Input, Button, Checkbox, Tooltip, message} from 'antd';
 const confirm = Modal.confirm;
 import css from './register.scss'
 
@@ -32,6 +31,31 @@ class Index extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                Axios.post('/api/register', values).then(ret => {
+                    if (ret.state) {
+                        Modal.success({
+                            title: '提示',
+                            content: (
+                                <div>
+                                    <p>恭喜你！</p>
+                                    <p>注册账号成功。</p>
+                                    <a href="/login">马上登录</a>
+                                </div>
+                            ),
+                            onOk() {
+                            },
+                        });
+                    } else {
+                        message.error(ret.message)
+                        switch (ret.code){
+                            case 10000:
+                                this.getCode();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                })
             }
         });
     }
