@@ -40,11 +40,11 @@ react 16 + react-router 4 + koa2 按需加载最新脚手架，开箱即用
 https://serve.bstu.cn
 
 
-## 项目总结
+# 项目总结
 
-##一、koa2的一些方法
+## 一、koa2的一些方法
 
-###1.API参数的获取
+### 1.API参数的获取
 
 >get 值（value）是字符串类型
 ````
@@ -56,7 +56,7 @@ http://localhost:3000/api/code/:page ctx.params {page: '123'}
 http://localhost:3000/api/code ctx.request.body {t: 1}
 ````
 
-##二、关于token
+## 二、关于token
 > 使用npm库的jsonwebtoken插件，登录或者获取信息时生成token，请求的时候利用中间件验证token合法性
 
 ````
@@ -90,11 +90,11 @@ router.get('/look/:page', checkToken, function (ctx, next) {
 });
 ````
 
-##三、关于验证码
+## 三、关于验证码
 
 > 验证码是为了验证操作这是人类或者机器人，避免资源浪费和恶意请求，通常用于登录注册验证或重要的API
 
-###1.关于验证方式
+### 1.关于验证方式
 
 * (1).验证码
 * (2).图形验证码（滑块的位置，图中选字，选择规定图片，最近操作，图片拼合）
@@ -102,7 +102,7 @@ router.get('/look/:page', checkToken, function (ctx, next) {
 * (4).固件验证，短信，证书
 
 
-###2.使用
+### 2.使用
 
 
 * (1).验证码
@@ -173,11 +173,11 @@ router.get('/code', async function (ctx, next) {
     ②...
 
 
-##四、关于上传
+## 四、关于上传
 
 > 上传
 
-###1.插件koa-multer
+### 1.插件koa-multer
 
 ````
 // 导包
