@@ -1,15 +1,18 @@
 const router = require('koa-router')()
-const {createToken, checkToken} = require('../token');
+const {createToken, checkToken, checkCode} = require('../token');
 var fs = require('fs'), path = require('path');
 var BMP24 = require('gd-bmp').BMP24;
+var md5 = require('js-md5');
+const conf = require('../config');
 
 router.prefix('/api');
 
 /**
  * lw 登录
  */
-router.post('/login', function (ctx, next) {
-    console.warn('login createToken', ctx.body);
+router.post('/login', checkCode, function (ctx, next) {
+    console.log(ctx);
+    console.warn('login createToken', ctx.res.user);
     let token = createToken({id: 10, name: 'liwei'});
     ctx.cookie.set('token', token)
     ctx.body = {
@@ -18,7 +21,7 @@ router.post('/login', function (ctx, next) {
 });
 
 router.get('/look/:page', checkToken, function (ctx, next) {
-    console.warn('PAGE', ctx.params.page);
+    console.warn('PAGE', ctx.params);
     console.warn('TokenUser', ctx.res.user);
     ctx.body = ctx.res.user
 });
@@ -200,8 +203,10 @@ function rand(min, max) {
     return Math.random() * (max - min + 1) + min | 0; //特殊的技巧，|0可以强制转换为整数
 }
 
+// 生成验证码并返回
 router.get('/code', async function (ctx, next) {
-    let imgs = '';
+    console.log(ctx.query.t);
+    let imgs = '', type = ctx.query.t || 0;
     await new Promise((resolve, reject) => {
         BMP24.loadFromFile(path.resolve(__dirname, 'a.bmp'), function (err, img) {
             // 边框
@@ -232,6 +237,7 @@ router.get('/code', async function (ctx, next) {
             for (let i = 0; i < 4; i++) {
                 str += p.charAt(Math.random() * p.length | 0);
             }
+            ctx.cookie.set('code', md5(conf.md5Name + str.toLowerCase()));
             let fonts = [BMP24.font8x16, BMP24.font12x24, BMP24.font16x32];
             let x = 15, y = 8;
             for (let i = 0; i < str.length; i++) {
@@ -245,7 +251,7 @@ router.get('/code', async function (ctx, next) {
         })
     });
     ctx.set('Content-Type', 'image/bmp');
-    ctx.body = 'data:image/bmp;base64,' + imgs.getFileData().toString('base64');
+    ctx.body = !parseInt(type) ? 'data:image/bmp;base64,' + imgs.getFileData().toString('base64') : imgs.getFileData();
 });
 
 module.exports = router

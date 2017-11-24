@@ -1,6 +1,7 @@
 module.exports = {
     port: 3000,
     tokenName: 'react16-koa2',
+    md5Name: 'react16-koa2',
     cookieOptions: {
         maxAge: 1000 * 3600 * 2,
         path: '/',
