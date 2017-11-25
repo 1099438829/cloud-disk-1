@@ -198,18 +198,28 @@ export default class Index extends React.Component {
         this.setState({catalog: catalog, allCheckSta: allSta})
     };
 
+    // 按钮触发选择上传文件
+    upBtn = () => {
+        this.state.file.click();
+    };
+
     file = () => {
-        let upFile = this.state.file.files[0];
-        let file = {
-            name: upFile.name,
-            size: upFile.size,
-            loading: 0,
-            status: 'active',
-            timeStamp: 0,
-            data: upFile,
-            index: 1
-        };
-        this.setState({file: [file]}, () => {
+        console.log(this.state.file.files);
+        let upFile = this.state.file.files;
+        let file = [];
+        console.log(upFile.length);
+        for (let i = 0; i < upFile.length; i++) {
+            file.push({
+                name: upFile[i].name,
+                size: upFile[i].size,
+                loading: 0,
+                status: 'active',
+                timeStamp: 0,
+                data: upFile[i],
+                index: 1
+            })
+        }
+        this.setState({file: file}, () => {
             this.state.file.value = '';
         });
     }
@@ -229,12 +239,9 @@ export default class Index extends React.Component {
         return <div className={css.box} onDragEnter={this.upSta.bind(this, true)}>
             {/*操作*/}
             <div className={css.oper}>
-                <button className={css.info_btn}><Icon type="upload"/>&nbsp;上传
-                    <input className={css.file} type="file" ref={(e) => this.state.file = e} onChange={this.file}/>
-                </button>
-                <button className={css.def_btn} onClick={() => this.changeModel(true, 'add')}><Icon
-                    type="folder-add"/>&nbsp;创建文件夹
-                </button>
+                <button onClick={this.upBtn} className={css.info_btn}><Icon type="upload"/>&nbsp;上传</button>
+                <input className={css.file} type="file" webkitdirectory="" ref={(e) => this.state.file = e} onChange={this.file}/>
+                <button className={css.def_btn} onClick={() => this.changeModel(true, 'add')}><Icon type="folder-add"/>&nbsp;创建文件夹</button>
                 {checkNum === 1 ?
                 <button className={css.def_btn} onClick={() => this.changeModel(true, 'edit')}><Icon type="edit"/>&nbsp;修改名称</button> :null}
                 {checkNum ?

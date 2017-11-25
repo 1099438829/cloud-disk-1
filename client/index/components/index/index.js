@@ -66,12 +66,10 @@ export default class Index extends React.Component {
                                 <span><img src={user.headImg}/></span>
                                 <span>{user.name}</span>
                                 <span><Icon type="pay-circle-o" /></span>
-                                <span><Icon type="up" /></span>
+                                <span><Icon className={card ? css.card_up_active : css.card_up} type="up" /></span>
                                 {card ?
                                 <div className={css.mess_card} onMouseMove={this.move}>
-                                    <div className={css.seat}>
-                                        <i className={css.san}>&nbsp;</i>
-                                    </div>
+                                    <div className={css.seat}></div>
                                     <div className={css.mess_card_info}>
                                         <span><img src={user.headImg}/></span>
                                         <span>{user.name}</span>

@@ -36,16 +36,82 @@
   outline: none;
 }
 
-.up_file_model {
+.file_model {
   position: fixed;
-  height: 300px;
-  width: 100%;
-  background: $def_hover;
-  left: 0;
+  max-width: 600px;
+  height: 100vh;
+  right: 0;
   bottom: 0;
-  box-shadow: 0 0 5px;
-  padding: 20px;
+  padding-left: 20px;
   overflow-y: auto;
+  transition: all .3s;
+
+  .colse{
+    cursor: pointer;
+    transform: rotate(270deg);
+    width: 30px;
+    height: 20px;
+    text-align: center;
+    color: $def_hover;
+    line-height: 20px;
+    background-color: $def_hover;
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    .colse_t {
+      height: 2px;
+      display: inline-block;
+      box-shadow: 0px -2px 2px #5d5d5d;
+      width: 34px;
+      position: absolute;
+      z-index: 1;
+      top: 2px;
+      left: -2px;
+    }
+    .colse_i {
+      color: #9c9c9c;
+      font-size: 20px;
+      margin-top: 2px;
+      transform: rotate(0deg);
+      transition: all .3s;
+    }
+  }
+  .colse:hover .colse_i{
+    transform: rotate(180deg);
+  }
+  .colse:before{
+    content: '';
+    display: block;
+    width: 12px;
+    height: 20px;
+    position: absolute;
+    -webkit-transform: skewX(-30deg);
+    transform: skewX(-30deg);
+    background: $def_hover;
+    left: -6px;
+    top: 0;
+    box-shadow: -2px -2px 2px #9c9c9c;
+  }
+  .colse:after{
+    content: '';
+    display: block;
+    width: 12px;
+    height: 20px;
+    position: absolute;
+    -webkit-transform: skewX(30deg);
+    transform: skewX(30deg);
+    background: $def_hover;
+    top: 0;
+    right: -6px;
+    box-shadow: 2px -2px 2px #9c9c9c;
+  }
+}
+
+.up_file_model {
+  background: #fff;
+  height: 100%;
+  padding: 20px;
+  box-shadow: 0 0 5px;
 
   table {
     width: 100%;
@@ -58,13 +124,13 @@
     border: 1px solid #ebebeb;
     line-height: 30px;
     background-color: $def;
-    width: 20%;
+    //width: 20%;
   }
 
   td {
     border: 1px solid #ebebeb;
     text-align: center;
-    width: 20%;
+    //width: 20%;
     padding: 0 10px;
   }
 

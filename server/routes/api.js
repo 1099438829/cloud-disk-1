@@ -1,8 +1,8 @@
 const router = require('koa-router')()
 const {createToken, checkToken, checkCode} = require('../token');
-var fs = require('fs'), path = require('path');
-var BMP24 = require('gd-bmp').BMP24;
-var md5 = require('js-md5');
+const fs = require('fs'), path = require('path');
+const BMP24 = require('gd-bmp').BMP24;
+const md5 = require('js-md5');
 const conf = require('../config');
 
 router.prefix('/api');

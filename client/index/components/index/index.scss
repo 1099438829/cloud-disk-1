@@ -88,8 +88,17 @@
   .user {
     margin-right: 10px;
     .mess {
+      cursor: pointer;
       height: 60px;
       display: inline-block;
+      .card_up{
+        transition: all .3s;
+        transform: rotate(0deg);
+      }
+      .card_up_active {
+        transition: all .3s;
+        transform: rotate(180deg);
+      }
       .mess_card {
         color: $deep;
         position: absolute;
@@ -105,15 +114,19 @@
           height: 15px;
           width: 100%;
         }
-        .san {
+        .seat:after {
           position: absolute;
-          top: 3px;
-          margin-left: 40px;
+          display: inline-block;
+          top: 5px;
+          left: 25px;
           width: 0;
           height: 0;
-          border-right: 12px solid transparent;
-          border-bottom: 12px solid $info_hover;
-          border-left: 12px solid transparent;
+          content: '';
+          border-style: solid;
+          border-width: 10px;
+          border-color: $info_hover $info_hover transparent transparent;
+          transform: rotate(-45deg);
+          box-shadow: 2px -2px 2px #ccc;
         }
         .mess_card_info {
           color: #fff;
