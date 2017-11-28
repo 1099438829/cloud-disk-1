@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {Form, Icon, Input, Button, Checkbox, Carousel, message, Tooltip} from 'antd';
 import css from './login.scss'
 const FormItem = Form.Item;
+import io from 'socket.io-client';
 
 class Index extends React.Component {
     constructor(props) {

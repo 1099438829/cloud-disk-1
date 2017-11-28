@@ -48,7 +48,7 @@ router.post('/register', checkCode, function (ctx, next) {
 
 router.get('/look/:page', checkToken, function (ctx, next) {
     let aa = socket.set()
-    console.warn(aa);
+    // console.warn(aa);
     aa.sockets.emit('number', 'BBB');
     // console.warn('PAGE', ctx.params);
     // console.warn('TokenUser', ctx.res.user);
