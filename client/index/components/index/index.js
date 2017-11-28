@@ -6,6 +6,7 @@ import {Route, Redirect, Switch as RouterSwitch, Link} from 'react-router-dom'
 import Bundle from '../../bundle';
 import {menu} from '../../config'
 import {Icon} from 'antd'
+import io from 'socket.io-client';
 
 import HomeController from 'bundle-loader?lazy&name=home!../home'
 import MainController from 'bundle-loader?lazy&name=main!../main'
@@ -33,6 +34,10 @@ export default class Index extends React.Component {
                 this.setState({sta: true})
             })
         }, 500)
+        window.socket = io.connect(':4000', {reconnection: true, secure: true})
+        socket.on('number', function (n) {
+            console.log(n, ' 人在线');
+        })
     }
 
     cardSta = (sta) => {

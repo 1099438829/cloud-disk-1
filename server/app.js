@@ -3,9 +3,11 @@ const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
+const favicon = require('koa-favicon')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const conf = require('./config');
+const socket = require('./socket');
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -16,6 +18,7 @@ const multer = require('./routes/multer')
 onerror(app)
 
 // middlewares
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
 }))
@@ -60,5 +63,7 @@ app.use(users.routes(), users.allowedMethods())
 app.on('error', (err, ctx) => {
     console.error('server error', err, ctx)
 });
+
+socket.srever(app);
 
 module.exports = app

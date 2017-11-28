@@ -4,6 +4,7 @@ const fs = require('fs'), path = require('path');
 const BMP24 = require('gd-bmp').BMP24;
 const md5 = require('js-md5');
 const conf = require('../config');
+const socket = require('../socket');
 
 router.prefix('/api');
 
@@ -46,8 +47,11 @@ router.post('/register', checkCode, function (ctx, next) {
 });
 
 router.get('/look/:page', checkToken, function (ctx, next) {
-    console.warn('PAGE', ctx.params);
-    console.warn('TokenUser', ctx.res.user);
+    let aa = socket.set()
+    console.warn(aa);
+    aa.sockets.emit('number', 'BBB');
+    // console.warn('PAGE', ctx.params);
+    // console.warn('TokenUser', ctx.res.user);
     ctx.body = ctx.res.user
 });
 /**
