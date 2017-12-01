@@ -240,7 +240,7 @@ export default class Index extends React.Component {
             {/*操作*/}
             <div className={css.oper}>
                 <button onClick={this.upBtn} className={css.info_btn}><Icon type="upload"/>&nbsp;上传</button>
-                <input className={css.file} type="file" webkitdirectory="" ref={(e) => this.state.file = e} onChange={this.file}/>
+                <input className={css.file} type="file" multiple="multiple" ref={(e) => this.state.file = e} onChange={this.file}/>
                 <button className={css.def_btn} onClick={() => this.changeModel(true, 'add')}><Icon type="folder-add"/>&nbsp;创建文件夹</button>
                 {checkNum === 1 ?
                 <button className={css.def_btn} onClick={() => this.changeModel(true, 'edit')}><Icon type="edit"/>&nbsp;修改名称</button> :null}

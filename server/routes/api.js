@@ -5,45 +5,61 @@ const BMP24 = require('gd-bmp').BMP24;
 const md5 = require('js-md5');
 const conf = require('../config');
 const socket = require('../socket');
+const db = require('../sql')
 
 router.prefix('/api');
 
 /**
  * lw 登录
  */
-router.post('/login', checkCode, function (ctx, next) {
-    console.warn('login createToken', ctx.res.user);
-    let ret = {
-        state: false,
-        message: '验证码错误',
-        code: 10000
-    };
+router.post('/login', checkCode, async(ctx, next) => {
+    let message = '', result = '', code = 200, state = true;
+    let dat = ctx.request.body;
     if (ctx.res.user.codeSta) {
-        ret = {
-            state: true
-        };
-        let token = createToken({id: 10, name: 'liwei'});
-        ctx.cookie.set('token', token);
+        try {
+            result = await db.op(`select * from r_user where users = "${dat.userName}" and password = "${md5(dat.password)}" limit 1`)
+            console.log(typeof result.length);
+            if (result.length) {
+                ctx.cookie.set('token', createToken(JSON.parse(JSON.stringify(result[0]))));
+            }else{
+                code = 10002;
+                state = false;
+                message = '账户名或者密码错误'
+            }
+        } catch (e) {
+            code = 10001;
+            state = false;
+            message = e.name + ':' + e.message
+        }
+    } else {
+        code = 10000;
+        state = false;
+        message = '验证码错误'
     }
-    ctx.body = ret
+    ctx.body = {result: result, state: state, message: message, code: code};
+
 });
 
 /**
- * lw 登录
+ * lw 注册
  */
-router.post('/register', checkCode, function (ctx, next) {
-    console.log('注册信息：', ctx.request.body);
-    let ret = {
-        state: false,
-        message: '验证码错误',
-        code: 10000
-    };
+router.post('/register', checkCode, async(ctx, next) => {
+    let message = '', result = '', code = 200, state = true;
+    let dat = ctx.request.body;
     if (ctx.res.user.codeSta) {
-        ret = {
-            state: true
+        try {
+            await db.op(`insert into r_user(users, password) values("${dat.name}", "${md5(dat.rpassword)}")`)
+        } catch (e) {
+            code = 10001;
+            state = false;
+            message = e.name + ':' + e.message
         }
+    } else {
+        code = 10000;
+        state = false;
+        message = '验证码错误'
     }
-    ctx.body = ret
+    ctx.body = {result: result, state: state, message: message, code: code};
 });
 
 router.get('/look/:page', checkToken, function (ctx, next) {
@@ -70,7 +86,7 @@ router.post('/catalog', checkToken, async function (ctx, next) {
             resolve()
         });
     });
-    for (let i=0; i<data.length; i++){
+    for (let i = 0; i < data.length; i++) {
         let curPath = route + "/" + data[i];
         await new Promise((resolve, reject) => {
             fs.stat(curPath, function (err, stats) {
@@ -145,7 +161,7 @@ router.post('/addFolder', checkToken, async function (ctx, next) {
 
 
         fs.mkdir(route, function (err) {
-            if(err)
+            if (err)
                 throw err;
             sta = true;
             console.log('创建目录成功')
@@ -210,7 +226,7 @@ router.post('/editFolder', checkToken, async function (ctx, next) {
     if (route) {
         await new Promise((resolve, reject) => {
             fs.rename(route, newRoute, function (err) {
-                if(err)
+                if (err)
                     throw err;
                 sta = true;
                 console.log('修改名称成功！')

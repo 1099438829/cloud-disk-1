@@ -1,8 +1,9 @@
 import React from 'react';
 import css from './index.scss'
 import {Axios} from 'Public';
+import axios from 'axios'
 
-import {Progress, Icon} from 'antd'
+import {Progress, Icon, message} from 'antd'
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ export default class Index extends React.Component {
 
     componentDidMount() {
         this.state.showUp = this.props.showUp;
-        // 禁止浏览器内退拽
+        // 禁止浏览器内拖拽
         document.ondragstart = function () {
             return false;
         };
@@ -39,15 +40,8 @@ export default class Index extends React.Component {
                 item.index = fileList.length + i;
                 i++;
             });
-            this.setState({upModelSta: true, fileList: [...this.state.fileList, ...nextProps.file]}, () =>{
-
-                this.upFile(nextProps.file);
-                // nextProps.file.map(item => {
-                //     new Promise((resolve, reject) => {
-                //         this.upFile(item);
-                //         resolve(true)
-                //     })
-                // })
+            this.setState({upModelSta: true, fileList: [...this.state.fileList, ...nextProps.file]}, () => {
+                this.upFile(nextProps.file, 0);
             })
         }
     }
@@ -61,25 +55,30 @@ export default class Index extends React.Component {
 
     // 拖拽释放
     upDrop = (e) => {
-        this.setState({showUp: false})
-        if (e.dataTransfer.files.length) {
-            let dat = {
-                name: e.dataTransfer.files[0].name,
-                size: e.dataTransfer.files[0].size,
-                loading: 0,
-                status: 'active',
-                timeStamp: 0,
-                data: e.dataTransfer.files[0],
-                index: this.state.fileList.length + 1
-            };
-            this.setState({fileList: [...this.state.fileList, dat], upModelSta: true}, () =>{
-                this.upFile(dat);
+        let file = e.dataTransfer.files;
+        this.setState({showUp: false});
+        if (file) {
+            let dat = [];
+            for (let i = 0; i < file.length; i++) {
+                dat.push({
+                    name: file[i].name,
+                    size: file[i].size,
+                    loading: 0,
+                    status: 'active',
+                    timeStamp: 0,
+                    data: file[i],
+                    index: this.state.fileList.length + 1 + i
+                })
+            }
+            this.setState({fileList: [...this.state.fileList, ...dat], upModelSta: true}, () => {
+                this.upFile(dat, 0);
             })
         }
     };
 
     // 上传
-    upFile = (dat) => {
+    upFile = (dat, n) => {
+        this.state.first = n;
         let file = dat;
         if (dat.length) {
             this.state.moreFile = dat;
@@ -89,25 +88,35 @@ export default class Index extends React.Component {
             file.status = 'active';
             this.state.upIng = true;
             this.state.thenFile = file;
-            let url = "/multer/upload";
             let form = new FormData();
             form.append('file', file.data);
-            let xhr = new XMLHttpRequest();
-            xhr.open("post", url, true);
-            xhr.onload = this.uploadComplete; //请求完成
-            xhr.onerror = this.uploadFailed; //请求失败
-            xhr.upload.onprogress = this.progressFunction;
-            xhr.send(form);
+            axios({
+                method: 'post',
+                url: 'http://127.0.0.1:3000/multer/upload',
+                data: form,
+                onUploadProgress: this.progressFunction, // 进度
+                onDownloadProgress: this.uploadComplete, // 完成
+            }).then(ret => {
+                if (ret.status === 200) {
+                    message.success(`${file.name}上传成功!`)
+                } else {
+                    message.success(`上传出错：${ret.statusText}!`)
+                }
+            }).catch(this.uploadFailed);
         }
     };
 
     // 上传进度
     progressFunction = (evt) => {
+        console.log(evt);
         let loading = Math.round(evt.loaded / evt.total * 100);
         let timeStamp = (evt.timeStamp).toFixed(2) + 'KB/s';
         let {thenFile, fileList} = this.state;
         fileList.map(item => {
             if (item.index === thenFile.index) {
+                // if (timeStamp > (evt.total / 1024).toFixed(2)) {
+                //     timeStamp = (evt.total / 1024).toFixed(2)
+                // }
                 item.loading = loading;
                 item.timeStamp = timeStamp;
             }
@@ -123,7 +132,7 @@ export default class Index extends React.Component {
         // 服务断接收完文件返回的结果
         // alert(evt.target.responseText);
         let {thenFile, fileList} = this.state;
-        console.log("上传成功！", thenFile);
+        // console.log("上传成功！", thenFile);
         fileList.map(item => {
             if (item.index === thenFile.index) {
                 item.status = 'success';
@@ -132,7 +141,7 @@ export default class Index extends React.Component {
         this.setState({fileList: fileList, upIng: false}, () => {
             if (this.state.moreFile.length > 0 && this.state.first < this.state.moreFile.length) {
                 this.state.first++;
-                this.upFile(this.state.moreFile)
+                this.upFile(this.state.moreFile, this.state.first)
             }
         })
     };
@@ -158,49 +167,52 @@ export default class Index extends React.Component {
                     <div className={css.up_box_sty}>
                         <div>释放上传文件</div>
                     </div>
-                    <input id="inputarea" className={css.up_file} type="file" name="file" multiple="multiple"
-                           accept="*"/>
+                    <input id="inputarea" className={css.up_file} type="file" name="file" multiple="multiple"/>
                 </div> : null
             }
             <div className={css.file_model}>
-                <div className={css.colse} onClick={() => {this.setState({upModelSta: !this.state.upModelSta})}}>
+                <div className={css.colse} onClick={() => {
+                    this.setState({upModelSta: !this.state.upModelSta})
+                }}>
                     <i className={css.colse_t}/>
-                    <Icon className={css.colse_i} type={upModelSta ? 'up' : 'down'} />
+                    <Icon className={css.colse_i} type={upModelSta ? 'up' : 'down'}/>
                 </div>
                 {upModelSta ?
-                <div className={css.up_file_model}>
-                    {fileList.length ?
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>文件名</th>
-                            <th>大小</th>
-                            <th>状态</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {fileList.map((item, i) => {
-                            return <tr key={i}>
-                                <td>{i + 1}</td>
-                                <td><span title={item.name}>{item.name.substring(0, 10)}</span></td>
-                                <td>{(item.size / 1024).toFixed(2)}KB</td>
-                                <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
-                                <td>
-                                    {item.status === 'active' ? (upIng ?
-                                        <span><Icon type="loading"/>&nbsp;上传中...</span> :
-                                        <button className={css.info_btn} onClick={this.upFile.bind(this, item)}>上传</button>) :
-                                        item.status === 'exception' ?
-                                            <button className={css.warn_btn} onClick={this.upFile.bind(this, item)}>重试</button> :
-                                            <span className={css.success_hover}>上传成功！</span>}
-                                </td>
-                            </tr>
-                        })}
-                        </tbody>
-                    </table> : null}
+                    <div className={css.up_file_model}>
+                        {fileList.length ?
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>文件名</th>
+                                    <th>大小</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {fileList.map((item, i) => {
+                                    return <tr key={i}>
+                                        <td>{i + 1}</td>
+                                        <td><span title={item.name}>{item.name.substring(0, 10)}</span></td>
+                                        <td>{(item.size / 1024).toFixed(2)}KB</td>
+                                        <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
+                                        <td>
+                                            {item.status === 'active' ? (upIng ?
+                                                <span><Icon type="loading"/>&nbsp;上传中...</span> :
+                                                <button className={css.info_btn} onClick={this.upFile.bind(this, item, this.state.first)}>
+                                                    上传</button>) :
+                                                item.status === 'exception' ?
+                                                    <button className={css.warn_btn}
+                                                            onClick={this.upFile.bind(this, item, this.state.first)}>重试</button> :
+                                                    <span className={css.success_hover}>上传成功！</span>}
+                                        </td>
+                                    </tr>
+                                })}
+                                </tbody>
+                            </table> : null}
 
-                </div> : null}
+                    </div> : null}
             </div>
         </div>
     }

@@ -23,7 +23,7 @@ module.exports = {
         path: path.resolve(__dirname, '../server/public/js'),
         filename: 'index.bundle.js',
         chunkFilename: '[name].[chunkhash:4].bundle.js',
-        publicPath: '/js/'
+        publicPath: './js/'
     },
     // 模块处理
     module: {

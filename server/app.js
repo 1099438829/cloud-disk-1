@@ -8,6 +8,8 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const conf = require('./config');
 const socket = require('./socket');
+var cors = require('koa-cors');
+app.use(cors());
 
 const index = require('./routes/index')
 const users = require('./routes/users')

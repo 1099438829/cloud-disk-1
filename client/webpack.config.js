@@ -22,10 +22,14 @@ module.exports = {
     },
     // 输出
     output: {
-        path: path.resolve(__dirname, '../server/public/js'),
+        // path: path.resolve(__dirname, '../server/public/js'),
+        // filename: 'index.bundle.js',
+        // chunkFilename: '[name].[chunkhash:4].bundle.js',
+        // publicPath: '/js/'
+        path: path.resolve(__dirname, './build/js'),
         filename: 'index.bundle.js',
         chunkFilename: '[name].[chunkhash:4].bundle.js',
-        publicPath: '/js/'
+        publicPath: './build/js/'
     },
     // 模块处理
     module: {
@@ -85,6 +89,6 @@ module.exports = {
         // 多个 html共用一个js文件(chunk)
         new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
         // 将样式文件(css,sass,less)合并成一个css文件
-        new ExtractTextPlugin({filename: '../css/[name].bundle.css', allChunks: true}),
+        new ExtractTextPlugin({filename: '../css/index.bundle.css', allChunks: true}),
     ]
 }

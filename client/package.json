@@ -2,10 +2,12 @@
   "name": "react16-koa2",
   "version": "0.1.0",
   "description": "react16+koa2脚手架",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "webpack --watch",
-    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress"
+    "ele": "electron .",
+    "package": "electron-packager . app --win --out react16koa2 --arch=x64 --version 1.7.8 --overwrite --ignore=node_modules",
+    "build": "set NODE_ENV=production && webpack --config ./webpack.prod.config.js --progress"
   },
   "author": "awei",
   "license": "ISC",
@@ -24,6 +26,7 @@
     "bluebird": "^3.5.1",
     "bundle-loader": "^0.5.5",
     "css-loader": "^0.28.7",
+    "electron": "~1.7.8",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.5",
     "node-sass": "^4.5.3",

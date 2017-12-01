@@ -34,7 +34,7 @@ export default class Index extends React.Component {
                 this.setState({sta: true})
             })
         }, 500)
-        window.socket = io.connect(':4000', {reconnection: true, secure: true})
+        window.socket = io.connect('http://127.0.0.1:4000', {reconnection: true, secure: true})
         socket.on('number', function (n) {
             console.log(n, ' 人在线');
         })

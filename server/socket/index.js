@@ -52,7 +52,6 @@ function srever(app) {
         ids.push(socket_id);
         number++;
         let u =await sql()
-        console.warn(u);
         io.sockets.emit('number', u);
 
         socket.emit('id', socket_id);
