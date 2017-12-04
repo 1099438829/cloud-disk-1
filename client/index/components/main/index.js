@@ -28,11 +28,17 @@ export default class Index extends React.Component {
         message.success('localStorage已删除！')
     }
 
+    open = () => {
+        // window.close()
+        window.open('#/about')
+    };
+
     render() {
         const {token} = this.state;
         const name = '12';
         return <div>
-            <p>this main</p>
+            <p onClick={this.open}>this mains</p>
+            {/*<a href="#/about" target="_blank">baidu</a>*/}
             <div>
                 <button onClick={this.look}>模拟请求，无token跳转到主页，有则返回token用户信息11</button>
             </div>

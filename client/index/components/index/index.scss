@@ -124,7 +124,7 @@
           content: '';
           border-style: solid;
           border-width: 10px;
-          border-color: $info_hover $info_hover transparent transparent;
+          border-color: $info_hover $info_hover $info_hover $info_hover;
           transform: rotate(-45deg);
           box-shadow: 2px -2px 2px #ccc;
         }

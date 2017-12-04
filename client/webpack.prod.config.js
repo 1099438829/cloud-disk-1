@@ -20,10 +20,14 @@ module.exports = {
     },
     // 输出
     output: {
-        path: path.resolve(__dirname, '../server/public/js'),
+        // path: path.resolve(__dirname, '../server/public/js'),
+        // filename: 'index.bundle.js',
+        // chunkFilename: '[name].[chunkhash:4].bundle.js',
+        // publicPath: './js/'
+        path: path.resolve(__dirname, './build/js'),
         filename: 'index.bundle.js',
         chunkFilename: '[name].[chunkhash:4].bundle.js',
-        publicPath: './js/'
+        publicPath: './build/js/'
     },
     // 模块处理
     module: {
@@ -31,17 +35,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: [{
-                    loader: 'babel-loader',
-                    //配置参数;
-                    options: {
-                        presets: ['react', 'es2015', 'stage-0'],
-                        plugins: [
-                            'transform-runtime',
-                            ["import", { "libraryName": "antd", "style": "css" }]
-                        ]
-                    }
-                }],
+                loader: 'babel-loader'
             },
             {
                 test: /\.(scss|sass)$/,
@@ -67,7 +61,10 @@ module.exports = {
             },
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-                loader: 'url-loader?limit=50000&name=[path][name].[ext]'
+                loader: 'url-loader?limit=50000&name=[path][name].[ext]',
+                options:{
+                    name:'[hash:base64:8].[ext]'
+                }
             },
             {
                 test: /\.css$/,

@@ -50,6 +50,9 @@ const checkCode = async (ctx, next) => {
     if (code && md5(conf.md5Name + code.toLowerCase()) === ctx.cookie.get('code')) {
         codeSta = true;
     }
+    if (!conf.verificationSta) {
+        codeSta = true
+    }
     ctx.res.user = {codeSta: codeSta};
     await next();
 };

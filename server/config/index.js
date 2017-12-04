@@ -16,6 +16,7 @@ module.exports = {
     db: db,
     tokenName: 'react16-koa2',
     md5Name: 'react16-koa2',
+    verificationSta: false, // 启用验证码
     cookieOptions: {
         maxAge: 1000 * 3600 * 2,
         path: '/',
