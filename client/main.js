@@ -18,8 +18,9 @@ var appTray = null, trayIcon;
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 760,
+        minWidth: 1200,
+        minHeight: 760,
+        frame: false,
         resizable: true,
         title: '百度云盘',
         skipTaskbar: false
