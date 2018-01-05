@@ -1,6 +1,5 @@
-# react16-koa2
-react16+koa2脚手架
-react 16 + react-router 4 + koa2 按需加载最新脚手架，开箱即用
+# cloud-disk
+由react 16 + react-router 4 + koa2 架构的在线云盘，ui仿照百度云
 
 ## 环境
 
