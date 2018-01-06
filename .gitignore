@@ -61,3 +61,4 @@ typings/
 
 server/public/css
 server/public/js
+server/config/*
