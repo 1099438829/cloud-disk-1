@@ -16,11 +16,11 @@
 ## 使用
 
 ```
-    $ git clone https://github.com/sliwei/react16-koa2.git
-    $ cd react16-koa2/client
+    $ git clone https://github.com/sliwei/cloud-disk.git
+    $ cd cloud-disk/client
     $ npm i
     $ npm run start
-    $ cd react16-koa2/server
+    $ cd cloud-disk/server
     $ npm i
     $ npm run start
     $ open http://localhost:3001

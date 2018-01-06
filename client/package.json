@@ -1,20 +1,35 @@
 {
-  "name": "react16-koa2",
-  "version": "0.1.0",
-  "description": "react16+koa2脚手架",
-  "main": "main.js",
-  "scripts": {
-    "start": "webpack --watch",
-    "ele": "electron .",
-    "package": "electron-packager . app --win --out react16koa2 --arch=x64 --version 1.7.8 --overwrite --ignore=node_modules",
-    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress"
+  "name": "cloud-disk",
+  "version": "0.0.1",
+  "description": "在线云盘，react架构，UI仿照百度云 https://serve.bstu.cn",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sliwei/cloud-disk"
   },
   "author": "awei",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sliwei/cloud-disk/issues"
+  },
+  "scripts": {
+    "start": "webpack --watch",
+    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress"
+  },
+  "main": "https://github.com/sliwei/cloud-disk/blob/master/server/views/index.pug",
+  "homepage": "https://github.com/sliwei/cloud-disk/blob/master/client/index/index.js",
   "dependencies": {
     "antd": "^2.13.6",
-    "autoprefixer": "^7.1.5",
     "axios": "^0.16.2",
+    "bluebird": "^3.5.1",
+    "nprogress": "^0.2.0",
+    "rc-queue-anim": "^1.3.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.5",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-import": "^1.6.2",
@@ -23,21 +38,13 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "bluebird": "^3.5.1",
     "bundle-loader": "^0.5.5",
     "css-loader": "^0.28.7",
-    "electron": "~1.7.8",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.5",
     "node-sass": "^4.5.3",
-    "nprogress": "^0.2.0",
     "postcss-loader": "^2.0.6",
-    "rc-queue-anim": "^1.3.1",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-router-dom": "^4.2.2",
     "sass-loader": "^6.0.6",
-    "socket.io": "^2.0.4",
     "style-loader": "^0.19.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.6.0"

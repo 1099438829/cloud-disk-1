@@ -98,6 +98,7 @@ router.post('/upload', upload.array('file'), async(ctx, next) => {
         mimetype = mimetype.substring(6, mimetype.length);
         let dest = files[0].destination;
         let name = files[0].filename;
+        console.log(dest);
         dest = dest.substring(conf.path_num, dest.length);
         dest = dest.replace(/\\/g, "/");
         let file_path = `${conf.url}/${dest}/${name}`;

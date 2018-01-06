@@ -16,7 +16,7 @@ function get(url) {
         NProgress.start();
         NProgress.set(0.5)
         NProgress.inc()
-        axios.get('http://127.0.0.1:3000'+url).then(res => {
+        axios.get(url).then(res => {
             NProgress.done();
             resolve(res.data)
         }).catch(function (error) {
@@ -28,7 +28,7 @@ function get(url) {
                 case 401:
                     message.warn('用户信息失效！');
                     NProgress.done();
-                    window.location = 'index.html#/login'
+                    window.location = '#login';
                     break;
                 default:
                     message.warn('一个错误！');
@@ -46,7 +46,7 @@ function post(url, parms) {
         NProgress.set(0.5)
         
         NProgress.inc()
-        axios.post('http://127.0.0.1:3000'+url, parms).then(res => {
+        axios.post(url, parms).then(res => {
             NProgress.done();
             resolve(res.data)
         }).catch(function (error) {
@@ -58,7 +58,7 @@ function post(url, parms) {
                 case 401:
                     message.warn('用户信息失效！');
                     NProgress.done();
-                    window.location = 'index.html#/login'
+                    window.location = '#login';
                     break;
                 default:
                     message.warn('一个错误！');

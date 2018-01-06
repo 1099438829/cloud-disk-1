@@ -3,7 +3,7 @@ import css from './index.scss'
 import {Axios} from 'Public';
 import axios from 'axios'
 
-import {Progress, Icon, message} from 'antd'
+import {Progress, Icon, message, Alert} from 'antd'
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -92,13 +92,13 @@ export default class Index extends React.Component {
             form.append('file', file.data);
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:3000/multer/upload',
+                url: '/multer/upload',
                 data: form,
                 onUploadProgress: this.progressFunction, // 进度
                 onDownloadProgress: this.uploadComplete, // 完成
             }).then(ret => {
                 if (ret.status === 200) {
-                    message.success(`${file.name}上传成功!`)
+                    // message.success(`${file.name}上传成功!`)
                 } else {
                     message.success(`上传出错：${ret.statusText}!`)
                 }
@@ -179,39 +179,38 @@ export default class Index extends React.Component {
                 </div>
                 {upModelSta ?
                     <div className={css.up_file_model}>
-                        {fileList.length ?
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>序号</th>
-                                    <th>文件名</th>
-                                    <th>大小</th>
-                                    <th>状态</th>
-                                    <th>操作</th>
+                        <Alert className={css.alert} message="暂时支持2M及以下大小文件上传,支持批量上传" type="warning" showIcon />
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>文件名</th>
+                                <th>大小</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {fileList.map((item, i) => {
+                                return <tr key={i}>
+                                    <td>{i + 1}</td>
+                                    <td><span title={item.name}>{item.name.substring(0, 10)}</span></td>
+                                    <td>{(item.size / 1024).toFixed(2)}KB</td>
+                                    <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
+                                    <td>
+                                        {item.status === 'active' ? (upIng ?
+                                            <span><Icon type="loading"/>&nbsp;上传中...</span> :
+                                            <button className={css.info_btn} onClick={this.upFile.bind(this, item, this.state.first)}>
+                                                上传</button>) :
+                                            item.status === 'exception' ?
+                                                <button className={css.warn_btn}
+                                                        onClick={this.upFile.bind(this, item, this.state.first)}>重试</button> :
+                                                <span className={css.success_hover}>上传成功！</span>}
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                {fileList.map((item, i) => {
-                                    return <tr key={i}>
-                                        <td>{i + 1}</td>
-                                        <td><span title={item.name}>{item.name.substring(0, 10)}</span></td>
-                                        <td>{(item.size / 1024).toFixed(2)}KB</td>
-                                        <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
-                                        <td>
-                                            {item.status === 'active' ? (upIng ?
-                                                <span><Icon type="loading"/>&nbsp;上传中...</span> :
-                                                <button className={css.info_btn} onClick={this.upFile.bind(this, item, this.state.first)}>
-                                                    上传</button>) :
-                                                item.status === 'exception' ?
-                                                    <button className={css.warn_btn}
-                                                            onClick={this.upFile.bind(this, item, this.state.first)}>重试</button> :
-                                                    <span className={css.success_hover}>上传成功！</span>}
-                                        </td>
-                                    </tr>
-                                })}
-                                </tbody>
-                            </table> : null}
-
+                            })}
+                            </tbody>
+                        </table>
                     </div> : null}
             </div>
         </div>

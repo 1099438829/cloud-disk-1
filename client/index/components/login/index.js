@@ -172,6 +172,7 @@ class Index extends React.Component {
                         <FormItem>
                             {getFieldDecorator('userName', {
                                 rules: [{required: true, message: '请输入用户名!'}],
+                                initialValue: 'admin'
                             })(
                                 <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="用户名"/>
                             )}
@@ -179,6 +180,7 @@ class Index extends React.Component {
                         <FormItem>
                             {getFieldDecorator('password', {
                                 rules: [{required: true, message: '请输入密码!'}],
+                                initialValue: '123456'
                             })(
                                 <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
                                        placeholder="密码"/>
@@ -212,7 +214,7 @@ class Index extends React.Component {
                     </Form>
                 </div>
                 <div className={css.agreement}>
-                    Copyright © 2017 react16-koa2
+                    Copyright © 2017-2018 cloud-disk
                 </div>
             </div>
         </QueueAnim>

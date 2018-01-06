@@ -1,8 +1,8 @@
 let menu = [
     {url: '/', icon: 'appstore', val: '全部文件'},
-    {url: '/pop', icon: '', val: 'pop'},
-    {url: '/main', icon: '', val: 'main'},
-    {url: '/about', icon: '', val: 'about'},
+    // {url: '/pop', icon: '', val: 'pop'},
+    // {url: '/main', icon: '', val: 'main'},
+    // {url: '/about', icon: '', val: 'about'},
     {url: '/img', icon: '', val: '图片'},
     {url: '/word', icon: '', val: '文档'},
     {url: '/video', icon: '', val: '视频'},

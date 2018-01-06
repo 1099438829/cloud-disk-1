@@ -2,7 +2,7 @@ import React from 'react';
 import {Popup, Axios} from 'Public'
 import css from './home.scss'
 import Upload from '../upload'
-import {Icon, Checkbox} from 'antd'
+import {Icon, Checkbox, Tooltip} from 'antd'
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -239,7 +239,9 @@ export default class Index extends React.Component {
         return <div className={css.box} onDragEnter={this.upSta.bind(this, true)}>
             {/*操作*/}
             <div className={css.oper}>
-                <button onClick={this.upBtn} className={css.info_btn}><Icon type="upload"/>&nbsp;上传</button>
+                <Tooltip placement="top" title="也可拖动到此上传哦^_^">
+                    <button onClick={this.upBtn} className={css.info_btn}><Icon type="upload"/>&nbsp;上传</button>
+                </Tooltip>
                 <input className={css.file} type="file" multiple="multiple" ref={(e) => this.state.file = e} onChange={this.file}/>
                 <button className={css.def_btn} onClick={() => this.changeModel(true, 'add')}><Icon type="folder-add"/>&nbsp;创建文件夹</button>
                 {checkNum === 1 ?

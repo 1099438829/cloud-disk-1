@@ -34,7 +34,7 @@ export default class Index extends React.Component {
                 this.setState({sta: true})
             })
         }, 500)
-        window.socket = io.connect('http://127.0.0.1:4000', {reconnection: true, secure: true})
+        window.socket = io.connect(':4000', {reconnection: true, secure: true})
         socket.on('number', function (n) {
             console.log(n, ' 人在线');
         })
@@ -132,7 +132,7 @@ export default class Index extends React.Component {
                             </RouterSwitch>
                         </div>
                         <div className={css.agreement}>
-                            Copyright © 2017 react16-koa2
+                                Copyright © 2017-2018 cloud-disk
                         </div>
                     </div>
                 </div>
