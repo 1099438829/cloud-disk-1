@@ -17,7 +17,7 @@ router.post('/login', checkCode, async(ctx, next) => {
     let dat = ctx.request.body;
     if (ctx.res.user.codeSta) {
         try {
-            result = await db.op(`select * from r_user where users = "${dat.userName}" and password = "${md5(dat.password)}" limit 1`)
+            result = await db.op(`select * from cloud_disk_user where users = "${dat.userName}" and password = "${md5(dat.password)}" limit 1`)
             console.log(typeof result.length);
             if (result.length) {
                 ctx.cookie.set('token', createToken(JSON.parse(JSON.stringify(result[0]))));
@@ -48,7 +48,7 @@ router.post('/register', checkCode, async(ctx, next) => {
     let dat = ctx.request.body;
     if (ctx.res.user.codeSta) {
         try {
-            await db.op(`insert into r_user(users, password) values("${dat.name}", "${md5(dat.rpassword)}")`)
+            await db.op(`insert into cloud_disk_user(users, password) values("${dat.name}", "${md5(dat.rpassword)}")`)
         } catch (e) {
             code = 10001;
             state = false;
