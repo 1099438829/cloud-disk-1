@@ -28,7 +28,7 @@ function get(url) {
                 case 401:
                     message.warn('用户信息失效！');
                     NProgress.done();
-                    window.location = '#login';
+                    window.location = 'login';
                     break;
                 default:
                     message.warn('一个错误！');
@@ -58,7 +58,7 @@ function post(url, parms) {
                 case 401:
                     message.warn('用户信息失效！');
                     NProgress.done();
-                    window.location = '#login';
+                    window.location = 'login';
                     break;
                 default:
                     message.warn('一个错误！');
