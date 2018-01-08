@@ -32,18 +32,14 @@ function set() {
 
 function srever(app) {
     // https conf
-    let options = {}, server;
-    if (conf.socket_safe) {
-        options = {
-            key: fs.readFileSync(conf.ssh_options.key),
-            ca: fs.readFileSync(conf.ssh_options.ca),
-            cert: fs.readFileSync(conf.ssh_options.cert)
-        };
-        console.log(options);
-        server = https.Server(options, app.callback()).listen(conf.socket_port);
-    } else {
-        server = http.Server(app.callback()).listen(conf.socket_port);
-    }
+    let server;
+    let options = {
+        key: fs.readFileSync('/etc/letsencrypt/live/yun.bstu.cn/privkey.pem'),
+        ca: fs.readFileSync('/etc/letsencrypt/live/yun.bstu.cn/chain.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/yun.bstu.cn/fullchain.pem')
+    };
+    server = https.Server(options, app.callback()).listen(conf.socket_port);
+    // server = http.Server(app.callback()).listen(conf.socket_port);
     let io = socketIo(server);
     socket = io;
     let number = 0, ids = [];
