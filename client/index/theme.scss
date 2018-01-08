@@ -15,7 +15,8 @@ body {
   padding: 0;
   margin: 0;
   font-size: 14px !important;
-  overflow: hidden;
+  overflow-y: hidden;
+  min-width: 1200px;
 }
 
 .def {
@@ -172,9 +173,9 @@ body {
   -webkit-background-size: cover;
   -o-background-size: cover;
   overflow: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  //position: absolute;
+  //top: 0;
+  //right: 0;
+  //bottom: 0;
+  //left: 0;
 }
