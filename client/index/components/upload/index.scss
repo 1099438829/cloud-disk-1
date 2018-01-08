@@ -38,10 +38,9 @@
 
 .file_model {
   position: fixed;
-  max-width: 600px;
-  height: 100vh;
-  right: 0;
-  bottom: 0;
+  right: -601px;
+  height: calc(100vh - 60px);
+  top: 60px;
   padding-left: 20px;
   overflow-y: auto;
   transition: all .3s;
@@ -74,10 +73,8 @@
       margin-top: 2px;
       transform: rotate(0deg);
       transition: all .3s;
+      transition-delay: .3s;
     }
-  }
-  .colse:hover .colse_i{
-    transform: rotate(180deg);
   }
   .colse:before{
     content: '';
@@ -110,8 +107,9 @@
 .up_file_model {
   background: #fff;
   min-height: 100%;
+  width: 600px;
   padding: 20px;
-  box-shadow: 0 0 1px;
+  box-shadow: 0 1px 1px;
 
   .alert {
     margin-bottom: 10px;

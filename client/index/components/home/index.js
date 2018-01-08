@@ -65,7 +65,7 @@ export default class Index extends React.Component {
     };
 
     // 修改文件/文件夹名称
-    edit = () =>{
+    edit = () => {
         const {catalog} = this.state;
         let name = '';
         catalog.list.map(item => {
@@ -101,39 +101,49 @@ export default class Index extends React.Component {
             switch (type) {
                 case 'add':
                     title = '新建文件夹';
-                    size = [480];
+                    size = [400];
                     html = <div className={css.add_box}>
-                        <input className={css.add_input} ref={e => this.state.addName = e} placeholder="请输入文件夹名"/>
-                        <button className={css.info_btn} onClick={this.add}>新建</button>
-                        <button className={css.def_btn} onClick={() => this.changeModel(false)}>取消</button>
+                        <div>
+                            <input className={css.add_input} ref={e => this.state.addName = e} placeholder="请输入文件夹名"/>
+                        </div>
+                        <div className={css.info_operation}>
+                            <button className={css.info_btn} onClick={this.add}>新建</button>
+                            <button className={css.def_btn} onClick={() => this.changeModel(false)}>取消</button>
+                        </div>
                     </div>;
                     break;
                 case 'edit':
                     let editName = '';
-                    title = '修改文件/文件夹名称';
-                    size = [480];
+                    catalog.list.map((item, i) => {
+                        if (item.check) {
+                            editName = item.name;
+                        }
+                    });
+                    title = `修改[${editName}]`;
+                    size = [400];
                     html = <div className={css.edit_box}>
-                        <p className={css.former_box}>
-                            <span className={css.former}><Icon type="edit" /></span>
-                            {catalog.list.map((item, i) => {
-                                if (item.check) {
-                                    editName = item.name;
-                                    return <span key={i}>{item.name}</span>
-                                }
-                            })}
-                        </p>
-                        <input className={css.add_input} defaultValue={editName} ref={e => this.state.editName = e} placeholder="新的名称"/>
-                        <button className={css.info_btn} onClick={this.edit}>修改</button>
-                        <button className={css.def_btn} onClick={() => this.changeModel(false)}>取消</button>
+                        <div>
+                            <input className={css.add_input} defaultValue={editName} ref={e => this.state.editName = e}
+                                   placeholder="新的名称"/>
+                        </div>
+                        <div className={css.info_operation}>
+                            <button className={css.info_btn} onClick={this.edit}>修改</button>
+                            <button className={css.def_btn} onClick={() => this.changeModel(false)}>取消</button>
+                        </div>
                     </div>;
                     break;
                 case 'del':
                     title = '删除文件/文件夹';
-                    size = [360];
+                    size = [400];
                     html = <div className={css.add_box}>
-                        <p className={`${css.warn_hover} ${css.del_txt}`}><Icon type="info-circle-o" />&nbsp;你确定删除所选文件/文件夹(包括子文件)吗？</p>
-                        <button className={css.danger_btn} onClick={this.del}>删除</button>
-                        <button className={css.def_btn} onClick={() => this.changeModel(false)}>取消</button>
+                        <div>
+                            <p className={css.danger_hover}><Icon type="exclamation-circle"/>&nbsp;
+                                你确定删除所选文件/文件夹(包括子文件)吗？</p>
+                        </div>
+                        <div className={css.info_operation}>
+                            <button className={css.danger_btn} onClick={this.del}>删除</button>
+                            <button className={css.def_btn} onClick={() => this.changeModel(false)}>取消</button>
+                        </div>
                     </div>;
                     break;
             }
@@ -242,17 +252,23 @@ export default class Index extends React.Component {
                 <Tooltip placement="top" title="也可拖动到此上传哦^_^">
                     <button onClick={this.upBtn} className={css.info_btn}><Icon type="upload"/>&nbsp;上传</button>
                 </Tooltip>
-                <input className={css.file} type="file" multiple="multiple" ref={(e) => this.state.file = e} onChange={this.file}/>
-                <button className={css.def_btn} onClick={() => this.changeModel(true, 'add')}><Icon type="folder-add"/>&nbsp;创建文件夹</button>
+                <input className={css.file} type="file" multiple="multiple" ref={(e) => this.state.file = e}
+                       onChange={this.file}/>
+                <button className={css.def_btn} onClick={() => this.changeModel(true, 'add')}><Icon
+                    type="folder-add"/>&nbsp;创建文件夹
+                </button>
                 {checkNum === 1 ?
-                <button className={css.def_btn} onClick={() => this.changeModel(true, 'edit')}><Icon type="edit"/>&nbsp;修改名称</button> :null}
+                    <button className={css.def_btn} onClick={() => this.changeModel(true, 'edit')}><Icon
+                        type="edit"/>&nbsp;修改名称</button> : null}
                 {checkNum ?
-                <button className={css.def_btn} onClick={() => this.changeModel(true, 'del')}><Icon type="delete"/>&nbsp;删除</button> : null}
+                    <button className={css.danger_btn} onClick={() => this.changeModel(true, 'del')}><Icon
+                        type="delete"/>&nbsp;删除</button> : null}
             </div>
             {/*路径*/}
             <div className={css.path}>
                 {catalogUrl.length ?
-                    <span><a onClick={this.ret} href="javascript:">返回上一级</a> | <a onClick={() => this.getCatalog('')} href="javascript:">全部文件</a> > </span> : '全部文件'}
+                    <span><a onClick={this.ret} href="javascript:">返回上一级</a> | <a onClick={() => this.getCatalog('')}
+                                                                                  href="javascript:">全部文件</a> > </span> : '全部文件'}
                 {catalogUrl.map((item, i) => {
                     let url = catalogUrl.slice(0, i + 1);
                     let urlStr = url.join('/');
@@ -279,10 +295,12 @@ export default class Index extends React.Component {
                                 <Checkbox checked={item.check} onChange={(e) => this.check(e, item, i)}/>
                             </div>
                             {item.isDirectory ?
-                                <div className={css.name} onDoubleClick={() => this.getCatalog(url)} onClick={(e) => this.check(e, item, i)}>
+                                <div className={css.name} onDoubleClick={() => this.getCatalog(url)}
+                                     onClick={(e) => this.check(e, item, i)}>
                                     <Icon type="folder"/>
                                     {item.name}
-                                </div> : <div className={css.name} onDoubleClick={() => this.showFile(url)} onClick={(e) => this.check(e, item, i)}>
+                                </div> : <div className={css.name} onDoubleClick={() => this.showFile(url)}
+                                              onClick={(e) => this.check(e, item, i)}>
                                     <Icon type="file-text"/>
                                     {item.name}
                                 </div>}

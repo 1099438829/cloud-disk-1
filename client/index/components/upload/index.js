@@ -170,48 +170,47 @@ export default class Index extends React.Component {
                     <input id="inputarea" className={css.up_file} type="file" name="file" multiple="multiple"/>
                 </div> : null
             }
-            <div className={css.file_model}>
+            <div className={css.file_model} style={{right: upModelSta ? '0px' : '-601px'}}>
                 <div className={css.colse} onClick={() => {
                     this.setState({upModelSta: !this.state.upModelSta})
                 }}>
                     <i className={css.colse_t}/>
-                    <Icon className={css.colse_i} type={upModelSta ? 'up' : 'down'}/>
+                    <Icon className={css.colse_i} style={{transform: upModelSta ? 'rotate(180deg)' : 'rotate(0deg)'}} type="up"/>
                 </div>
-                {upModelSta ?
-                    <div className={css.up_file_model}>
-                        <Alert className={css.alert} message="暂时支持2M及以下大小文件上传,支持批量上传" type="warning" showIcon />
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>序号</th>
-                                <th>文件名</th>
-                                <th>大小</th>
-                                <th>状态</th>
-                                <th>操作</th>
+                <div className={css.up_file_model}>
+                    <Alert className={css.alert} message="暂时支持2M及以下大小文件上传,支持批量上传" type="warning" showIcon />
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>文件名</th>
+                            <th>大小</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {fileList.map((item, i) => {
+                            return <tr key={i}>
+                                <td>{i + 1}</td>
+                                <td><span title={item.name}>{item.name.substring(0, 10)}</span></td>
+                                <td>{(item.size / 1024).toFixed(2)}KB</td>
+                                <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
+                                <td>
+                                    {item.status === 'active' ? (upIng ?
+                                        <span><Icon type="loading"/>&nbsp;上传中...</span> :
+                                        <button className={css.info_btn} onClick={this.upFile.bind(this, item, this.state.first)}>
+                                            上传</button>) :
+                                        item.status === 'exception' ?
+                                            <button className={css.warn_btn}
+                                                    onClick={this.upFile.bind(this, item, this.state.first)}>重试</button> :
+                                            <span className={css.success_hover}>上传成功！</span>}
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            {fileList.map((item, i) => {
-                                return <tr key={i}>
-                                    <td>{i + 1}</td>
-                                    <td><span title={item.name}>{item.name.substring(0, 10)}</span></td>
-                                    <td>{(item.size / 1024).toFixed(2)}KB</td>
-                                    <td><Progress percent={item.loading} status={item.status}/>{item.timeStamp}</td>
-                                    <td>
-                                        {item.status === 'active' ? (upIng ?
-                                            <span><Icon type="loading"/>&nbsp;上传中...</span> :
-                                            <button className={css.info_btn} onClick={this.upFile.bind(this, item, this.state.first)}>
-                                                上传</button>) :
-                                            item.status === 'exception' ?
-                                                <button className={css.warn_btn}
-                                                        onClick={this.upFile.bind(this, item, this.state.first)}>重试</button> :
-                                                <span className={css.success_hover}>上传成功！</span>}
-                                    </td>
-                                </tr>
-                            })}
-                            </tbody>
-                        </table>
-                    </div> : null}
+                        })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     }
