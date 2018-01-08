@@ -39,19 +39,20 @@ function srever(app) {
             ca: fs.readFileSync(conf.ssh_options.ca),
             cert: fs.readFileSync(conf.ssh_options.cert)
         };
+        console.log(options);
         server = https.Server(options, app.callback()).listen(conf.socket_port);
     } else {
         server = http.Server(app.callback()).listen(conf.socket_port);
     }
     let io = socketIo(server);
-    socket = io
+    socket = io;
     let number = 0, ids = [];
     io.on('connection', async function (socket) {
         // 连接人数
         let socket_id = socket.id || undefined;
         ids.push(socket_id);
         number++;
-        let u =await sql()
+        let u =await sql();
         io.sockets.emit('number', u);
 
         socket.emit('id', socket_id);
