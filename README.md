@@ -30,6 +30,7 @@
 
 ```
     如果在Windows中node-sass使用npm安装失败，请使用cnpm安装
+    该项目在chrome规则下设计，其他浏览器不保证正常使用，后面再逐步处理兼容问题
 ```
 
 ## Examples
