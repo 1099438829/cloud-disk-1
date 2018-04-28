@@ -37,6 +37,7 @@
 }
 
 .file_model {
+  overflow-x: hidden;
   position: fixed;
   right: -601px;
   height: calc(100vh - 60px);

@@ -8,8 +8,9 @@ module.exports = {
         port: '3306',
         user: 'root',
         password: '123456',
-        database: 'react16koa2',
+        database: 'bdm296810572_db',
         charset: 'utf8',
+        insecureAuth: true
     },
     debug: true,
 };

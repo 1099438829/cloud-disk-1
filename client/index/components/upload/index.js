@@ -55,6 +55,8 @@ export default class Index extends React.Component {
 
     // 拖拽释放
     upDrop = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         let file = e.dataTransfer.files;
         this.setState({showUp: false});
         if (file) {
