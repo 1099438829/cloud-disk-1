@@ -141,6 +141,7 @@
 
   tbody tr:hover {
     border-left: 2px solid $danger;
+    box-sizing: border-box;
   }
   tr:hover td {
     background-color: #fbe7e7;
