@@ -81,7 +81,8 @@ module.exports = {
         // 多个 html共用一个js文件(chunk)
         new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
         // 将样式文件(css,sass,less)合并成一个css文件
-        new ExtractTextPlugin({filename: '../css/[name].bundle.css', allChunks: true}),
+        // new ExtractTextPlugin({filename: '../css/theme_light.bundle.css', allChunks: true}),
+        new ExtractTextPlugin({filename: '../css/theme_dark.bundle.css', allChunks: true}),
         // 压缩
         new webpack.optimize.UglifyJsPlugin({
             output: {comments: false,},

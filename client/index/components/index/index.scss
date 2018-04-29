@@ -5,6 +5,7 @@
   width: 200px;
   height: calc(100vh - 60px);
   color: $def_hover;
+  position: relative;
   a {
     display: block;
     height: 42px;
@@ -31,6 +32,12 @@
   }
   li:hover {
     background: rgba(255, 255, 255, .15);
+  }
+  .theme_box {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
   }
 }
 

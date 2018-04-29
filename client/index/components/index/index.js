@@ -5,7 +5,7 @@ import {Axios} from 'Public';
 import {Route, Redirect, Switch as RouterSwitch, Link} from 'react-router-dom'
 import Bundle from '../../bundle';
 import {menu} from '../../config'
-import {Icon} from 'antd'
+import {Icon, Switch} from 'antd'
 import io from 'socket.io-client';
 
 import HomeController from 'bundle-loader?lazy&name=home!../home'
@@ -52,6 +52,16 @@ export default class Index extends React.Component {
             }
         }
         this.props.history.push("/login");
+    };
+
+    changeTheme = () => {
+        let el = document.querySelector('#theme-link');
+        console.log(el.href);
+        if (el.href.indexOf('theme_dark') > -1) {
+            el.href = '/css/theme_light.bundle.css';
+        } else {
+            el.href = '/css/theme_dark.bundle.css';
+        }
     };
 
     render() {
@@ -120,6 +130,9 @@ export default class Index extends React.Component {
                                 </li>
                             })}
                         </ul>
+                        <div className={css.theme_box}>
+                            <Switch onChange={this.changeTheme} checkedChildren="Light" unCheckedChildren="Dark" defaultChecked />
+                        </div>
                     </div>
                     <div className={css.content_box}>
                         <div className={css.content}>

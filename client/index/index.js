@@ -8,7 +8,7 @@ import Index from './components/index'
 import {Icon, Modal} from 'antd'
 import Bundle from './bundle';
 
-import css from './theme.scss'
+import css from './index.scss'
 
 import LoginController from 'bundle-loader?lazy&name=login!./components/login'
 import RegisterController from 'bundle-loader?lazy&name=register!./components/register'
