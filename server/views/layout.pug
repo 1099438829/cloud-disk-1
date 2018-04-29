@@ -72,10 +72,10 @@ html
   body(id="dropbox")
     script.
       var dropbox = document.getElementById('dropbox');
-      dropbox.addEventListener("dragenter", function (e) {
-          e.stopPropagation();
-          e.preventDefault();
-      }, false);
+      // dropbox.addEventListener("dragenter", function (e) {
+      //     e.stopPropagation();
+      //     e.preventDefault();
+      // }, false);
       dropbox.addEventListener("dragover", function (e) {
           e.stopPropagation();
           e.preventDefault();
@@ -83,6 +83,5 @@ html
       dropbox.addEventListener("drop", function (e) {
           e.stopPropagation();
           e.preventDefault();
-
       }, false);
     block content
