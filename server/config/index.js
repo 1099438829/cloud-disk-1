@@ -6,11 +6,11 @@ const db = require('./mysql');
 module.exports = {
     port: 3000,         // 端口
     socket_port: 4000,  // socket端口
-    socket_safe: false, // socket 连接如果是https协议，则需要证书
+    socket_safe: true, // socket 连接如果是https协议，则需要证书
     ssh_options: {      // https证书
-        key: '/etc/letsencrypt/live/bstu.cn-0003/privkey.pem',
-        ca: '/etc/letsencrypt/live/bstu.cn-0003/chain.pem',
-        cert: '/etc/letsencrypt/live/bstu.cn-0003/fullchain.pem'
+        key: '/etc/letsencrypt/live/yun.bstu.cn/privkey.pem',
+        ca: '/etc/letsencrypt/live/yun.bstu.cn/chain.pem',
+        cert: '/etc/letsencrypt/live/yun.bstu.cn/fullchain.pem'
     },
     db: db,
     tokenName: 'cloud-disk',

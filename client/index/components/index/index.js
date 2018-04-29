@@ -58,9 +58,9 @@ export default class Index extends React.Component {
         let el = document.querySelector('#theme-link');
         console.log(el.href);
         if (el.href.indexOf('theme_dark') > -1) {
-            el.href = '/css/theme_light.bundle.css';
+            el.href = 'https://i.bstu.cn/cloud-disk/css/theme_light.bundle.css';
         } else {
-            el.href = '/css/theme_dark.bundle.css';
+            el.href = 'https://i.bstu.cn/cloud-disk/css/theme_dark.bundle.css';
         }
     };
 

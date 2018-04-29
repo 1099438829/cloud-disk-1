@@ -23,7 +23,7 @@ module.exports = {
         path: path.resolve(__dirname, '../server/public/js'),
         filename: 'index.bundle.js',
         chunkFilename: '[name].[chunkhash:4].bundle.js',
-        publicPath: './js/'
+        publicPath: 'https://i.bstu.cn/cloud-disk/js/'
         // path: path.resolve(__dirname, './build/js'),
         // filename: 'index.bundle.js',
         // chunkFilename: '[name].[chunkhash:4].bundle.js',
