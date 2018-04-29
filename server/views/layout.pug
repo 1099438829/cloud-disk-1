@@ -65,23 +65,5 @@ html
       }
     script.
       var user = {headImg: 'https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/a04ecb20.jpg', name: 'awei'};
-      var drop = function (e) {
-          e.stopPropagation();
-          e.preventDefault();
-      }
-  body(id="dropbox")
-    script.
-      var dropbox = document.getElementById('dropbox');
-      // dropbox.addEventListener("dragenter", function (e) {
-      //     e.stopPropagation();
-      //     e.preventDefault();
-      // }, false);
-      dropbox.addEventListener("dragover", function (e) {
-          e.stopPropagation();
-          e.preventDefault();
-      }, false);
-      dropbox.addEventListener("drop", function (e) {
-          e.stopPropagation();
-          e.preventDefault();
-      }, false);
+  body
     block content

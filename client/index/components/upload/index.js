@@ -48,6 +48,8 @@ export default class Index extends React.Component {
 
     // 拖拽进入退出
     upSta = (sta) => {
+        e.stopPropagation();
+        e.preventDefault();
         console.log(sta);
         this.props.upSta(sta)
         // this.setState({showUp: sta})
