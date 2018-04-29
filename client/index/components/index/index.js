@@ -137,19 +137,6 @@ export default class Index extends React.Component {
                     </div>
                 </div>
             </div>
-        </QueueAnim> : <QueueAnim type="alpha">
-            <div key={1} className={css.box}>
-                <div className={css.loading}>
-                    <div className={css.container}>
-                        <p className={css.container_txt}>安全验证中...</p>
-                        <div className={css.progress}>
-                            <div className={css.progress_bar}>
-                                <div className={css.progress_shadow}>&nbsp;</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </QueueAnim>
+        </QueueAnim> : null;
     }
 }
