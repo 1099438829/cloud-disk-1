@@ -18,7 +18,7 @@
   "main": "https://github.com/sliwei/cloud-disk/blob/master/server/views/index.pug",
   "homepage": "https://github.com/sliwei/cloud-disk/blob/master/client/index/index.js",
   "dependencies": {
-    "antd": "^2.13.6",
+    "antd": "^3.4.5",
     "axios": "^0.16.2",
     "bluebird": "^3.5.1",
     "nprogress": "^0.2.0",
@@ -42,11 +42,22 @@
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.5",
+    "less": "^2.7.2",
+    "less-loader": "^4.1.0",
+    "less-vars-to-js": "^1.2.1",
     "node-sass": "^4.5.3",
     "postcss-loader": "^2.0.6",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.6.0"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not ie < 11",
+    "last 2 versions",
+    "> 1%",
+    "iOS 7",
+    "last 3 iOS versions"
+  ]
 }

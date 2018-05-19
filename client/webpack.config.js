@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const fs  = require('fs');
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './index/defined.less'), 'utf8'));
 // http://www.cnblogs.com/auok/p/6420843.html
 
 module.exports = {
@@ -33,43 +36,92 @@ module.exports = {
     },
     // 模块处理
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
             {
-                test: /\.(scss|sass)$/,
-                loader: ExtractTextPlugin.extract({
+                test: /\.less$/,  // antd 中的less
+                include: path.resolve(__dirname, 'node_modules/antd'),  //这个路径要写准确，否则报错
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
                     use: [
-                        {loader: 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]_[hash:base64:4]_[local]'},
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true,
+                            }
+                        },
+                        {
+                            loader: 'less-loader',
+                            options: {
+                                sourceMap: true,
+                                modules: false,
+                                modifyVars: themeVariables,
+                                // modifyVars: theme(),
+                            },
+                        },
+                    ],
+                }),
+            },
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true,
+                                modules: true,
+                                importLoaders: 1,
+                                localIdentName: '[name]_[hash:base64:4]_[local]',
+                            }
+                        },
                         {
                             loader: 'postcss-loader',
                             options: {
-                                plugins: function () {
-                                    return [
-                                        require('autoprefixer')({
-                                            browsers: ['ios >= 7.0']
-                                        })
-                                    ];
+                                sourceMap: true,
+                                config: {
+                                    path: 'postcss.config.js'  // 这个得在项目根目录创建此文件
                                 }
                             }
                         },
-                        {loader: 'sass-loader'},
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true,
+                                outputStyle: 'expanded'
+                            }
+                        },
                     ]
                 })
             },
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-                loader: 'url-loader?limit=50000&name=[path][name].[ext]',
-                options:{
-                    name:'[name].[ext]'
-                }
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 50000,
+                            name: '[path][name].[ext]'
+                        }
+                    },
+                ]
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('css-loader')
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [{
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    }]
+                })
             },
         ]
     },

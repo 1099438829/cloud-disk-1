@@ -4,23 +4,13 @@ $deep: #999;
 $deep_hover: #000;
 $warn: #fda82a;
 $warn_hover: #FF9800;
-$info: #7b4fca;
-$info_hover: #673AB7;
+$info: #62a3ff;
+$info_hover: #3b8cff;
 $success: #60c364;
 $success_hover: #4CAF50;
 $danger: #f36257;
 $danger_hover: #F44336;
 $radius: 4px;
-
-body {
-  padding: 0;
-  margin: 0;
-  font-size: 14px !important;
-  overflow: hidden;
-  min-width: 1200px;
-  font-family: Arial;
-  line-height: 1.5;
-}
 
 .def {
   color: $def;
@@ -157,7 +147,7 @@ body {
   -ms-flex: auto;
   flex: auto;
   //background: #ececec;
-  background-image: url("https://i.bstu.cn/img/b2.jpg");
+  background-image: url("https://i.bstu.cn/img/main_bg.jpg");
   background-position: center 0;
   background-repeat: no-repeat;
   background-size: cover;

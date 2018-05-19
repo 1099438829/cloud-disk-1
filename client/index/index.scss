@@ -1,5 +1,15 @@
 @import "./theme";
 
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 14px !important;
+  overflow: hidden;
+  min-width: 1200px;
+  font-family: Arial;
+  line-height: 1.5;
+}
+
 .statement {
   color: $danger_hover;
   position: fixed;

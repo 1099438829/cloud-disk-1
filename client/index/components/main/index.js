@@ -52,6 +52,7 @@ export default class Index extends React.Component {
             <div className={css.img}>
                 ON IMG
             </div>
+            <MIn/>
             <Route path="/main/min/:name" component={Min}/>
         </div>;
     }
