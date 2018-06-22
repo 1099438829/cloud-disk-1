@@ -209,7 +209,7 @@ class Index extends React.Component {
                             <Button type="primary" htmlType="submit">
                                 登录
                             </Button>
-                            还没有账号？ <Link to="/register">去注册</Link>
+                            <p>还没有账号？ <Link to="/register">去注册</Link></p>
                         </FormItem>
                     </Form>
                 </div>
