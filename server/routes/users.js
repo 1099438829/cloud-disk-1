@@ -64,7 +64,7 @@ router.get('/get', async (ctx, next) => {
 
     let result = await client.get(name, name);
     console.log(result);
-    // let file = await urllib.request(result.res.requestUrls[0])
+    let file = await urllib.request(result.res.requestUrls[0])
     // console.log('111',file);
     //
     // let result = await client.getStream(name);
@@ -74,7 +74,7 @@ router.get('/get', async (ctx, next) => {
     // console.log(result);
     //
     ctx.set('Content-disposition','attachment;filename='+name);
-    ctx.body = result;
+    ctx.body = file.data;
 
     // await send(ctx, result.res.requestUrls[0]);
 })
