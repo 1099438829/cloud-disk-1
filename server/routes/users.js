@@ -2,7 +2,7 @@ const router = require('koa-router')()
 const OSS = require('ali-oss');
 const send = require('koa-send');
 const fs = require('fs');
-// const urllib = require('urllib')
+const urllib = require('urllib')
 
 
 

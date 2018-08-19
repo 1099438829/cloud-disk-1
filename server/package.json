@@ -29,7 +29,8 @@
     "koa-views": "^5.2.1",
     "mysql": "^2.15.0",
     "pug": "^2.0.0-rc.1",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "urllib": "^2.29.1"
   },
   "devDependencies": {
     "nodemon": "^1.8.1"
