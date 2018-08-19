@@ -5,6 +5,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const favicon = require('koa-favicon')
 const bodyparser = require('koa-bodyparser')
+const koaBody = require('koa-body')
 const logger = require('koa-logger')
 const conf = require('./config');
 const socket = require('./socket');
@@ -23,8 +24,14 @@ onerror(app)
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
-}))
-app.use(json())
+}));
+app.use(koaBody({
+    multipart: true,
+    formidable: {
+        maxFileSize: 1000*1024*1024    // 设置上传文件大小最大限制，默认2M
+    }
+}));
+app.use(json());
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
@@ -58,8 +65,8 @@ app.use(async (ctx, next) => {
 // routes
 app.use(multer.routes(), multer.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
-app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(index.routes(), index.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
