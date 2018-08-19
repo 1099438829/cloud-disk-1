@@ -73,17 +73,17 @@ router.get('/get', async (ctx, next) => {
     //
     // console.log(result);
     //
-    // ctx.set('Content-disposition','attachment;filename='+name);
-    // ctx.body = result;
+    ctx.set('Content-disposition','attachment;filename='+name);
+    ctx.body = result;
 
-    await send(ctx, result.res.requestUrls[0]);
+    // await send(ctx, result.res.requestUrls[0]);
 })
 
 router.get('/download', async (ctx) => {
 
-    // ctx.header('Access-Control-Allow-Origin', '*');
-    // ctx.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-    // ctx.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    ctx.header('Access-Control-Allow-Origin', '*');
+    ctx.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+    ctx.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
     console.log(ctx.query);
     const name = ctx.query.name;
