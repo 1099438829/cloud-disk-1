@@ -11,12 +11,13 @@ Promise.config({
  * @param  {Object} options
  * @return {Object}         Return Promise
  */
+let urls = 'http://localhost:3012';
 function get(url) {
     return new Promise((resolve, reject) => {
         NProgress.start();
         NProgress.set(0.5)
         NProgress.inc()
-        axios.get(url).then(res => {
+        axios.get(urls+url).then(res => {
             NProgress.done();
             resolve(res.data)
         }).catch(function (error) {
@@ -28,7 +29,7 @@ function get(url) {
                 case 401:
                     message.warn('用户信息失效！');
                     NProgress.done();
-                    window.location = 'login';
+                    window.location = '#/login';
                     break;
                 default:
                     message.warn('一个错误！');
@@ -46,7 +47,7 @@ function post(url, parms) {
         NProgress.set(0.5)
         
         NProgress.inc()
-        axios.post(url, parms).then(res => {
+        axios.post(urls+url, parms).then(res => {
             NProgress.done();
             resolve(res.data)
         }).catch(function (error) {
@@ -58,7 +59,7 @@ function post(url, parms) {
                 case 401:
                     message.warn('用户信息失效！');
                     NProgress.done();
-                    window.location = 'login';
+                    window.location = '#/login';
                     break;
                 default:
                     message.warn('一个错误！');

@@ -6,6 +6,7 @@ import {Form, Icon, Input, Button, Checkbox, Carousel, message, Tooltip} from 'a
 import css from './login.scss'
 const FormItem = Form.Item;
 import io from 'socket.io-client';
+import qs from 'qs'
 
 class Index extends React.Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class Index extends React.Component {
     componentDidMount() {
         getCookie('token') ? this.props.history.push("/") : null;
         this.getCode();
+        console.log('componentDidMount');
     }
 
     getCode = () => {
@@ -30,7 +32,7 @@ class Index extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                console.log('Received values of form: ', qs.stringify(values));
                 Axios.post('/api/login', values).then(ret => {
                     if (ret.state) {
                         this.props.history.push("/");

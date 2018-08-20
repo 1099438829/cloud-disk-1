@@ -96,7 +96,8 @@ export default class Index extends React.Component {
             form.append('file', file.data);
             axios({
                 method: 'post',
-                url: '/multer/upload',
+                url: '/users/bar',
+                // url: '/multer/upload',
                 data: form,
                 onUploadProgress: this.progressFunction, // 进度
                 onDownloadProgress: this.uploadComplete, // 完成

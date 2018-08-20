@@ -9,7 +9,7 @@ const koaBody = require('koa-body')
 const logger = require('koa-logger')
 const conf = require('./config');
 const socket = require('./socket');
-var cors = require('koa-cors');
+var cors = require('koa2-cors');
 app.use(cors());
 
 const index = require('./routes/index')
@@ -25,12 +25,12 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
 }));
-app.use(koaBody({
-    multipart: true,
-    formidable: {
-        maxFileSize: 1000*1024*1024    // 设置上传文件大小最大限制，默认2M
-    }
-}));
+// app.use(koaBody({
+//     multipart: true,
+//     formidable: {
+//         maxFileSize: 1000*1024*1024    // 设置上传文件大小最大限制，默认2M
+//     }
+// }));
 app.use(json());
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
@@ -73,6 +73,6 @@ app.on('error', (err, ctx) => {
     console.error('server error', err, ctx)
 });
 
-socket.srever(app);
+// socket.srever(app);
 
 module.exports = app

@@ -29,7 +29,7 @@ export default class Index extends React.Component {
 
     componentDidMount() {
         setTimeout(() => {
-            Axios.post('/api/user').then(ret => {
+            Axios.post('/api/user', {a: 1}).then(ret => {
                 user = {...ret, ...user};
                 this.setState({sta: true})
             })

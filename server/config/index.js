@@ -4,9 +4,9 @@
 const db = require('./mysql');
 
 module.exports = {
-    port: 3000,         // 端口
-    socket_port: 4000,  // socket端口
-    socket_safe: true, // socket 连接如果是https协议，则需要证书
+    port: 3012,         // 端口
+    socket_port: 4002,  // socket端口
+    socket_safe: false, // socket 连接如果是https协议，则需要证书
     ssh_options: {      // https证书
         key: '/etc/letsencrypt/live/yun.bstu.cn/privkey.pem',
         ca: '/etc/letsencrypt/live/yun.bstu.cn/chain.pem',

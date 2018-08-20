@@ -6,7 +6,7 @@ const urllib = require('urllib')
 
 
 
-router.prefix('/users')
+router.prefix('/users/ce')
 
 let client = new OSS({
     region: 'oss-cn-shenzhen',
@@ -53,7 +53,7 @@ router.get('/list', async (ctx, next) => {
 
 router.get('/url', async (ctx, next) => {
 
-    let url = client.signatureUrl('b.png', {expires: 3600});
+    let url = client.signatureUrl('号.txt', {expires: 3600});
 
     ctx.body = url
 })
@@ -80,16 +80,12 @@ router.get('/get', async (ctx, next) => {
 })
 
 router.get('/download', async (ctx) => {
-
-    ctx.header('Access-Control-Allow-Origin', '*');
-    ctx.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-    ctx.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-
     console.log(ctx.query);
     const name = ctx.query.name;
     let url = client.signatureUrl(name, {expires: 3600});
-    ctx.attachment(url);
-    await send(ctx, url);
+    ctx.body = url
+    // ctx.attachment(url);
+    // await send(ctx, url);
 })
 
 module.exports = router
