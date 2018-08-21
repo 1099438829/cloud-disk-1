@@ -11,6 +11,8 @@ Promise.config({
  * @param  {Object} options
  * @return {Object}         Return Promise
  */
+
+axios.defaults.withCredentials = true;
 let urls = 'http://localhost:3012';
 function get(url) {
     return new Promise((resolve, reject) => {

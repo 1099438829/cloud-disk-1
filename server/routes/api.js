@@ -12,7 +12,7 @@ router.prefix('/api');
 /**
  * lw 登录
  */
-router.post('/login1', checkCode, async(ctx, next) => {
+router.post('/login', checkCode, async(ctx, next) => {
     let message = '', result = '', code = 200, state = true;
     let dat = ctx.request.body;
     if (ctx.res.user.codeSta) {
@@ -237,11 +237,6 @@ router.post('/editFolder', checkToken, async function (ctx, next) {
         sta = false;
     }
     ctx.body = sta
-});
-
-router.post('/login', function (ctx, next) {
-    console.log(ctx.request.body);
-    ctx.body = ctx.request.body
 });
 
 router.post('/user', function (ctx, next) {
