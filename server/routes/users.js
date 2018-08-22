@@ -5,7 +5,7 @@ const fs = require('fs');
 const urllib = require('urllib')
 const koaBody = require('koa-body')
 
-router.prefix('/users/ce')
+router.prefix('/users')
 
 let client = new OSS({
     region: 'oss-cn-shenzhen',
@@ -18,12 +18,8 @@ router.get('/', function (ctx, next) {
     ctx.body = 'this is a users response!'
 })
 
-router.post('/bar', koaBody({
-    multipart: true,
-    formidable: {
-        maxFileSize: 1000*1024*1024    // 设置上传文件大小最大限制，默认2M
-    }
-}), async (ctx, next) => {
+router.post('/bar',  async (ctx, next) => {
+    // console.log(ctx);
 
     const file = ctx.request.files.file;
     // console.log(file);

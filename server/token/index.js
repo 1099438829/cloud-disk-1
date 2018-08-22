@@ -42,7 +42,8 @@ const checkToken = async (ctx, next) => {
 // 检测验证码正确性
 const checkCode = async (ctx, next) => {
     let code = ctx.request.body.code;
-    console.log('AAA');
+    console.log('111');
+
     if(ctx.request.method === 'GET'){
         code = ctx.params.code
     }

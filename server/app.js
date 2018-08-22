@@ -4,24 +4,18 @@ const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const favicon = require('koa-favicon')
+const koaBody = require('koa-body')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const conf = require('./config');
 const socket = require('./socket');
 var cors = require('koa2-cors');
-app.use(cors({
-    origin: function (ctx) {
-        // if (ctx.url === '/test') {
-        //     return "*"; // 允许来自所有域名请求
-        // }
-        return 'http://localhost:3001'; // 这样就能只允许 http://localhost:8080 这个域名的请求了
-    },
-    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-    maxAge: 5,
-    credentials: true,
-    allowMethods: ['GET', 'POST', 'DELETE'],
-    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
-}))
+app.use(koaBody({
+    multipart: true,
+    formidable: {
+        maxFileSize: 1000*1024*1024    // 设置上传文件大小最大限制，默认2M
+    }
+}));
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -33,9 +27,24 @@ onerror(app)
 
 // middlewares
 app.use(favicon(__dirname + '/public/favicon.ico'));
+
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
 }));
+
+app.use(
+    cors({
+        origin: function(ctx) {
+            return "http://localhost:3001";
+        },
+        exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
+        maxAge: 3600,
+        credentials: true,
+        allowMethods: ['GET', 'PUT', 'POST'],
+        allowHeaders: ["Content-Type", "Authorization", "Accept"]
+    })
+);
+
 app.use(json());
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
