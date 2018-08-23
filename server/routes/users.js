@@ -18,25 +18,13 @@ router.get('/', function (ctx, next) {
     ctx.body = 'this is a users response!'
 })
 
-router.post('/bar',  async (ctx, next) => {
-    // console.log(ctx);
-
+router.post('/bar', async (ctx, next) => {
     const file = ctx.request.files.file;
-    // console.log(file);
-    // let result = await client.list();
-    // console.log(result);
-    // let result = await client.list({
-    //     prefix: 'test/',
-    //     delimiter: '/'
-    // });
-    // let result = await client.put('test/a/object-key.txt', new Buffer('hello world'));
-    // console.log(result);
     let stream = fs.createReadStream(file.path);
-    console.log(stream);
     let result = await client.putStream(file.name, stream);
-    console.log(result);
+    console.log(result.name);
     ctx.body = result
-})
+});
 
 router.get('/list', async (ctx, next) => {
 
@@ -47,14 +35,11 @@ router.get('/list', async (ctx, next) => {
         prefix: '',
         delimiter: '/'
     });
-
     ctx.body = result
 })
 
 router.get('/url', async (ctx, next) => {
-
     let url = client.signatureUrl('号.txt', {expires: 3600});
-
     ctx.body = url
 })
 

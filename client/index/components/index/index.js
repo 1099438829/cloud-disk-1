@@ -34,10 +34,10 @@ export default class Index extends React.Component {
                 this.setState({sta: true})
             })
         }, 500)
-        window.socket = io.connect(':4000', {reconnection: true, secure: true})
-        socket.on('number', function (n) {
-            console.log(n, ' 人在线');
-        })
+        // window.socket = io.connect(':4000', {reconnection: true, secure: true})
+        // socket.on('number', function (n) {
+        //     console.log(n, ' 人在线');
+        // })
     }
 
     cardSta = (sta) => {

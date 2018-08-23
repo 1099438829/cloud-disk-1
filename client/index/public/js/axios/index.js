@@ -17,7 +17,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // axios.defaults.headers.post['Content-Type'] = 'application/json'; // Request Payload 模式
 // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'; // Form Data 文件流模式(与x-www-form-urlencoded相似)
 axios.defaults.headers.common['Authorization'] = sessionStorage.getItem("Authorization");
-
+// 允许服务端下发cookie
+axios.defaults.withCredentials = true;
 /**
  * lw get统一请求
  * @param url 地址 例如：'/api/getList?page=1&index=1' Query String Parameters 模式，参数可使用qs将json转换成"page=1&index=1"格式
