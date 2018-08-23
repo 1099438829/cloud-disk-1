@@ -9,13 +9,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const conf = require('./config');
 const socket = require('./socket');
-var cors = require('koa2-cors');
-app.use(koaBody({
-    multipart: true,
-    formidable: {
-        maxFileSize: 1000*1024*1024    // 设置上传文件大小最大限制，默认2M
-    }
-}));
+const cors = require('koa2-cors');
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -24,14 +18,17 @@ const multer = require('./routes/multer')
 
 // error handler
 onerror(app)
-
+app.use(koaBody({
+    multipart: true,
+    formidable: {
+        maxFileSize: 1000*1024*1024    // 设置上传文件大小最大限制，默认2M
+    }
+}));
 // middlewares
 app.use(favicon(__dirname + '/public/favicon.ico'));
-
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
 }));
-
 app.use(
     cors({
         origin: function(ctx) {

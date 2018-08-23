@@ -62,3 +62,6 @@ typings/
 server/public/css
 server/public/js
 server/config/*
+
+client/package-lock.json
+server/package-lock.json

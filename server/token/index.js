@@ -42,13 +42,10 @@ const checkToken = async (ctx, next) => {
 // 检测验证码正确性
 const checkCode = async (ctx, next) => {
     let code = ctx.request.body.code;
-    console.log('111');
-
     if(ctx.request.method === 'GET'){
         code = ctx.params.code
     }
     let codeSta = false;
-    console.log(code, md5(conf.md5Name + code.toLowerCase()), ctx.cookie.get('code'));
     if (code && md5(conf.md5Name + code.toLowerCase()) === ctx.cookie.get('code')) {
         codeSta = true;
     }

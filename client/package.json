@@ -12,8 +12,8 @@
     "url": "https://github.com/sliwei/cloud-disk/issues"
   },
   "scripts": {
-    "dev": "webpack-dev-server --debug --output-pathinfo",
-    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress"
+    "dev": "webpack-dev-server",
+    "build": "set NODE_ENV=production && webpack --config ./webpack.prod.config.js"
   },
   "main": "https://github.com/sliwei/cloud-disk/blob/master/server/views/index.pug",
   "homepage": "https://github.com/sliwei/cloud-disk/blob/master/client/index/index.js",
