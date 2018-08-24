@@ -1,23 +1,22 @@
-const Koa = require('koa')
-const app = new Koa()
-const views = require('koa-views')
-const json = require('koa-json')
-const onerror = require('koa-onerror')
-const favicon = require('koa-favicon')
-const koaBody = require('koa-body')
-const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
+const Koa = require('koa');
+const app = new Koa();
+const views = require('koa-views');
+const json = require('koa-json');
+const onerror = require('koa-onerror');
+const favicon = require('koa-favicon');
+const koaBody = require('koa-body');
+const bodyparser = require('koa-bodyparser');
+const logger = require('koa-logger');
 const conf = require('./config');
-const socket = require('./socket');
+const {srever} = require('./routes/socket');
 const cors = require('koa2-cors');
 
-const index = require('./routes/index')
-const users = require('./routes/users')
-const api = require('./routes/api')
-const multer = require('./routes/multer')
+const api = require('./routes/api');
+const index = require('./routes/index');
 
 // error handler
-onerror(app)
+onerror(app);
+// 允许上传文件
 app.use(koaBody({
     multipart: true,
     formidable: {
@@ -26,9 +25,11 @@ app.use(koaBody({
 }));
 // middlewares
 app.use(favicon(__dirname + '/public/favicon.ico'));
+// 允许请求格式
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
 }));
+// 允许跨域
 app.use(
     cors({
         origin: function(ctx) {
@@ -43,12 +44,12 @@ app.use(
 );
 
 app.use(json());
-app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
-
+app.use(logger());
+app.use(require('koa-static')(__dirname + '/public'));
+// 模板文件
 app.use(views(__dirname + '/views', {
     extension: 'pug'
-}))
+}));
 
 // 加入cookie.get 及 set
 app.use(async (ctx, next) => {
@@ -67,23 +68,22 @@ app.use(async (ctx, next) => {
 
 // logger
 app.use(async (ctx, next) => {
-    const start = new Date()
-    await next()
-    const ms = new Date() - start
+    const start = new Date();
+    await next();
+    const ms = new Date() - start;
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
+});
 
 // routes
-app.use(multer.routes(), multer.allowedMethods())
-app.use(api.routes(), api.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
-app.use(index.routes(), index.allowedMethods())
+app.use(api()); // api
+app.use(index.routes(), index.allowedMethods()); // 模板页
 
 // error-handling
 app.on('error', (err, ctx) => {
     console.error('server error', err, ctx)
 });
 
-// socket.srever(app);
+// socket连接
+srever(app);
 
-module.exports = app
+module.exports = app;

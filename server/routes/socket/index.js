@@ -6,10 +6,10 @@ const https = require('https');
 const http = require('http');
 const socketIo = require('socket.io');
 const fs = require('fs');
-const conf = require('../config');
-const db = require('../sql')
+const conf = require('../../config');
+const db = require('../../database');
 
-var socket = {}
+var socket = {};
 
 // 特殊字符转义
 function ClearBr(key) {
@@ -99,4 +99,4 @@ function srever(app) {
 module.exports = {
     srever: srever,
     set: set
-}
+};

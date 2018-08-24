@@ -1,15 +1,24 @@
 const jwt = require('jsonwebtoken');
-const conf = require('../config');
+const conf = require('../../config');
 const md5 = require('js-md5');
 
-// 创建token
+/**
+ * 创建token
+ * @param dat
+ * @returns {*}
+ */
 const createToken = function (dat) {
     return jwt.sign(dat, conf.tokenName, {
         expiresIn: conf.cookieOptions.maxAge / 1000 + 's'
     });
 };
 
-// 检测token合法性
+/**
+ * 检测token合法性
+ * @param ctx
+ * @param next
+ * @returns {Promise<void>}
+ */
 const checkToken = async (ctx, next) => {
     // const token = ctx.get('Authorization');
     let code = ctx.request.body.code;
@@ -39,7 +48,12 @@ const checkToken = async (ctx, next) => {
     await next();
 };
 
-// 检测验证码正确性
+/**
+ * 检测验证码正确性
+ * @param ctx
+ * @param next
+ * @returns {Promise<void>}
+ */
 const checkCode = async (ctx, next) => {
     let code = ctx.request.body.code;
     if(ctx.request.method === 'GET'){
@@ -56,4 +70,8 @@ const checkCode = async (ctx, next) => {
     await next();
 };
 
-module.exports = {createToken, checkToken, checkCode}
+module.exports = {
+    createToken,
+    checkToken,
+    checkCode
+};

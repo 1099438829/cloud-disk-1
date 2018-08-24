@@ -15,7 +15,7 @@ module.exports = {
     db: db,
     tokenName: 'cloud-disk',
     md5Name: 'cloud-disk',
-    verificationSta: true, // 启用验证码
+    verificationSta: false, // 启用验证码
     cookieOptions: {
         maxAge: 1000 * 3600 * 2,
         path: '/',
@@ -29,4 +29,10 @@ module.exports = {
     path_num: 56,       // win开发
     // path_num: 41,    // mac开发
     // path_num: 39,    // linux线上
+    oss: {
+        region: 'oss-cn-shenzhen',
+        accessKeyId: 'LTAIAEWt96MQ6EbR',
+        accessKeySecret: 'JxpOyA8axOJgyYyMf0GUKgLsbwNQrG',
+        bucket: 'bstu'
+    },
 };

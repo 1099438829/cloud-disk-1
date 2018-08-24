@@ -23,7 +23,7 @@ class Index extends React.Component {
     }
 
     getCode = () => {
-        Axios.get('/api/code').then(ret => {
+        Axios.get('/api/verification/code2').then(ret => {
             this.setState({code: ret})
         })
     };
@@ -54,6 +54,9 @@ class Index extends React.Component {
     render() {
         const {code} = this.state;
         const {getFieldDecorator} = this.props.form;
+
+        console.log(code);
+
         return <QueueAnim type="alpha">
             <div className={css.boxs} key={1}>
                 <div className={css.login_logo}>
@@ -196,7 +199,7 @@ class Index extends React.Component {
                                     <Input len={4} prefix={<Icon type="lock" style={{fontSize: 13}}/>} placeholder="验证码"/>
                                 )}
                                 <Tooltip placement="right" title="刷新">
-                                    <img onClick={this.getCode} src={code} alt="验证码"/>
+                                    {code}
                                 </Tooltip>
                             </div>
                         </FormItem>

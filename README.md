@@ -282,3 +282,6 @@ https://hk.saowen.com/a/a6409807820f99dd8c2262e4d9653f2feb7d321aa84c8a54ce52a7b9
 
 前后端跨域请求处理以及携带cookie CORS实现（koa2）
 https://blog.csdn.net/qq_33358824/article/details/80694865
+
+验证码2.0
+https://juejin.im/post/5ad82856f265da50463e3ae7
