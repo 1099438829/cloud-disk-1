@@ -4,10 +4,10 @@
 module.exports = {
     client: 'mysql',
     connection: {
-        host: 'localhost',
+        host: 'bdm296810572.my3w.com',
         port: '3306',
-        user: 'root',
-        password: '123456',
+        user: 'bdm296810572',
+        password: 'lw555wam',
         database: 'bdm296810572_db',
         charset: 'utf8',
         insecureAuth: true

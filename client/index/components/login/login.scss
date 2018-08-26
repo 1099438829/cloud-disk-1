@@ -14,7 +14,8 @@
   right: 10%;
   padding: 20px 50px;
   background: $def_hover;
-  opacity: .8;
+  //opacity: .8;
+  width: 378px;
   button {
     max-width: 300px;
     width: 100%;
@@ -23,15 +24,27 @@
 }
 
 .code {
+  height: 32px;
   span[class='ant-input-affix-wrapper'] {
     width: 60%;
+    float: left;
   }
   input {
     height: 32px;
+    vertical-align: top;
   }
   img {
     cursor: pointer;
     float: right;
+  }
+  .code_svg {
+    cursor: pointer;
+    display: inline-block;
+    height: 32px;
+    float: left;
+    vertical-align: top;
+    border: 1px solid #d9d9d9;
+    margin-left: -1px;
   }
 }
 

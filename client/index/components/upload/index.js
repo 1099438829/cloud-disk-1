@@ -94,19 +94,26 @@ export default class Index extends React.Component {
             this.state.thenFile = file;
             let form = new FormData();
             form.append('file', file.data);
-            axios({
-                method: 'post',
-                url: '/multer/upload',
-                data: form,
-                onUploadProgress: this.progressFunction, // 进度
-                onDownloadProgress: this.uploadComplete, // 完成
-            }).then(ret => {
-                if (ret.status === 200) {
-                    // message.success(`${file.name}上传成功!`)
-                } else {
-                    message.success(`上传出错：${ret.statusText}!`)
-                }
-            }).catch(this.uploadFailed);
+            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+            Axios.post('/api/oss/upload', form).then(ret => {
+                console.log(ret);
+            })
+
+            // axios({
+            //     method: 'post',
+            //     url: '/users/bar',
+            //     // url: '/multer/upload',
+            //     data: form,
+            //     onUploadProgress: this.progressFunction, // 进度
+            //     onDownloadProgress: this.uploadComplete, // 完成
+            // }).then(ret => {
+            //     if (ret.status === 200) {
+            //         // message.success(`${file.name}上传成功!`)
+            //     } else {
+            //         message.success(`上传出错：${ret.statusText}!`)
+            //     }
+            // }).catch(this.uploadFailed);
         }
     };
 

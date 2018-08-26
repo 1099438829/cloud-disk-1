@@ -2,7 +2,7 @@ import 'babel-polyfill'
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Route, Switch, BrowserRouter as Router, Redirect} from 'react-router-dom'
+import {Route, Switch, HashRouter, BrowserRouter as Router, Redirect} from 'react-router-dom'
 import './public/css/nprogress.css'
 import Index from './components/index'
 import {Icon, Modal} from 'antd'
@@ -19,7 +19,7 @@ const Register = (props) => <Bundle load={RegisterController}>{(A) => <A {...pro
 const Fzf = (props) => <Bundle load={FzfController}>{(A) => <A {...props}/>}</Bundle>;
 setTimeout(() => {
     ReactDOM.render(
-        <Router>
+        <HashRouter>
             <div>
                 <div className={css.statement} onClick={() => {
                     Modal.warning({
@@ -44,6 +44,6 @@ setTimeout(() => {
                     <Route path="/" component={Index}/>
                 </Switch>
             </div>
-        </Router>, document.getElementById("app")
+        </HashRouter>, document.getElementById("app")
     );
 }, 500);

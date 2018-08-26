@@ -257,4 +257,31 @@ router.post('/upload', upload.array('file'), async(ctx, next) => {
 });
 ````
 
+关于 webpack 和 webpack-dev-server 配置的个人小结(里面的样式兼容配置有待考研)
+https://juejin.im/entry/57a94ed15bbb5000643e3e26
 
+koa里如何设置统一的返回状态码？
+https://segmentfault.com/q/1010000015934061
+
+Koa2 路由拆分成多文件
+https://blog.csdn.net/u010730897/article/details/81741355
+
+关于 webpack 和 webpack-dev-server 配置的个人小结
+https://juejin.im/entry/57a94ed15bbb5000643e3e26
+
+前后端跨域请求处理以及携带cookie CORS实现（koa2）
+https://blog.csdn.net/qq_33358824/article/details/80694865
+
+vue2 前后端分离项目ajax跨域session问题解决
+https://blog.csdn.net/sky786905664/article/details/73920815#comments
+
+使用webstorm调试node程序
+https://blog.csdn.net/super_wangl/article/details/78239189（8.7.0版本貌似可以）
+https://www.cnblogs.com/jinguangguo/p/4809886.html
+https://hk.saowen.com/a/a6409807820f99dd8c2262e4d9653f2feb7d321aa84c8a54ce52a7b9e764a727
+
+前后端跨域请求处理以及携带cookie CORS实现（koa2）
+https://blog.csdn.net/qq_33358824/article/details/80694865
+
+验证码2.0
+https://juejin.im/post/5ad82856f265da50463e3ae7

@@ -1,7 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// const theme = require('./theme.js');
 const fs  = require('fs');
 const lessToJs = require('less-vars-to-js');
 const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './index/defined.less'), 'utf8'));
@@ -9,7 +11,7 @@ const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './index/de
 
 module.exports = {
     // map
-    devtool: 'source-map',
+    devtool: 'eval-source-map',
     // 根目录
     context: path.resolve(__dirname, './'),
     // 需要打包的文件入口
@@ -23,16 +25,19 @@ module.exports = {
             'Public': path.resolve(__dirname, './index/public/js')
         }
     },
-    // 输出
-    output: {
-        path: path.resolve(__dirname, '../server/public/js'),
-        filename: 'index.bundle.js',
-        chunkFilename: '[name].[chunkhash:4].bundle.js',
-        publicPath: '/js/'
-        // path: path.resolve(__dirname, './build/js'),
-        // filename: 'index.bundle.js',
-        // chunkFilename: '[name].bundle.js',
-        // publicPath: './build/js/'
+    // webpack服务器
+    devServer: {
+        inline: true,
+        open: true,
+        overlay: true, // 错误显示到屏幕上
+        port: 3001,
+        stats: {
+            colors: true,
+            modules: false,
+            children: false,
+            chunks: false,
+            chunkModules: false
+        },
     },
     // 模块处理
     module: {
@@ -127,6 +132,10 @@ module.exports = {
     },
     // 插件
     plugins: [
+        // 生成HTMl并引用资源
+        new HtmlWebpackPlugin({
+            template: './index.html'
+        }),
         // 定义变量，一般用于开发环境log或者全局变量
         new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify(process.env.NODE_ENV)}}),
         // 根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id
@@ -134,7 +143,6 @@ module.exports = {
         // 多个 html共用一个js文件(chunk)
         new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
         // 将样式文件(css,sass,less)合并成一个css文件
-        new ExtractTextPlugin({filename: '../css/theme_light.bundle.css', allChunks: true}),
-        // new ExtractTextPlugin({filename: '../css/theme_dark.bundle.css', allChunks: true}),
+        new ExtractTextPlugin({filename: '[name].[contenthash:4].bundle.css', allChunks: true}),
     ]
-}
+};
