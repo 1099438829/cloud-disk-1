@@ -9,11 +9,17 @@ router.prefix('/api/user');
 /**
  * lw 当前登录信息
  */
-router.post('/info', checkToken, async(ctx, next) => {
+router.post('/info', checkCode, checkToken, async(ctx, next) => {
     let message = '', data = '', code = 200, state = true;
-    let user = ctx.res.user;
-    delete user.password;
-    data = user;
+    let user = ctx.res.check.user;
+    let userDat = await db.op(`select * from cloud_disk_user where id = ${user.id}`);
+    data = {
+        name: userDat[0].name,
+        users: userDat[0].users,
+        sex: userDat[0].sex,
+        login_time: userDat[0].login_time,
+        head_img: userDat[0].head_img
+    };
     ctx.body = {data: data, state: state, message: message, code: code};
 });
 
@@ -23,12 +29,11 @@ router.post('/info', checkToken, async(ctx, next) => {
 router.post('/login', checkCode, async(ctx, next) => {
     let message = '', data = '', code = 200, state = true;
     let dat = ctx.request.body;
-    if (ctx.res.user.codeSta) {
+    if (ctx.res.check.code) {
         try {
-            data = await db.op(`select * from cloud_disk_user where users = "${dat.userName}" and password = "${md5(dat.password)}" limit 1`)
-            console.log(typeof data.length);
+            data = await db.op(`select id from cloud_disk_user where users = "${dat.userName}" and password = "${md5(dat.password)}" limit 1`)
             if (data.length) {
-                ctx.cookie.set('token', createToken(JSON.parse(JSON.stringify(data[0]))));
+                ctx.cookie.set('token', createToken({id: data[0].id}));
             }else{
                 code = 10002;
                 state = false;
@@ -44,6 +49,7 @@ router.post('/login', checkCode, async(ctx, next) => {
         state = false;
         message = '验证码错误'
     }
+
     ctx.body = {data: data, state: state, message: message, code: code};
 
 });
@@ -54,7 +60,7 @@ router.post('/login', checkCode, async(ctx, next) => {
 router.post('/register', checkCode, async(ctx, next) => {
     let message = '', data = '', code = 200, state = true;
     let dat = ctx.request.body;
-    if (ctx.res.user.codeSta) {
+    if (ctx.res.check.code) {
         try {
             await db.op(`insert into cloud_disk_user(users, password) values("${dat.name}", "${md5(dat.rpassword)}")`)
         } catch (e) {

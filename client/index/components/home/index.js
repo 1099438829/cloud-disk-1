@@ -29,13 +29,13 @@ export default class Index extends React.Component {
             const {catalog} = this.state;
             route = catalog.url ? catalog.url : '';
         }
-        Axios.get(`/api/oss/list?name=${route}`).then(ret => {
+        Axios.get(`/api/oss/list?name=${route}`).then(res => {
             let catalog = {
                 url: '',
                 list: []
             };
-            if (ret.prefixes) {
-                ret.prefixes.map(item => {
+            if (res.data.prefixes) {
+                res.data.prefixes.map(item => {
                     catalog.list.push({
                         name: item,
                         check: 0,
@@ -43,8 +43,8 @@ export default class Index extends React.Component {
                     })
                 });
             }
-            if (ret.objects) {
-                ret.objects.map(item => {
+            if (res.data.objects) {
+                res.data.objects.map(item => {
                     catalog.list.push({
                         check: 0,
                         isDirectory: 0,
@@ -203,7 +203,10 @@ export default class Index extends React.Component {
     };
 
     showFile = (dat) => {
-        console.log(dat);
+        // console.log(dat);
+        Axios.get(`/api/oss/url?name=${dat.name}`).then(res => {
+            console.log(res);
+        })
     };
 
     // 选择全部

@@ -20,15 +20,8 @@ const createToken = function (dat) {
  * @returns {Promise<void>}
  */
 const checkToken = async (ctx, next) => {
+    // Authorization TODO:如果需要允许所有跨域，那么只有不使用cookie，改为Authorization存token
     // const token = ctx.get('Authorization');
-    let code = ctx.request.body.code;
-    if(ctx.request.method === 'GET'){
-        code = ctx.params.code
-    }
-    let codeSta = false;
-    if (code && md5(conf.md5Name + code.toLowerCase()) === ctx.cookie.get('code')) {
-        codeSta = true;
-    }
     const token = ctx.cookie.get('token');
     if (!token) {
         ctx.throw(401, '没有找到用户信息');
@@ -38,8 +31,8 @@ const checkToken = async (ctx, next) => {
             if (err) {
                 ctx.throw(401, err.name);
             } else {
-                decoded.codeSta = codeSta;
-                ctx.res.user = decoded;
+                !('check' in ctx.res) ? ctx.res.check = {} : null;
+                ctx.res.check.user = decoded;
             }
         });
     } catch (err) {

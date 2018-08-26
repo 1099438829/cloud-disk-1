@@ -18,7 +18,7 @@ function execQuery(sql, values, callback) {
             errInfo = 'MYSQL获取数据库连接异常！';
             throw errInfo;
         } else {
-            console.log('sql:', sql, values);
+            console.log(`SQL: [${sql}] ${values}`.bgWhite.black);
             connection.query(sql, values, function (err, rows) {
                 release(connection);
                 if (err) {

@@ -13,10 +13,10 @@ Promise.config({
 // axios.defaults.baseURI = defUrl[0];
 // 请求头参考
 // https://www.jianshu.com/p/c81ec1a547ad
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; // Form Data 模式
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; // Form Data 模式
 // axios.defaults.headers.post['Content-Type'] = 'application/json'; // Request Payload 模式
 // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'; // Form Data 文件流模式(与x-www-form-urlencoded相似)
-axios.defaults.headers.common['Authorization'] = sessionStorage.getItem("Authorization");
+// axios.defaults.headers.common['Authorization'] = sessionStorage.getItem("Authorization");
 // 允许服务端下发cookie
 axios.defaults.withCredentials = true;
 /**

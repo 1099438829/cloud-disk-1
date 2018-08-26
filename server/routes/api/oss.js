@@ -5,26 +5,28 @@ const oss = require('../oss');
 router.prefix('/api/oss');
 
 router.post('/upload', async (ctx, next) => {
+    let message = '', data = '', code = 200, state = true;
     const file = ctx.request.files.file;
     let stream = fs.createReadStream(file.path);
-    let data = await oss().putStream(file.name, stream);
-    ctx.body = data;
+    data = await oss().putStream(file.name, stream);
+    ctx.body = {data: data, state: state, message: message, code: code};
 });
 
 router.get('/list', async (ctx, next) => {
+    let message = '', data = '', code = 200, state = true;
     const name = ctx.query.name;
-    let data = await oss().list({
+    data = await oss().list({
         prefix: name,
         delimiter: '/'
     });
-    ctx.body = data;
+    ctx.body = {data: data, state: state, message: message, code: code};
 });
 
 router.get('/url', async (ctx) => {
-    console.log(ctx.query);
+    let message = '', data = '', code = 200, state = true;
     const name = ctx.query.name;
-    let url = oss().signatureUrl(name, {expires: 3600});
-    ctx.body = url;
+    data = oss().signatureUrl(name, {expires: 3600});
+    ctx.body = {data: data, state: state, message: message, code: code};
 });
 
 module.exports = router;

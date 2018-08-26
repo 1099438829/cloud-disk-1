@@ -10,6 +10,9 @@ const logger = require('koa-logger');
 const conf = require('./config');
 const {srever} = require('./routes/socket');
 const cors = require('koa2-cors');
+const colors = require('colors');
+const { resolve } = require('path');
+const fs = require('fs');
 
 const api = require('./routes/api');
 const index = require('./routes/index');
@@ -44,6 +47,36 @@ app.use(
 );
 
 app.use(json());
+
+// logger
+app.use(async (ctx, next) => {
+    let logPath = resolve(__dirname, './log', 'log.log');
+    let log = '\r\n';
+
+    const start = new Date();
+    await next();
+    const ms = new Date() - start;
+
+    // console.log(`${ctx.method} ${ctx.url} - ${ms}ms`.red);
+    // console.log(JSON.stringify(ctx.request));
+
+    let json = {};
+    json.url = ctx.url;
+    json.type = ctx.method;
+    json.request = ctx.request;
+    if (ctx.method === 'GET') {
+        json.parm = ctx.query;
+    } else {
+        json.parm = ctx.request.body;
+    }
+    json.time = `${ms}ms`;
+    json = JSON.stringify(json);
+    log += `${new Date().toLocaleString()}\r\n`;
+    log += json;
+    log += '\r\n';
+    fs.writeFile(logPath, log, {'flag': 'a'}, e => {});
+});
+// koa-logger
 app.use(logger());
 app.use(require('koa-static')(__dirname + '/public'));
 // 模板文件
@@ -66,21 +99,37 @@ app.use(async (ctx, next) => {
     await next();
 });
 
-// logger
-app.use(async (ctx, next) => {
-    const start = new Date();
-    await next();
-    const ms = new Date() - start;
-    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-});
-
 // routes
 app.use(api()); // api
 app.use(index.routes(), index.allowedMethods()); // 模板页
 
 // error-handling
 app.on('error', (err, ctx) => {
-    console.error('server error', err, ctx)
+    if(!err.status) err.status = 500;
+    console.error('Server Error'.red, err.message, err.status);
+    console.error(err);
+
+    let logPath = resolve(__dirname, './log', 'error.log');
+    let log = '\r\n';
+    let json = {};
+    json.url = ctx.url;
+    json.type = ctx.method;
+    json.request = ctx.request;
+    if (ctx.method === 'GET') {
+        json.parm = ctx.query;
+    } else {
+        json.parm = ctx.request.body;
+    }
+    json.status = err.status;
+    json.message = err.message;
+    json = JSON.stringify(json);
+
+    log += `${new Date().toLocaleString()}\r\n`;
+    log += json;
+    log += '\r\n';
+    log += err.stack;
+    log += '\r\n';
+    fs.writeFile(logPath, log, {'flag': 'a'}, e => {});
 });
 
 // socket连接

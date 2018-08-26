@@ -3,7 +3,6 @@ const glob = require('glob');
 const colors = require('colors');
 const { resolve } = require('path');
 const fs = require('fs');
-const path = require('path');
 
 /**
  * 合并路由
@@ -12,7 +11,7 @@ const path = require('path');
 module.exports = function () {
     let routers = [];
     let len = 0;
-    let logPath = path.resolve(__dirname, './', 'api_log.txt');
+    let logPath = resolve(__dirname, '../log', 'api_log.log');
     glob.sync(resolve(__dirname, './', '**/*.js'))
         // 排除非api文件
         .filter(value => (value.indexOf('api.js') === -1))

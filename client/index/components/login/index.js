@@ -19,7 +19,6 @@ class Index extends React.Component {
     componentDidMount() {
         getCookie('token') ? this.props.history.push("/") : null;
         this.getCode();
-        console.log('componentDidMount');
     }
 
     getCode = () => {
@@ -49,14 +48,10 @@ class Index extends React.Component {
                 })
             }
         });
-    }
+    };
 
     render() {
-        const {code} = this.state;
         const {getFieldDecorator} = this.props.form;
-
-        console.log(code);
-
         return <QueueAnim type="alpha">
             <div className={css.boxs} key={1}>
                 <div className={css.login_logo}>

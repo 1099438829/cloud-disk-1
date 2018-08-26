@@ -19,7 +19,8 @@ const checkCode = async (ctx, next) => {
     if (!conf.verificationSta) {
         codeSta = true
     }
-    ctx.res.user = {codeSta: codeSta};
+    !('check' in ctx.res) ? ctx.res.check = {} : null;
+    ctx.res.check.code = codeSta;
     await next();
 };
 

@@ -64,7 +64,6 @@ router.get('/code', async function (ctx, next) {
  * 生成数字字母验证码
  */
 router.get('/code2', async function (ctx, next) {
-    console.log(ctx.query);
     let fontSize = ctx.query.size || 40;
     let width = ctx.query.w || 150;
     let height = ctx.query.h || 50;
