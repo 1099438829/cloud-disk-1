@@ -23,8 +23,8 @@ class Index extends React.Component {
     }
 
     getCode = () => {
-        Axios.get('/api/verification/code2').then(ret => {
-            this.setState({code: ret})
+        Axios.get(`/api/verification/code2?w=110&h=32`).then(ret => {
+            this.refs.code.innerHTML = ret;
         })
     };
 
@@ -33,7 +33,7 @@ class Index extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', qs.stringify(values));
-                Axios.post('/api/login', values).then(ret => {
+                Axios.post('/api/user/login', values).then(ret => {
                     if (ret.state) {
                         this.props.history.push("/");
                     } else {
@@ -199,7 +199,7 @@ class Index extends React.Component {
                                     <Input len={4} prefix={<Icon type="lock" style={{fontSize: 13}}/>} placeholder="验证码"/>
                                 )}
                                 <Tooltip placement="right" title="刷新">
-                                    {code}
+                                    <span className={css.code_svg} ref='code' onClick={this.getCode}>&nbsp;</span>
                                 </Tooltip>
                             </div>
                         </FormItem>

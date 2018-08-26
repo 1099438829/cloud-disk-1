@@ -49,12 +49,15 @@ function get(url, config, tp) {
                             window.location.href = '#/login';
                         });
                         break;
+                    case 405:
+                        message.warn('找不到请求！');
+                        break;
                     default:
-                        message.warn('连接错误！');
+                        message.error('连接错误！');
                         break;
                 }
             } else {
-                message.warn('连接超时！');
+                message.error('连接超时！');
             }
             reject()
         });
@@ -93,12 +96,15 @@ function post(url, parms, config, tp) {
                             window.location.href = '#/login';
                         });
                         break;
+                    case 405:
+                        message.warn('找不到请求！');
+                        break;
                     default:
-                        message.warn('连接错误！');
+                        message.error('连接错误！');
                         break;
                 }
             } else {
-                message.warn('连接超时！');
+                message.error('连接超时！');
             }
             reject()
         });

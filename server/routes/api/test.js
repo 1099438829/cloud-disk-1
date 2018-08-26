@@ -7,10 +7,10 @@ router.get('/get', function (ctx, next) {
 });
 
 router.post('/post', function (ctx, next) {
-    let message = '', result = '', code = 200, state = true;
-    result = ctx.request.body;
+    let message = '', data = '', code = 200, state = true;
+    data = ctx.request.body;
     message = 'this is a post test!';
-    ctx.body = {result: result, state: state, message: message, code: code};
+    ctx.body = {data: data, state: state, message: message, code: code};
 });
 
 module.exports = router;

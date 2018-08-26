@@ -29,8 +29,30 @@ export default class Index extends React.Component {
             const {catalog} = this.state;
             route = catalog.url ? catalog.url : '';
         }
-        Axios.post('/api/catalog', {name: route}).then(ret => {
-            this.setState({catalog: ret, allCheckSta: false})
+        Axios.get(`/api/oss/list?name=${route}`).then(ret => {
+            let catalog = {
+                url: '',
+                list: []
+            };
+            if (ret.prefixes) {
+                ret.prefixes.map(item => {
+                    catalog.list.push({
+                        name: item,
+                        check: 0,
+                        isDirectory: 1,
+                    })
+                });
+            }
+            if (ret.objects) {
+                ret.objects.map(item => {
+                    catalog.list.push({
+                        check: 0,
+                        isDirectory: 0,
+                        ...item
+                    })
+                });
+            }
+            this.setState({catalog: catalog, allCheckSta: false})
         })
     };
 
@@ -181,7 +203,7 @@ export default class Index extends React.Component {
     };
 
     showFile = (dat) => {
-        console.log('文件：' + dat);
+        console.log(dat);
     };
 
     // 选择全部
@@ -295,11 +317,11 @@ export default class Index extends React.Component {
                                 <Checkbox checked={item.check} onChange={(e) => this.check(e, item, i)}/>
                             </div>
                             {item.isDirectory ?
-                                <div className={css.name} onDoubleClick={() => this.getCatalog(url)}
+                                <div className={css.name} onDoubleClick={() => this.getCatalog(item.name)}
                                      onClick={(e) => this.check(e, item, i)}>
                                     <Icon type="folder"/>
                                     {item.name}
-                                </div> : <div className={css.name} onDoubleClick={() => this.showFile(url)}
+                                </div> : <div className={css.name} onDoubleClick={() => this.showFile(item)}
                                               onClick={(e) => this.check(e, item, i)}>
                                     <Icon type="file-text"/>
                                     {item.name}

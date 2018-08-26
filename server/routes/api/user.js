@@ -1,22 +1,34 @@
 const router = require('koa-router')();
-const {createToken, checkCode} = require('../token');
+const {createToken, checkToken} = require('../token');
+const {checkCode} = require('../verification');
 const md5 = require('js-md5');
 const db = require('../../database');
 
 router.prefix('/api/user');
 
 /**
+ * lw 当前登录信息
+ */
+router.post('/info', checkToken, async(ctx, next) => {
+    let message = '', data = '', code = 200, state = true;
+    let user = ctx.res.user;
+    delete user.password;
+    data = user;
+    ctx.body = {data: data, state: state, message: message, code: code};
+});
+
+/**
  * lw 登录
  */
 router.post('/login', checkCode, async(ctx, next) => {
-    let message = '', result = '', code = 200, state = true;
+    let message = '', data = '', code = 200, state = true;
     let dat = ctx.request.body;
     if (ctx.res.user.codeSta) {
         try {
-            result = await db.op(`select * from cloud_disk_user where users = "${dat.userName}" and password = "${md5(dat.password)}" limit 1`)
-            console.log(typeof result.length);
-            if (result.length) {
-                ctx.cookie.set('token', createToken(JSON.parse(JSON.stringify(result[0]))));
+            data = await db.op(`select * from cloud_disk_user where users = "${dat.userName}" and password = "${md5(dat.password)}" limit 1`)
+            console.log(typeof data.length);
+            if (data.length) {
+                ctx.cookie.set('token', createToken(JSON.parse(JSON.stringify(data[0]))));
             }else{
                 code = 10002;
                 state = false;
@@ -32,7 +44,7 @@ router.post('/login', checkCode, async(ctx, next) => {
         state = false;
         message = '验证码错误'
     }
-    ctx.body = {result: result, state: state, message: message, code: code};
+    ctx.body = {data: data, state: state, message: message, code: code};
 
 });
 
@@ -40,7 +52,7 @@ router.post('/login', checkCode, async(ctx, next) => {
  * lw 注册
  */
 router.post('/register', checkCode, async(ctx, next) => {
-    let message = '', result = '', code = 200, state = true;
+    let message = '', data = '', code = 200, state = true;
     let dat = ctx.request.body;
     if (ctx.res.user.codeSta) {
         try {
@@ -55,7 +67,7 @@ router.post('/register', checkCode, async(ctx, next) => {
         state = false;
         message = '验证码错误'
     }
-    ctx.body = {result: result, state: state, message: message, code: code};
+    ctx.body = {data: data, state: state, message: message, code: code};
 });
 
 module.exports = router;

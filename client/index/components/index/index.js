@@ -5,7 +5,7 @@ import {Axios} from 'Public';
 import {Route, Redirect, Switch as RouterSwitch, Link} from 'react-router-dom'
 import Bundle from '../../bundle';
 import {menu} from '../../config'
-import {Icon, Switch} from 'antd'
+import {Icon, Switch, message} from 'antd'
 import io from 'socket.io-client';
 
 import HomeController from 'bundle-loader?lazy&name=home!../home'
@@ -29,9 +29,13 @@ export default class Index extends React.Component {
 
     componentDidMount() {
         setTimeout(() => {
-            Axios.post('/api/user', {a: 1}).then(ret => {
-                user = {...ret, ...user};
-                this.setState({sta: true})
+            Axios.post('/api/user/info').then(ret => {
+                if (ret.code === 200) {
+                    user = {...user, ...ret.data};
+                    this.setState({sta: true})
+                } else {
+                    message.error(ret.message)
+                }
             })
         }, 500)
         // window.socket = io.connect(':4000', {reconnection: true, secure: true})
@@ -84,7 +88,7 @@ export default class Index extends React.Component {
                                 <span><Icon className={card ? css.card_up_active : css.card_up} type="up" /></span>
                                 {card ?
                                 <div className={css.mess_card} onMouseMove={this.move}>
-                                    <div className={css.seat}></div>
+                                    <div className={css.seat}>&nbsp;</div>
                                     <div className={css.mess_card_info}>
                                         <span><img src={user.headImg}/></span>
                                         <span>{user.name}</span>

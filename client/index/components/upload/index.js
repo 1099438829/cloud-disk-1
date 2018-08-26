@@ -96,7 +96,7 @@ export default class Index extends React.Component {
             form.append('file', file.data);
             axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-            Axios.post('/users/bar', form).then(ret => {
+            Axios.post('/api/oss/upload', form).then(ret => {
                 console.log(ret);
             })
 
