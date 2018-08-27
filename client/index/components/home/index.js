@@ -1,8 +1,8 @@
 import React from 'react';
-import {Popup, Axios} from 'Public'
+import {Popup, Axios, fileType} from 'Public'
 import css from './home.scss'
 import Upload from '../upload'
-import {Icon, Checkbox, Tooltip} from 'antd'
+import {Icon, Checkbox, Tooltip, message} from 'antd'
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -15,6 +15,8 @@ export default class Index extends React.Component {
             modelTitle: '',             // 模态框标题
             modelHtml: '',              // 模态框内容
             allCheckSta: false,         // 全选
+            indeterminate: false,       // 部分选中
+            isIndeterminate: true,      // 部分选中
             file: [],                   // 上传按钮的文件容器
         }
     }
@@ -25,6 +27,8 @@ export default class Index extends React.Component {
 
     // 获取文件列表
     getCatalog = (route) => {
+        console.log(route);
+        this.state.isIndeterminate = false;
         if (route === '--Refresh') {
             const {catalog} = this.state;
             route = catalog.url ? catalog.url : '';
@@ -34,6 +38,7 @@ export default class Index extends React.Component {
                 url: '',
                 list: []
             };
+
             if (res.data.prefixes) {
                 res.data.prefixes.map(item => {
                     catalog.list.push({
@@ -45,14 +50,18 @@ export default class Index extends React.Component {
             }
             if (res.data.objects) {
                 res.data.objects.map(item => {
-                    catalog.list.push({
-                        check: 0,
-                        isDirectory: 0,
-                        ...item
-                    })
+                    if (item.size === 0) {
+                        catalog.url += item.name.slice(0, -1);
+                    } else {
+                        catalog.list.push({
+                            check: 0,
+                            isDirectory: 0,
+                            ...item
+                        })
+                    }
                 });
             }
-            this.setState({catalog: catalog, allCheckSta: false})
+            this.setState({catalog: catalog, allCheckSta: false, indeterminate: false, isIndeterminate: true});
         })
     };
 
@@ -63,7 +72,7 @@ export default class Index extends React.Component {
         let route = '';
         if (catalogUrl.length > 1) {
             catalogUrl.splice(catalogUrl.length - 1, 1);
-            route = catalogUrl.join('/')
+            route = catalogUrl.join('/') + '/'
         }
         this.getCatalog(route)
     };
@@ -177,25 +186,30 @@ export default class Index extends React.Component {
     // 删除文件或文件夹
     del = () => {
         let {catalog} = this.state;
-        let delList = [];
+        let delList = [], directory = [];
         if (catalog && catalog.list) {
             catalog.list.map(item => {
+                console.log(item);
                 if (item.check) {
-                    let filePath = catalog.url ? catalog.url + '/' + item.name : item.name;
-                    filePath ? delList.push(filePath) : null;
+                    if (item.isDirectory) {
+                        directory.push(item.name)
+                    } else {
+                        delList.push(item.name)
+                    }
                 }
             })
         }
-        if (delList.length) {
-            delList.map(item => {
-                Axios.post('/api/delFolder', {name: item}).then(ret => {
-                    console.log(ret);
-                    if (ret) {
-                        this.state.modelSta = false;
-                        const {catalog} = this.state;
-                        this.getCatalog(catalog.url)
-                    }
-                })
+        if (delList.length || directory.length) {
+            Axios.post('/api/oss/del', [delList, directory]).then(res => {
+                if (res.code === 200) {
+                    message.success(res.message);
+                    this.setState({modelSta: false});
+                    // this.state.modelSta = false;
+                    // const {catalog} = this.state;
+                    // this.getCatalog(catalog.url)
+                } else {
+                    message.error(res.message)
+                }
             })
         } else {
             console.log('还没有可以删除的项哦!');
@@ -211,26 +225,37 @@ export default class Index extends React.Component {
 
     // 选择全部
     checkAll = (e) => {
-        let {catalog} = this.state;
+        let {catalog, indeterminate} = this.state;
         let check = e.target.checked;
         if (catalog.list && catalog.list.length) {
             catalog.list.map(item => {
                 item.check = check;
             })
         }
-        this.setState({allCheckSta: check, catalog: catalog})
+        check ? indeterminate = false : null;
+        this.setState({allCheckSta: check, indeterminate: indeterminate, catalog: catalog})
     };
 
     // 选择
     check = (e, dat, i) => {
-        let {catalog} = this.state;
-        dat.check = !dat.check;
-        catalog.list[i] = dat;
-        let allSta = false;
-        catalog.list.map(item => {
-            item.check ? allSta = true : null;
-        })
-        this.setState({catalog: catalog, allCheckSta: allSta})
+        let {catalog,isIndeterminate} = this.state;
+        let _this = this;
+        setTimeout(function () {
+            if (isIndeterminate) {
+                dat.check = !dat.check;
+                catalog.list[i] = dat;
+                let allSta = true, indeterminate = false;
+                catalog.list.map(item => {
+                    if (item.check) {
+                        indeterminate = true
+                    } else {
+                        allSta = false
+                    }
+                });
+                allSta ? indeterminate = false : null;
+                _this.setState({catalog: catalog, allCheckSta: allSta, indeterminate: indeterminate})
+            }
+        }, 100)
     };
 
     // 按钮触发选择上传文件
@@ -260,8 +285,10 @@ export default class Index extends React.Component {
     }
 
     render() {
-        const {catalog, file, modelSta, modelSize, modelTitle, modelHtml, showUp, allCheckSta} = this.state;
+        const {catalog, file, modelSta, modelSize, modelTitle, modelHtml, showUp, allCheckSta, indeterminate} = this.state;
+        console.log(catalog);
         let catalogUrl = catalog.url ? catalog.url.split('/') : [];
+        console.log(catalogUrl);
         let checkNum = 0;
         if (catalog && catalog.list) {
             catalog.list.map(item => {
@@ -296,7 +323,7 @@ export default class Index extends React.Component {
                                                                                   href="javascript:">全部文件</a> > </span> : '全部文件'}
                 {catalogUrl.map((item, i) => {
                     let url = catalogUrl.slice(0, i + 1);
-                    let urlStr = url.join('/');
+                    let urlStr = url.join('/')+'/';
                     return <span key={i}>
                         {catalogUrl.length - 1 > i ?
                             <a onClick={() => this.getCatalog(urlStr)} href="javascript:">{item}</a> : item}
@@ -308,7 +335,7 @@ export default class Index extends React.Component {
             <div className={css.cat}>
                 <div className={css.list_base}>
                     <div className={css.sel}>
-                        <Checkbox checked={allCheckSta} onChange={this.checkAll}/>
+                        <Checkbox checked={allCheckSta} indeterminate={indeterminate} onChange={this.checkAll}/>
                     </div>
                     {checkNum ? <div className={css.check_txt}>已选中{checkNum}个文件/文件夹</div> : null}
                 </div>
@@ -322,11 +349,20 @@ export default class Index extends React.Component {
                             {item.isDirectory ?
                                 <div className={css.name} onDoubleClick={() => this.getCatalog(item.name)}
                                      onClick={(e) => this.check(e, item, i)}>
-                                    <Icon type="folder"/>
-                                    {item.name}
+                                    <a href="Javascript:;" onClick={() => this.getCatalog(item.name)}>
+
+                                        <svg className="icon" aria-hidden="true">
+                                            <use xlinkHref={fileType('', 0)}>&ensp;</use>
+                                        </svg>
+
+                                        {item.name}
+                                    </a>
                                 </div> : <div className={css.name} onDoubleClick={() => this.showFile(item)}
                                               onClick={(e) => this.check(e, item, i)}>
-                                    <Icon type="file-text"/>
+                                    <svg className="icon" aria-hidden="true">
+                                        <use xlinkHref={fileType(item.name)}>&ensp;</use>
+                                    </svg>
+
                                     {item.name}
                                 </div>}
                         </div>

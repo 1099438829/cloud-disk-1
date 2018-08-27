@@ -12,7 +12,6 @@ class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            code: ''
         }
     }
 
@@ -33,17 +32,11 @@ class Index extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', qs.stringify(values));
                 Axios.post('/api/user/login', values).then(ret => {
-                    if (ret.state) {
+                    if (ret.code === 200) {
                         this.props.history.push("/");
                     } else {
-                        message.error(ret.message)
-                        switch (ret.code){
-                            case 10000:
-                                this.getCode();
-                                break;
-                            default:
-                                break;
-                        }
+                        message.error(ret.message);
+                        this.getCode();
                     }
                 })
             }
@@ -205,7 +198,7 @@ class Index extends React.Component {
                             })(
                                 <Checkbox>记住我</Checkbox>
                             )}
-                            <a href="/retrieve">忘记密码</a>
+                            <a href="#/retrieve">忘记密码</a>
                             <Button type="primary" htmlType="submit">
                                 登录
                             </Button>

@@ -28,6 +28,7 @@
     border-top: 1px solid #d3e4ff;
   }
   .list, .list_base {
+    height: 42px;
     cursor: pointer;
     margin-top: -1px;
     padding: 0 20px;
@@ -45,10 +46,12 @@
     }
     .name {
       width: calc(100% - 30px);
-      i {
+      svg {
         margin-right: 10px;
-        font-size: 18px;
-        vertical-align: text-bottom;
+        width: 24px;
+        height: 24px;
+        //font-size: 18px;
+        vertical-align: middle;
       }
     }
     .name:hover {

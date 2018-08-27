@@ -18,7 +18,7 @@
   "main": "https://github.com/sliwei/cloud-disk/blob/master/server/views/index.pug",
   "homepage": "https://github.com/sliwei/cloud-disk/blob/master/client/index/index.js",
   "dependencies": {
-    "antd": "^3.4.5",
+    "antd": "^3.8.4",
     "axios": "^0.16.2",
     "bluebird": "^3.5.1",
     "nprogress": "^0.2.0",

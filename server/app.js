@@ -96,6 +96,11 @@ app.use(async (ctx, next) => {
             return ctx.cookies.get(k, opt);
         }
     };
+    ctx.DATA = {
+        data: {},
+        message: '',
+        code: 200,
+    };
     await next();
 });
 

@@ -37,7 +37,7 @@ export default class Index extends React.Component {
                     message.error(ret.message)
                 }
             }).catch(e => {
-                this.setState({sta: true})
+                // this.setState({sta: true})
             })
         }, 500)
         // window.socket = io.connect(':4000', {reconnection: true, secure: true})
